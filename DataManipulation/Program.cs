@@ -1,10 +1,12 @@
+using System;
+
 namespace DataManipulation
 {
-    static class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
-            
+            // ResidentDataController.ParseSourceFile("");
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DataManipulation
 {
-    internal class Resident
+    public class Resident
     {
         internal int ID { get; private set; }
         internal string LastName { get; private set; }
@@ -12,22 +12,22 @@ namespace DataManipulation
         internal DateTime DateOfBirth { get; private set; }
         internal string PassportInfo { get; private set; }
         internal string TIN { get; private set; }
-        internal string RoomNumber { get; private set; }
-
-        internal Resident(int id, string lastName, string firstName, 
-            string Patronymic, char gender, DateTime dateOfBirth)
+        internal bool IsEvicted { get; private set; }
+        
+        public Resident(int id, string lastName, string firstName, string patronymic, char gender, DateTime dateOfBirth)
         {
-            // Continue by yourself
+            ID = id;
+            LastName = lastName;
+            FirstName = firstName;
+            Patronymic = patronymic;
+            Gender = gender;
+            DateOfBirth = dateOfBirth;
         }
 
         internal void FillDocuments(string passportInfo, string TIN)
         {
-            
-        }
-
-        internal void SettleInRoom(string roomNumber)
-        {
-            
+            PassportInfo = passportInfo;
+            this.TIN = TIN;
         }
     }
 }
