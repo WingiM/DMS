@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="SourceFiles" />
-      <Folder Include="SQLScripts" />
     </ItemGroup>
 
 </Project>
