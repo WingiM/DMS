@@ -7,13 +7,8 @@ namespace DataManipulation
     {
         public static void Main(string[] args)
         {
-            ResidentDataController.GenerateResidentInsertSqlScript(
-                new Resident[]
-                {
-                    new Resident(1, "Name", "name", null, 'm',
-                        DateTime.Today)
-                });
-            // ResidentDataController.ParseSourceFile("text.txt");
+            var residents = ResidentDataController.ParseSourceFile("TestData.txt");
+            ResidentDataController.GenerateResidentInsertSqlScript(residents);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -11,19 +12,34 @@ namespace DataManipulation
             ScriptStoringPath = "../../../SQLScripts";
 
         private static readonly string
-            InsertCommandTemplate =
-                "INSERT INTO Residents(last_name, first_name, patronymic, gender, birth_date, passport_information, tin) VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6})";
+            SourceFilesStoringPath = "../../../SourceFiles";
 
-        internal static void ParseSourceFile(string filename)
+        internal static Resident[] ParseSourceFile(string filename)
         {
-            using (StreamReader reader = new StreamReader(filename))
+            List<Resident> residents = new List<Resident>();
+            using (StreamReader reader = new StreamReader(Path.Combine(SourceFilesStoringPath, filename)))
             {
-                string? line;
+                string? line = filename;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    // Your code here
+                    string[] temp = line.Split('\t');
+                    string[] date = temp[5].Split('.');
+                    
+                    int day = Convert.ToInt32(date[0]);
+                    int month = Convert.ToInt32(date[1]);
+                    int year = Convert.ToInt32(date[2]);
+                    
+                    Resident resident = new Resident(Convert.ToInt32(temp[0]), temp[1], temp[2],
+                        temp[3].Equals("null") ? null : temp[3], temp[4][0], new DateTime(year, month, day));
+                    
+                    resident.FillDocuments(temp[6].Equals("null") ? null : temp[6],
+                        temp[7].Equals("null") ? null : temp[7]);
+                    
+                    residents.Add(resident);
                 }
             }
+
+            return residents.ToArray();
         }
 
         internal static void GenerateResidentInsertSqlScript(

@@ -26,7 +26,7 @@ namespace DataManipulation
             DateOfBirth = dateOfBirth.Date;
         }
 
-        internal void FillDocuments(string passportInfo, string TIN)
+        internal void FillDocuments(string? passportInfo, string? TIN)
         {
             PassportInfo = passportInfo;
             this.TIN = TIN;
