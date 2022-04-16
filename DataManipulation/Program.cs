@@ -6,7 +6,7 @@ namespace DataManipulation
     {
         public static void Main(string[] args)
         {
-            // ResidentDataController.ParseSourceFile("");
+            // ResidentDataController.ParseSourceFile("text.txt");
         }
     }
 }

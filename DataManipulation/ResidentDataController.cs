@@ -7,19 +7,18 @@ namespace DataManipulation
     {
         internal static void ParseSourceFile(string filename)
         {
-            try
+            using (StreamReader reader = new StreamReader(filename))
             {
-                var fileLines = File.ReadLines(filename);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                string? line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // Your code here
+                }
             }
         }
-        
+
         internal static void GenerateInsertSQLScript(Resident[] residents)
         {
-            
         }
     }
 }
