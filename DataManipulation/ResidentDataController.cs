@@ -16,25 +16,30 @@ namespace DataManipulation
 
         internal static Resident[] ParseSourceFile(string filename)
         {
-            List<Resident> residents = new List<Resident>();
-            using (StreamReader reader = new StreamReader(Path.Combine(SourceFilesStoringPath, filename)))
+            List<Resident> residents = new();
+            using (StreamReader reader =
+                new(Path.Combine(SourceFilesStoringPath,
+                    filename)))
             {
                 string? line = filename;
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] temp = line.Split('\t');
                     string[] date = temp[5].Split('.');
-                    
+
                     int day = Convert.ToInt32(date[0]);
                     int month = Convert.ToInt32(date[1]);
                     int year = Convert.ToInt32(date[2]);
-                    
-                    Resident resident = new Resident(Convert.ToInt32(temp[0]), temp[1], temp[2],
-                        temp[3].Equals("null") ? null : temp[3], temp[4][0], new DateTime(year, month, day));
-                    
-                    resident.FillDocuments(temp[6].Equals("null") ? null : temp[6],
+
+                    Resident resident = new Resident(Convert.ToInt32(temp[0]),
+                        temp[1], temp[2],
+                        temp[3].Equals("null") ? null : temp[3], temp[4][0],
+                        new DateTime(year, month, day));
+
+                    resident.FillDocuments(
+                        temp[6].Equals("null") ? null : temp[6],
                         temp[7].Equals("null") ? null : temp[7]);
-                    
+
                     residents.Add(resident);
                 }
             }
@@ -70,7 +75,7 @@ namespace DataManipulation
                 : $"'{resident.Patronymic}'";
             sb.Append($"{patronymic}, ");
             sb.Append($"'{resident.Gender}', ");
-            sb.Append($"'{resident.DateOfBirth.ToString("d")}', ");
+            sb.Append($"'{resident.DateOfBirth:MM/dd/yyyy}', ");
             var passportInfo = resident.PassportInfo == null
                 ? "null"
                 : $"'{resident.PassportInfo}'";
