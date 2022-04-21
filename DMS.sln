@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS-Main", "DMS-Main\DMS-Main.csproj", "{BC686FF0-1680-410B-A94C-C9D576EEC9EA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManipulation", "DataManipulation\DataManipulation.csproj", "{5656F5BF-566C-462A-BA8F-F221E9F111EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS", "DMS\DMS.csproj", "{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,13 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC686FF0-1680-410B-A94C-C9D576EEC9EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC686FF0-1680-410B-A94C-C9D576EEC9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC686FF0-1680-410B-A94C-C9D576EEC9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC686FF0-1680-410B-A94C-C9D576EEC9EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5656F5BF-566C-462A-BA8F-F221E9F111EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5656F5BF-566C-462A-BA8F-F221E9F111EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5656F5BF-566C-462A-BA8F-F221E9F111EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5656F5BF-566C-462A-BA8F-F221E9F111EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
