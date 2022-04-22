@@ -28,7 +28,7 @@ public class JwtAuthenticationController : ControllerBase
         var jwt = new JwtSecurityToken(
             issuer: configuration["Jwt:Issuer"],
             audience: configuration["Jwt:Audience"],
-            expires: DateTime.UtcNow.Add(TimeSpan.FromHours(1)),
+            expires: DateTime.UtcNow.Add(TimeSpan.FromHours(2)),
             signingCredentials: new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                     configuration["Jwt:Key"])),
