@@ -1,16 +1,23 @@
-﻿namespace DMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DMS.Models
 {
     public class EvictionOrder
     {
-        internal int order_id { get; private set; }
-        internal int resident_id { get; private set; }
-        internal string description { get; private set; }
+        [Column("order_id")]
+        internal int OrderId { get; private set; }
+        
+        [Column("resident_id")]
+        internal int ResidentId { get; private set; }
+        
+        [Column("description")]
+        internal string Description { get; private set; }
 
         public EvictionOrder(int orderId, int residentId, string description)
         {
-            order_id = orderId;
-            resident_id = residentId;
-            this.description = description;
+            OrderId = orderId;
+            ResidentId = residentId;
+            Description = description;
         }
     }
 }

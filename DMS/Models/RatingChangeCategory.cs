@@ -1,14 +1,19 @@
-﻿namespace DMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DMS.Models
 {
     public class RatingChangeCategory
     {
-        internal int category_id { get; private set; }
-        internal string name { get; private set; }
+        [Column("category_id")]
+        internal int CategoryId { get; private set; }
+        
+        [Column("name")]
+        internal string Name { get; private set; }
 
         public RatingChangeCategory(int categoryId, string name)
         {
-            category_id = categoryId;
-            this.name = name;
+            CategoryId = categoryId;
+            Name = name;
         }
     }
 }

@@ -1,19 +1,27 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataManipulation
 {
     public class Room
     {
+        [Column("room_number")]
         internal int RoomNumber { get; private set; }
+        
+        [Column("capacity")]
         internal int Capacity { get; private set; }
-        internal char gender { get; private set; }
-        internal int floor_number => (RoomNumber / 100);
+        
+        [Column("gender")]
+        internal char Gender { get; private set; }
+        
+        [Column("floor_number")]
+        internal int FloorNumber => (RoomNumber / 100);
 
         public Room(int roomNumber, int capacity, char gender)
         {
             RoomNumber = roomNumber;
-            this.Capacity = capacity;
-            this.gender = gender;
+            Capacity = capacity;
+            Gender = gender;
         }
     }
 }

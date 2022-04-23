@@ -18,11 +18,11 @@ namespace DMS.Models
             Database.EnsureCreated();
         }
 
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     base.OnConfiguring(optionsBuilder);
-        //     optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-        // }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+             base.OnConfiguring(optionsBuilder);
+             optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
