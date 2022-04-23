@@ -1,8 +1,15 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Text;
 using DMS;
 using DMS.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +33,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationContext>();
+builder.Services.AddDbContext<ApplicationContext>((options) =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -48,5 +56,7 @@ app.MapControllers();
 //     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
+
+//app.MapGet("/api/test", (ApplicationContext db) => db.Residents.ToList());
 
 app.Run();

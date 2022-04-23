@@ -1,29 +1,33 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DataManipulation;
+using DMS.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace DMS.Controllers;
-
-[ApiController]
-[Authorize]
-[Route("/api/[controller]")]
-public class MyTestController : ControllerBase
+namespace DMS.Controllers
 {
-    private readonly ILogger<MyTestController> _logger;
-
-    public MyTestController(ILogger<MyTestController> logger)
+    [ApiController]
+    [Authorize]
+    [Route("/api/[controller]")]
+    public class MyTestController : ControllerBase
     {
-        _logger = logger;
-    }
+        private readonly ILogger<MyTestController> _logger;
+        private readonly ApplicationContext db;
 
-    [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = "random msg"
-            })
-            .ToArray();
+        public MyTestController(ILogger<MyTestController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public Resident Get()
+        {
+            _logger.Log(LogLevel.Debug, db.ToString());
+            _logger.Log(LogLevel.Debug, db.Residents.ToString());
+            return db.Residents.First();
+        }
     }
 }

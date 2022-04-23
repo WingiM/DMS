@@ -3,7 +3,7 @@ using System.Data.SqlTypes;
 
 namespace DataManipulation
 {
-    public class Resident
+    internal class Resident
     {
         internal int ID { get; private set; }
         internal string LastName { get; private set; }
