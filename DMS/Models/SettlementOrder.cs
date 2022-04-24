@@ -10,18 +10,22 @@ public class SettlementOrder
     [Required]
     public int SettlementOrderId { get; set; }
     
+    [Column("resident_id")]
     [Required]
+    public int ResidentId { get; set; }
     public Resident? Resident { get; set; }
     
     [Required]
-    public Room? RoomNumber { get; set; }
+    [Column("room_number")]
+    public int RoomNumber { get; set; }
+    public Room? Room { get; set; }
         
     [Column("order_date")]
     [Required]
     public DateTime OrderDate { get; set; }
         
     [Column("description", TypeName = "varchar(200)")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     public SettlementOrder()
     {

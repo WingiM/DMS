@@ -31,7 +31,7 @@ public class ApplicationContext : DbContext
         modelBuilder.UseSerialColumns();
 
         modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
-            .ValueGeneratedOnAdd();
+            .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Resident>().HasData(new Resident()
         {
             ResidentId = 71, LastName = "Vasilev", FirstName = "Roma",

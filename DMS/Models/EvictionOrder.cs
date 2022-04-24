@@ -11,14 +11,15 @@ namespace DMS.Models
         
         [Column("resident_id")]
         [Required]
-        public Resident? ResidentId { get; set; }
+        public int ResidentId { get; set; }
+        public Resident? Resident { get; set; }
         
         [Column("order_date")]
         [Required]
         public DateTime OrderDate { get; set; }
         
         [Column("description", TypeName = "varchar(200)")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public EvictionOrder()
         {

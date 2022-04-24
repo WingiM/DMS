@@ -23,13 +23,18 @@ namespace DMS.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Resident> Get()
+        public IResult Get()
         {
-            foreach (var resident in _context.Residents)
+            var res = new Resident()
             {
-                _logger.Log(LogLevel.Information, resident.ToString());
-            }
-            return _context.Residents.OrderBy(r => r.ResidentId);
+                FirstName = "roma", LastName = "Boma",
+                BirthDate = DateTime.UtcNow, Gender = 'M'
+            };
+            _context.Residents.Add(res);
+            _context.EvictionOrders.Add(new EvictionOrder()
+                { Resident = res, OrderDate = DateTime.UtcNow });
+            _context.SaveChanges();
+            return Results.Json(_context.Residents.OrderBy(r => r.ResidentId));
         }
     }
 }

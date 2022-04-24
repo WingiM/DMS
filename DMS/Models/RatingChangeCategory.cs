@@ -15,9 +15,4 @@ public class RatingChangeCategory
     public RatingChangeCategory()
     {
     }
-
-    public RatingChangeCategory(string name)
-    {
-        Name = name;
-    }
 }

@@ -11,7 +11,8 @@ public class Transaction
         
     [Column("resident_id")]
     [Required]
-    public Resident? ResidentId { get; set; }
+    public int ResidentId { get; set; }
+    public Resident? Resident { get; set; }
     
     [Column("operation_date")]
     [Required]

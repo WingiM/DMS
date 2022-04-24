@@ -13,22 +13,26 @@ namespace DMS.Controllers
     [Route("/login")]
     public class JwtAuthenticationController : ControllerBase
     {
-    
         private readonly ILogger<JwtAuthenticationController> _logger;
 
-        public JwtAuthenticationController(ILogger<JwtAuthenticationController> logger)
+        public JwtAuthenticationController(
+            ILogger<JwtAuthenticationController> logger)
         {
             _logger = logger;
         }
-    
+
         [HttpPost]
         public IResult Post([FromServices] IConfiguration configuration)
         {
             Request.Headers.TryGetValue("password", out var pass);
             if (pass.Count == 0)
             {
-                return Results.Unauthorized();
+                Response.StatusCode = 401;
+                return Results.Json(
+                    new { message = "Incorrect password given" },
+                    statusCode: 401);
             }
+
             _logger.Log(LogLevel.Information, pass.First());
             var jwt = new JwtSecurityToken(
                 issuer: configuration["Jwt:Issuer"],
@@ -48,5 +52,5 @@ namespace DMS.Controllers
 
             return Results.Ok(response);
         }
-    }   
+    }
 }
