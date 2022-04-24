@@ -1,32 +1,29 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DMS.Models
-{
-    public class SettlementOrder
-    {
-        [Column("operation_id")]
-        internal int OperationId { get; private set; }
-        
-        [Column("resident_id")]
-        internal int ResidentId { get; private set; }
-        
-        [Column("room_number")]
-        internal int RoomNumber { get; private set; }
-        
-        [Column("order_date")]
-        internal DateTime OrderDate { get; private set; }
-        
-        [Column("description")]
-        internal string Description { get; private set; }
+namespace DMS.Models;
 
-        public SettlementOrder(int operationId, int residentId, int roomNumber, DateTime orderDate, string description)
-        {
-            OperationId = operationId;
-            ResidentId = residentId;
-            RoomNumber = roomNumber;
-            OrderDate = orderDate;
-            Description = description;
-        }
+public class SettlementOrder
+{
+    [Column("order_id")]
+    [Required]
+    public int SettlementOrderId { get; set; }
+    
+    [Required]
+    public Resident? Resident { get; set; }
+    
+    [Required]
+    public Room? RoomNumber { get; set; }
+        
+    [Column("order_date")]
+    [Required]
+    public DateTime OrderDate { get; set; }
+        
+    [Column("description", TypeName = "varchar(200)")]
+    public string Description { get; set; }
+
+    public SettlementOrder()
+    {
     }
 }

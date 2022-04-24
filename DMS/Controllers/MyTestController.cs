@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataManipulation;
 using DMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +14,22 @@ namespace DMS.Controllers
     public class MyTestController : ControllerBase
     {
         private readonly ILogger<MyTestController> _logger;
-        private readonly ApplicationContext db;
+        private readonly ApplicationContext _context;
 
-        public MyTestController(ILogger<MyTestController> logger)
+        public MyTestController(ILogger<MyTestController> logger, ApplicationContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
-        public Resident Get()
+        public IEnumerable<Resident> Get()
         {
-            _logger.Log(LogLevel.Debug, db.ToString());
-            _logger.Log(LogLevel.Debug, db.Residents.ToString());
-            return db.Residents.First();
+            foreach (var resident in _context.Residents)
+            {
+                _logger.Log(LogLevel.Information, resident.ToString());
+            }
+            return _context.Residents.OrderBy(r => r.ResidentId);
         }
     }
 }

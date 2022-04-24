@@ -1,36 +1,33 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DMS.Models
-{
-    public class RatingOperation
-    {
-        [Column("operation_id")]
-        internal int OperationId { get; private set; }
-        
-        [Column("resident_id")]
-        internal int ResidentId { get; private set; }
-        
-        [Column("category_id")]
-        internal int CategoryId { get; private set; }
-        
-        [Column("change_value")]
-        internal int ChangeValue { get; private set; }
-        
-        [Column("order_date")]
-        internal DateTime OrderDate { get; private set; }
-        
-        [Column("description")]
-        internal string Description { get; private set; }
+namespace DMS.Models;
 
-        public RatingOperation(int operationId, int residentId, int categoryId, int changeValue, DateTime orderDate, string description)
-        {
-            OperationId = operationId;
-            ResidentId = residentId;
-            CategoryId = categoryId;
-            ChangeValue = changeValue;
-            OrderDate = orderDate;
-            Description = description;
-        }
+public class RatingOperation
+{
+    [Column("operation_id")]
+    [Required]
+    public int RatingOperationId { get; set; }
+        
+    [Column("resident_id")]
+    [Required]
+    public Resident? ResidentId { get; set; }
+        
+    [Column("category_id")]
+    public RatingChangeCategory? CategoryId { get; set; }
+        
+    [Column("change_value")]
+    public int ChangeValue { get; set; }
+        
+    [Column("order_date")]
+    [Required]
+    public DateTime OrderDate { get; set; }
+        
+    [Column("description", TypeName = "varchar(200)")]
+    public string Description { get; set; }
+
+    public RatingOperation()
+    {
     }
 }

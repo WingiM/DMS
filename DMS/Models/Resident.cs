@@ -1,54 +1,68 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
+using Microsoft.EntityFrameworkCore;
 
-namespace DMS.Models
+namespace DMS.Models;
+
+[Index("PassportInformation", IsUnique = true)]
+[Index("Tin", IsUnique = true)]
+public class Resident
 {
-    public class Resident
+    [Column("resident_id")] 
+    [Required] 
+    public int ResidentId { get; set; }
+
+    [Column("last_name", TypeName = "varchar(50)")]
+    [Required]
+    public string LastName { get; set; }
+
+    [Column("first_name", TypeName = "varchar(30)")]
+    [Required]
+    public string FirstName { get; set; }
+
+    [Column("patronymic", TypeName = "varchar(30)")]
+    public string? Patronymic { get; set; }
+
+    [Column("gender")] [Required] public char Gender { get; set; }
+
+    [Column("birth_date")] [Required] public DateTime BirthDate { get; set; }
+
+    [Column("passport_information", TypeName = "varchar(10)")]
+    public string? PassportInformation { get; set; }
+
+    [Column("tin", TypeName = "varchar(12)")]
+    public string? Tin { get; set; }
+
+    [Column("room_number")] public Room? Room { get; set; }
+
+    public List<RatingOperation> RatingOperations { get; set; } = new();
+    public List<SettlementOrder> SettlementOrders { get; set; } = new();
+    public List<EvictionOrder> EvictionOrders { get; set; } = new();
+
+    public Resident()
     {
-        [Column("resident_id")]
-        internal int ResidentId { get; private set; }
-        
-        [Column("last_name")]
-        internal string LastName { get; private set; }
-        
-        [Column("first_name")]
-        internal string FirstName { get; private set; }
-        
-        [Column("patronymic")]
-        internal string? Patronymic { get; private set; }
-        
-        [Column("gender")]
-        internal char Gender { get; private set; }
-        
-        [Column("birth_date")]
-        internal DateTime BirthDate { get; private set; }
-        
-        [Column("passport_information")]
-        internal string? PassportInformation { get; private set; }
-        
-        [Column("tin")]
-        internal string? Tin { get; private set; }
-        
-        [Column("room_number")]
-        internal int RoomNumber { get; private set; }
+    }
 
-        public Resident(int residentId, string lastName, string firstName,
-            string? patronymic, char gender, DateTime dateOfBirth, int roomNumber)
-        {
-            ResidentId = residentId;
-            LastName = lastName;
-            FirstName = firstName;
-            Patronymic = patronymic;
-            Gender = gender;
-            RoomNumber = roomNumber;
-            BirthDate = dateOfBirth.Date;
-        }
+    public Resident(string lastName, string firstName, string? patronymic,
+        char gender, DateTime birthDate)
+    {
+        LastName = lastName;
+        FirstName = firstName;
+        Patronymic = patronymic;
+        Gender = gender;
+        BirthDate = birthDate;
+    }
 
-        internal void FillDocuments(string? passportInfo, string? TIN)
-        {
-            PassportInformation = passportInfo;
-            this.Tin = TIN;
-        }
+    public void FillDocuments(string? passportInfo, string? TIN)
+    {
+        PassportInformation = passportInfo;
+        this.Tin = TIN;
+    }
+
+    public override string ToString()
+    {
+        return $"{ResidentId} {LastName} {FirstName}";
     }
 }
