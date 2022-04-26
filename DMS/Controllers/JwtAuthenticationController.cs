@@ -1,16 +1,11 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DMS.Controllers
 {
-    [Route("/login")]
+    [Route("/api/login")]
     public class JwtAuthenticationController : ControllerBase
     {
         private readonly ILogger<JwtAuthenticationController> _logger;
@@ -27,10 +22,10 @@ namespace DMS.Controllers
             Request.Headers.TryGetValue("password", out var pass);
             if (pass.Count == 0)
             {
-                Response.StatusCode = 401;
+                Response.StatusCode = 400;
                 return Results.Json(
                     new { message = "Incorrect password given" },
-                    statusCode: 401);
+                    statusCode: 400);
             }
 
             _logger.Log(LogLevel.Information, pass.First());

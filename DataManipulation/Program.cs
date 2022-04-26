@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace DataManipulation
 {
     public static class Program

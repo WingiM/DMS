@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DMS.Models;
+﻿using DMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace DMS.Controllers
 {
@@ -16,7 +12,8 @@ namespace DMS.Controllers
         private readonly ILogger<MyTestController> _logger;
         private readonly ApplicationContext _context;
 
-        public MyTestController(ILogger<MyTestController> logger, ApplicationContext context)
+        public MyTestController(ILogger<MyTestController> logger,
+            ApplicationContext context)
         {
             _logger = logger;
             _context = context;
@@ -31,8 +28,10 @@ namespace DMS.Controllers
                 BirthDate = DateTime.UtcNow, Gender = 'M'
             };
             _context.Residents.Add(res);
-            _context.EvictionOrders.Add(new EvictionOrder()
-                { Resident = res, OrderDate = DateTime.UtcNow });
+            _context.SettlementOrders.Add(new SettlementOrder()
+            {
+                Resident = res, RoomId = "304", OrderDate = DateTime.UtcNow
+            });
             _context.SaveChanges();
             return Results.Json(_context.Residents.OrderBy(r => r.ResidentId));
         }

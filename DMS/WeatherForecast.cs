@@ -1,5 +1,3 @@
-using System;
-
 namespace DMS
 {
     public class WeatherForecast

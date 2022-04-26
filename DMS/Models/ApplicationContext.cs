@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Models;
 
@@ -29,7 +27,6 @@ public class ApplicationContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseSerialColumns();
-
         modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Resident>().HasData(new Resident()
@@ -53,5 +50,15 @@ public class ApplicationContext : DbContext
         modelBuilder.Entity<Room>()
             .Property(r => r.FloorNumber)
             .HasComputedColumnSql("left(room_number, 1)", stored: true);
+        modelBuilder.Entity<Room>().HasData(new Room()
+        {
+            Capacity = 3, Gender = 'M', RoomId = "304"
+        });
+        modelBuilder.Entity<SettlementOrder>().HasData(new SettlementOrder()
+        {
+            Description = null, OrderDate = DateTime.UtcNow, ResidentId = 35,
+            RoomId = "304",
+            SettlementOrderId = 1
+        });
     }
 }

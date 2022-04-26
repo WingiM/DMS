@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DMS.Models;
 
+[Table("rating_operation")]
 public class RatingOperation
 {
     [Column("operation_id")]

@@ -1,18 +1,15 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.SqlTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Models;
 
 [Index("PassportInformation", IsUnique = true)]
 [Index("Tin", IsUnique = true)]
+[Table("resident")]
 public class Resident
 {
-    [Column("resident_id")] 
-    [Required] 
-    public int ResidentId { get; set; }
+    [Column("resident_id")] [Required] public int ResidentId { get; set; }
 
     [Column("last_name", TypeName = "varchar(50)")]
     [Required]
@@ -34,7 +31,8 @@ public class Resident
 
     [Column("tin", TypeName = "varchar(12)")]
     public string? Tin { get; set; }
-
+    
+    
     [Column("room_number")] public Room? Room { get; set; }
 
     public List<RatingOperation> RatingOperations { get; set; } = new();
