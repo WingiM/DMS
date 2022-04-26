@@ -30,7 +30,7 @@ namespace DMS.Controllers
             _context.Residents.Add(res);
             _context.SettlementOrders.Add(new SettlementOrder()
             {
-                Resident = res, RoomId = "304", OrderDate = DateTime.UtcNow
+                Resident = res, RoomId = 304, OrderDate = DateTime.UtcNow
             });
             _context.SaveChanges();
             return Results.Json(_context.Residents.OrderBy(r => r.ResidentId));

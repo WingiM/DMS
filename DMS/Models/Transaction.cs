@@ -9,11 +9,10 @@ public class Transaction
     [Column("operation_id")] [Required] public int TransactionId { get; set; }
 
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
+
     public Resident? Resident { get; set; }
 
-    [Column("operation_date")]
-    [Required]
-    public DateTime OperationDate { get; set; }
+    [Column("operation_date")] [Required] public DateTime OperationDate { get; set; }
 
     [Column("sum")] public double Sum { get; set; }
 
