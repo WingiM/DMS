@@ -1,6 +1,7 @@
 ﻿using DMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Controllers
 {
@@ -33,7 +34,13 @@ namespace DMS.Controllers
                 Resident = res, RoomId = 304, OrderDate = DateTime.UtcNow
             });
             _context.SaveChanges();
-            return Results.Json(_context.Residents.OrderBy(r => r.ResidentId));
+            return Results.Json(_context.Residents
+                .Include(r => r.EvictionOrders)
+                .Include(r => r.SettlementOrders)
+                .Include(r => r.RatingOperations)
+                .ThenInclude(ro => ro.Category)
+                .AsSplitQuery()
+                .OrderBy(r => r.ResidentId));
         }
     }
 }

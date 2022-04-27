@@ -33,7 +33,7 @@ public class Resident
     public string? Tin { get; set; }
 
 
-    [Column("room_number")] public int RoomId { get; set; }
+    [Column("room_number")] public int? RoomId { get; set; }
     public Room? Room { get; set; }
 
     public List<RatingOperation> RatingOperations { get; set; } = new();
