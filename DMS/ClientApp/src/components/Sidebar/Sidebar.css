@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+
+:root {
+    --stats-block-height: 0px;
+    --blocks-border-radius: 0;
+}
+
+html {
+    background: url("img/background.svg");
+    font-family: "Ubuntu", serif;
+    font-style: normal;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+#root {
+    height: 100%;
+}
+
+.sidebar {
+    box-sizing: border-box;
+
+    width: 21.51%;
+    height: 100%;
+    background: #86F0DD;
+    border-radius: 0 var(--blocks-border-radius) var(--blocks-border-radius) 0;
+
+    margin-right: 6.354%;
+    float: left;
+    position: relative;
+    padding: 1.5%;
+
+    text-align: center;
+}
+
+.sidebar img {
+    width: 48px;
+}
+
+#waves {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0
+}
+
+#sidebar-header {
+    color: #299DCE;
+    font-size: 50px;
+    align-self: center;
+}
+
+#stats-header {
+    color: #2D8CB5;
+    font-size: 15px;
+    letter-spacing: 0.5em;
+}
+
+#settings {
+    display: inline-block;
+    padding: 5px;
+    border-radius: 10px;
+    background: #299DCE;
+    float: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.stats-block {
+    box-sizing: border-box;
+    margin-top: 4.81%;
+    background: #F5FCFF;
+    border-radius: 20px;
+    height: var(--stats-block-height);
+    padding: 4%;
+}
+
+.stats-intel-block {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.stats-intel {
+    margin-top: auto;
+    display: inline-block;
+    left: -3%;
+
+}
+
+.stats-intel span {
+    float: left;
+    box-sizing: border-box;
+    display: inline-block;
+
+    font-style: normal;
+    font-size: 20px;
+
+    color: #469ABE;
+}
+
+.relative-span {
+    margin-left: 13%;
+    margin-bottom: 13%;
+    font-weight: 500;
+}
+
+.unfilled::before {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: url("img/unfilledDot.svg");
+    content: "";
+    margin-right: 0.2em;
+}
+
+.filled::before {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: url("img/filledDot.svg");
+    content: "";
+    margin-right: 0.2em;
+}
+
+.circlechart {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.circle-chart {
+    width: 10em;
+    height: 10em;
+    color: #2E84A8;
+    margin-top: 23%;
+    border-radius: 50%;
+    box-shadow: 0px 8px 15px rgba(0, 107, 94, 0.3);
+}
+
+.circle-chart__circle {
+    stroke: #00acc1;
+    stroke-width: 4;
+    stroke-linecap: round;
+    fill: none;
+    animation: circle-chart-fill 2s reverse;
+    transform: rotate(-90deg);
+    transform-origin: center;
+
+}
+
+.circle-chart__circle--negative {
+    transform: rotate(-90deg) scale(1, -1);
+}
+
+.circle-chart__background {
+    stroke: #d2eaf4;
+    stroke-width: 4;
+    fill: none;
+}
+
+.circle-chart__info {
+    animation: circle-chart-appear 2s forwards;
+    opacity: 0;
+    transform: translateY(0);
+}
+
+.circle-chart__percent {
+    alignment-baseline: central;
+    text-anchor: middle;
+    font-size: 6px;
+    color: #2E84A8;
+}
+
+.diagram-stroke {
+    stroke: #299dce;
+}
+
+@keyframes circle-chart-fill {
+    to {
+        stroke-dasharray: 0 100;
+    }
+}
+
+@keyframes circle-chart-appear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* buttons */
+
+.sidebar-btn-block {
+    margin-top: 35%;
+
+}
+
+.sidebar-btn {
+    margin-bottom: 10%;
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #D2F2FF;
+    border-radius: 20px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 23px;
+    color: #3A7890;
+    text-decoration: none;
+    position: relative;
+}
+
+.sidebar-btn:target {
+    width: 108.1%;
+    background: #F3F3F3;
+    border-radius: 20px 0 0 20px;
+}
+
+.sidebar-btn::before, .sidebar-btn::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: 0;
+    width: 65px;
+    height: 60px;
+    border-radius: 0 0 30px 0;
+
+}
+
+.sidebar-btn::before {
+    top: auto;
+    bottom: -60px;
+
+    border-radius: 0 30px 0 0;
+}
+
+.sidebar-btn:target::after {
+    box-shadow: 0 30px 0 0 #F3F3F3;
+}
+
+.sidebar-btn:target::before {
+    box-shadow: 0 -30px 0 0 #F3F3F3;
+}

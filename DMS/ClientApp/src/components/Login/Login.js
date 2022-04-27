@@ -1,0 +1,39 @@
+import React, {Component} from "react";
+import template from "./Login.jsx";
+import {Redirect} from "react-router-dom";
+
+export class Login extends Component {
+    static displayName = Login.name;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            password: "",
+        }
+    }
+
+    loginHandler = async e => {
+        console.log(123);
+        e.preventDefault();
+        await fetch("/api/login", {
+            method: "POST", 
+            headers: {"password": e},
+        }).then(async resp => {
+            let responseJson = await resp.json();
+            if (resp.status === 200) {
+                localStorage.setItem("token", "Bearer: " + responseJson["value"]["access_token"]);
+                window.location = "/";
+            }
+        })
+    }
+
+    render() {
+        if (localStorage.getItem("token")) {
+            console.log(123);
+            return <Redirect to="/" />
+        }
+        
+        return template.call(this);
+    }
+}
+export default Login;
