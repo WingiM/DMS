@@ -14,8 +14,8 @@ public class Room
 
     [Column("gender")] public char Gender { get; set; }
 
-    [Column("floor_number", TypeName = "varchar(1)")]
-    public string FloorNumber { get; set; }
+    [Column("floor_number")]
+    public int FloorNumber { get; set; }
 
     public List<Resident> Residents { get; set; } = new();
 
