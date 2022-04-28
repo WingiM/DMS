@@ -29,7 +29,7 @@
     text-underline-offset: 12px;
 }
 
-.container-1 {
+.login-form-container {
     padding: 0;
     position: relative;
     top: 25%;
@@ -127,4 +127,9 @@
     opacity: 0.6;
     color: #E15E4C;
     visibility: hidden;
+}
+
+
+.visible {
+    visibility: visible;
 }

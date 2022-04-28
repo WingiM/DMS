@@ -3,6 +3,7 @@ import {Outlet, Route, Router, Routes, Navigate} from 'react-router-dom'
 import Sidebar from "./Sidebar";
 import '../custom.css'
 import Rooms from "./Rooms";
+import Settings from "./Settings";
 
 export class Layout extends Component {
     static displayName = Layout.name;
@@ -19,6 +20,7 @@ export class Layout extends Component {
                     <Sidebar/>
                     <Routes>
                         <Route path='/' element={<Rooms/>}/>
+                        <Route path="/settings" element={<Settings/>}/>
                     </Routes>
                 </Fragment>
             // <React.StrictMode>

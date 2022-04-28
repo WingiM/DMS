@@ -5,13 +5,12 @@ import s_circle from "./img/Intersect-2.svg";
 import t_circle from "./img/Intersect-3.svg";
 import circle from "./img/Intersect.svg";
 import React from "react";
-import {Redirect} from "react-router-dom";
 
 function template() {
-
+    let state = this.state.isVisible ? "visible" : "";
     return (
         <div className="main">
-            <div className="container-1">
+            <div className="login-form-container">
                 <div className="col-2-3" style={{height: "100%", position: "relative"}}>
                     <div className="row">
                         <div className="logo">
@@ -21,9 +20,9 @@ function template() {
                     </div>
                     <div className="row" style={{textAlign: "center", marginTop: "5.07071%", height: "75.773282%"}}>
                         <p className="authorization-text">Авторизация</p>
-                            <input style={{zIndex: 4,}} type="password" onChange={ e => this.setState({password: e.target.value}) }
+                            <input style={{zIndex: 4,}} type="password" onChange={ e => this.setState({password: e.target.value, isVisible: false}) }
                                    className="password-input" placeholder="пароль"/> <br/>
-                            <span className="incorrect-password">неверный пароль</span> <br/>
+                            <span className={`incorrect-password ${state}`}>неверный пароль</span> <br/>
                             <button className="login-btn" type={"submit"} onClick={this.loginHandler}>Войти</button>
                     </div>
                 </div>

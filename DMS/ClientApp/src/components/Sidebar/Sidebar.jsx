@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import "./Sidebar.css";
 import "./progresscircle"
 import React from "react";
@@ -10,8 +12,8 @@ import wavesIco from './img/waves.svg'
 function template() {
     return (
         <div className="sidebar">
-            <a id="settings" href="#settings"><img alt="settings"
-                                                   src={settingIco}/></a>
+            <Link to="/settings"><a id="settings"><img alt="settings"
+                                                   src={settingIco}/></a></Link>
             <span id="sidebar-header">DMS</span>
 
             <div className="stats-block">

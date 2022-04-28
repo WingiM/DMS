@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Rooms from "./components/Rooms";
 
 import './custom.css'
+import Settings from "./components/Settings";
 
 
 export default class App extends Component {
@@ -15,8 +16,9 @@ export default class App extends Component {
         return (
             <Routes>
                 <Route path="/login" element={<Login/>}/>
-                <Route exact path="/" element={<Layout/>}> 
-                    <Route exact path="/" element={<Rooms/>}/>
+                <Route path="/" element={<Layout/>}> 
+                    <Route path="/"/>
+                    <Route path="/settings"/>
                 </Route>
                 <Route path="*" element={<Navigate to="/"/>}/>
             </Routes>

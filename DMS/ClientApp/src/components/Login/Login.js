@@ -9,6 +9,7 @@ export class Login extends Component {
         super(props);
         this.state = {
             password: "",
+            isVisible: false
         }
     }
 
@@ -22,7 +23,9 @@ export class Login extends Component {
             let responseJson = await resp.json();
             if (resp.status === 200) {
                 localStorage.setItem("token", "Bearer: " + responseJson["value"]["access_token"]);
-                window.location = "/";
+                window.location = "/"
+            } else {
+                this.setState({isVisible: true})
             }
         })
     }
