@@ -12,19 +12,24 @@ public class RoomResource
         _context = context;
     }
 
-    public Room? GetById(int id)
+    public Room? GetRoomById(int id)
     {
         return _context.Rooms
             .Include(r => r.Residents)
             .FirstOrDefault(r => r.RoomId == id);
     }
 
-    public IEnumerable<Room> GetByFloorNumber(int roomNumber)
+    public IEnumerable<int> GetFloorsCount()
+    {
+        return _context.Rooms.Select(r => r.FloorNumber).Distinct();
+    }
+
+    public IEnumerable<Room> GetAllRoomsOnFloor(int roomNumber)
     {
         return _context.Rooms.Where(r => r.FloorNumber == roomNumber);
     }
 
-    public IEnumerable<Room> GetAll()
+    public IEnumerable<Room> GetAllRooms()
     {
         return _context.Rooms;
     }

@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddTransient<RoomResource>();
+builder.Services.AddTransient<ResidentResource>();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Controllers;
 
-
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
@@ -13,35 +12,44 @@ public class RoomsController
     private readonly ILogger<RoomsController> _logger;
     private readonly RoomResource _resource;
 
-    public RoomsController(RoomResource resource, ILogger<RoomsController> logger)
+    public RoomsController(RoomResource resource,
+        ILogger<RoomsController> logger)
     {
         _logger = logger;
         _resource = resource;
     }
 
     [HttpGet]
-    public IResult Get(int? id, int? floor)
+    [Route("/api/rooms/{id:int}")]
+    public IResult GetWithId(int id)
     {
-        if (floor is not null)
+        var res = _resource.GetRoomById(id);
+        if (res is null)
         {
-            var res = _resource.GetByFloorNumber(floor.Value).ToArray();
-            if (!res.Any())
-            {
-                return Results.BadRequest("Floor number incorrect");
-            }
-            return Results.Ok(res.Select(r=>r.RoomId));
+            return Results.BadRequest("Room id incorrect");
         }
-        
-        if (id is not null)
+
+        return Results.Ok(res);
+    }
+
+    [HttpGet]
+    [Route("/api/rooms/floors/{floor:int}")]
+    public IResult GetWithFloorNumber(int floor)
+    {
+        var res = _resource.GetAllRoomsOnFloor(floor).ToArray();
+        if (!res.Any())
         {
-            var res = _resource.GetById(id.Value);
-            if (res is null)
-            {
-                return Results.BadRequest("Room id incorrect");
-            }
-            return Results.Ok(res);
+            return Results.BadRequest("Floor number incorrect");
         }
-        
-        return Results.Ok(_resource.GetAll());
+
+        return Results.Ok(res.Select(r => r.RoomId));
+    }
+
+    [HttpGet]
+    [Route("/api/rooms/floors")]
+    public IResult GetFloors()
+    {
+        var res = _resource.GetFloorsCount();
+        return Results.Ok(res);
     }
 }
