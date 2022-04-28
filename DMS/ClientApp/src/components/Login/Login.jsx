@@ -5,8 +5,10 @@ import s_circle from "./img/Intersect-2.svg";
 import t_circle from "./img/Intersect-3.svg";
 import circle from "./img/Intersect.svg";
 import React from "react";
+import {Redirect} from "react-router-dom";
 
 function template() {
+
     return (
         <div className="main">
             <div className="container-1">

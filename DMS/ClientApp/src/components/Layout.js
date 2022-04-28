@@ -1,20 +1,30 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
+import {Outlet, Route, Router, Routes, Navigate} from 'react-router-dom'
 import Sidebar from "./Sidebar";
 import '../custom.css'
-import {Redirect} from "react-router-dom";
+import Rooms from "./Rooms";
 
 export class Layout extends Component {
     static displayName = Layout.name;
-    
+    constructor(props) {
+        super(props);
+    }
     render() {
-        if (!localStorage.getItem("token")) {
-            return <Redirect to="/login" />
+        if (localStorage.getItem("token") === null) {
+            console.log(123);
+            return <Navigate to="/login" />
         }
         return (
-            <React.StrictMode>
-                <Sidebar/>
-                {this.props.children}
-            </React.StrictMode>
+                <Fragment>
+                    <Sidebar/>
+                    <Routes>
+                        <Route path='/' element={<Rooms/>}/>
+                    </Routes>
+                </Fragment>
+            // <React.StrictMode>
+            //     <Sidebar/>
+            //     {this.toRender}
+            // </React.StrictMode>
         );
     }
 }

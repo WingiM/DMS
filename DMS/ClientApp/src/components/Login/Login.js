@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import template from "./Login.jsx";
-import {Redirect} from "react-router-dom";
+import {Redirect, Navigate} from "react-router-dom";
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -28,9 +28,8 @@ export class Login extends Component {
     }
 
     render() {
-        if (localStorage.getItem("token")) {
-            console.log(123);
-            return <Redirect to="/" />
+        if (localStorage.getItem("token") !== null) {
+            return <Navigate to="/" replace />
         }
         
         return template.call(this);
