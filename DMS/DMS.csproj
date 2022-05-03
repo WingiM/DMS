@@ -63,4 +63,5 @@
             </ResolvedFileToPublish>
         </ItemGroup>
     </Target>
+    
 </Project>

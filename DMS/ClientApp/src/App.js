@@ -1,22 +1,54 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-
+import React from 'react';
 import './custom.css'
+import Sidebar from "./components/Sidebar";
+import RoomsBlock from "./components/RoomsBlock"
+import InRoomResidents from "./components/InRoomResidents";
 
-export default class App extends Component {
-  static displayName = App.name;
+class App extends React.Component {
+    static displayName = App.name;
 
-  render () {
-    return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
-    );
-  }
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showRooms: false,
+            showInRoomResidents: false,
+        }
+
+        this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
+        this.openRoomButtonClickHandler = this.openRoomButtonClickHandler.bind(this);
+        this.closeRoomButtonClickHandler = this.closeRoomButtonClickHandler.bind(this);
+    }
+
+    showRoomsButtonClickHandler() {
+        this.setState({showRooms: true})
+    }
+
+    openRoomButtonClickHandler() {
+        this.setState({showInRoomResidents: true})
+    }
+
+    closeRoomButtonClickHandler() {
+        this.setState({showInRoomResidents : false})
+    }
+
+    render() {
+        return (
+            <React.StrictMode>
+                <Sidebar
+                    showRooms={this.showRoomsButtonClickHandler}
+                />
+                <RoomsBlock
+                    show={this.state.showRooms}
+                    openRoom = {this.openRoomButtonClickHandler}
+                />
+                <InRoomResidents
+                    show={this.state.showInRoomResidents}
+                    closeButtonClickHandler = {this.closeRoomButtonClickHandler}
+                />
+            </React.StrictMode>
+        )
+    }
 }
+
+export default App;
