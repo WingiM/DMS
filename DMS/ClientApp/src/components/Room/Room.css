@@ -1,0 +1,31 @@
+.room-btn {
+    box-sizing: border-box;
+    border-radius: var(--blocks-border-radius);
+    display: inline-block;
+
+    color: #FFF;
+    font-weight: lighter;
+    font-size: 38px;
+    line-height: 34px;
+    text-align: center;
+    vertical-align: middle;
+
+    margin-right: 8.89%;
+    margin-top: 8%;
+    width: var(--room-btn-size);
+    height: var(--room-btn-size);
+    cursor: pointer;
+}
+
+.room-btn span {
+    display: inline-block;
+    margin-top: 30%;
+}
+
+.-full {
+    background: #D6D6D6;
+}
+
+.-free {
+    background: #70E2CE;
+}
