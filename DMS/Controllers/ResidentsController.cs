@@ -1,10 +1,7 @@
-﻿using System.Text;
-using System.Text.Json;
-using DMS.Models;
+﻿using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DMS.Controllers;
 
@@ -13,6 +10,13 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class ResidentsController : ControllerBase
 {
+    internal static readonly Func<Resident, object> ConvertResident = res => new
+    {
+        res.ResidentId, res.FirstName, res.LastName, res.Patronymic, res.Gender,
+        res.BirthDate, res.PassportInformation, res.Tin, Rating = res.CountRating(),
+        Debt = res.CountDebt(), Reports = res.CountReports()
+    };
+
     private readonly ILogger<ResidentsController> _logger;
     private readonly ResidentResource _resource;
 
@@ -26,7 +30,7 @@ public class ResidentsController : ControllerBase
     [HttpGet]
     public IResult GetAllResidents()
     {
-        return Results.Ok(_resource.GetAllResidents());
+        return Results.Ok(_resource.GetAllResidents().Select(r => ConvertResident(r)));
     }
 
     [HttpPost]
@@ -56,13 +60,9 @@ public class ResidentsController : ControllerBase
         var addResult = _resource.AddResident(resident);
 
         if (!addResult.Item1)
-        {
             return Results.Conflict(addResult.Item2);
-        }
-
         return Results.Ok("Added successfully");
     }
-
 
     [HttpGet]
     [Route("/api/[controller]/{id:int}")]
@@ -72,7 +72,7 @@ public class ResidentsController : ControllerBase
         if (res is null)
             return Results.BadRequest("Wrong id");
 
-        return Results.Ok(res);
+        return Results.Ok(ConvertResident(res));
     }
 
     [HttpPut]

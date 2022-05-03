@@ -1,4 +1,5 @@
 ﻿using DMS.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Resources;
@@ -14,9 +15,16 @@ public class RoomResource
 
     public Room? GetRoomById(int id)
     {
-        return _context.Rooms
-            .Include(r => r.Residents)
-            .FirstOrDefault(r => r.RoomId == id);
+        var room = _context.Rooms.FirstOrDefault(r => r.RoomId == id);
+        var roomResidents = _context.Residents.Where(r => r.RoomId == id);
+        roomResidents.Load();
+        foreach (var resident in roomResidents.ToArray())
+        {
+            _context.Transactions.Where(t => t.ResidentId == resident.ResidentId).Load();
+            _context.RatingOperations.Where(t => t.ResidentId == resident.ResidentId).Load();
+            _context.RatingChangeCategories.Load();
+        }
+        return room;
     }
 
     public IEnumerable<int> GetFloorsCount()

@@ -1,4 +1,5 @@
-﻿using DMS.Resources;
+﻿using DMS.Models;
+using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,12 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class RoomsController
 {
+    internal static readonly Func<Room, object> ConvertRoom = room => new
+    {
+        room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
+        Residents = room.Residents.Select(ResidentsController.ConvertResident)
+    };
+
     private readonly ILogger<RoomsController> _logger;
     private readonly RoomResource _resource;
 
@@ -23,13 +30,13 @@ public class RoomsController
     [Route("/api/rooms/{id:int}")]
     public IResult GetWithId(int id)
     {
-        var res = _resource.GetRoomById(id);
-        if (res is null)
+        var room = _resource.GetRoomById(id);
+        if (room is null)
         {
             return Results.BadRequest("Room id incorrect");
         }
 
-        return Results.Ok(res);
+        return Results.Ok(ConvertRoom(room));
     }
 
     [HttpGet]

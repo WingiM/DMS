@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Diagnostics;
 using DMS.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace DMS.Resources;
 
@@ -17,24 +17,22 @@ public class ResidentResource
         _logger = logger;
     }
 
-    public IEnumerable GetAllResidents()
+    public IEnumerable<Resident> GetAllResidents()
     {
         return _context.Residents
-            .Include(r => r.SettlementOrders)
-            .Include(r => r.SettlementOrders)
+            .Include(r => r.Transactions)
             .Include(r => r.RatingOperations)
-            .Include(r => r.Room)
             .AsSplitQuery();
     }
 
     public Resident? GetResidentById(int id)
     {
         return _context.Residents
-            .Include(r => r.SettlementOrders)
-            .Include(r => r.SettlementOrders)
+            .Include(r => r.Transactions)
             .Include(r => r.RatingOperations)
             .Include(r => r.Room)
-            .AsSplitQuery().FirstOrDefault(res => res.ResidentId == id);
+            .AsSplitQuery()
+            .FirstOrDefault(res => res.ResidentId == id);
     }
 
     public Tuple<bool, string?> AddResident(Resident resident)
@@ -46,12 +44,12 @@ public class ResidentResource
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
         }
-        catch (DbUpdateException e)
+        catch (Exception e)
         {
             _logger.Log(LogLevel.Information,
                 "Failed to insert resident:\n " + e);
-            errorMessage = (e.InnerException as Npgsql.PostgresException)
-                ?.MessageText;
+            errorMessage = GetErrorMessage(e);
+            _logger.Log(LogLevel.Information, errorMessage);
         }
 
         return new Tuple<bool, string?>(false, errorMessage);
@@ -66,15 +64,27 @@ public class ResidentResource
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
         }
-        catch (DbUpdateException e)
+        catch (Exception e)
         {
             _logger.Log(LogLevel.Information,
                 "Failed to update resident\n " + e);
-            errorMessage = (e.InnerException as Npgsql.PostgresException)
-                ?.MessageText;
+            errorMessage = GetErrorMessage(e);
         }
 
         return new Tuple<bool, string?>(false, errorMessage);
+    }
+
+    private string GetErrorMessage(Exception e)
+    {
+        switch (e.InnerException)
+        {
+            case PostgresException pe:
+                return pe.MessageText;
+            case InvalidCastException ice:
+                return ice.Message;
+            default:
+                return "Unknown error";
+        }
     }
 
     public bool DeleteResident(int id)
@@ -84,7 +94,6 @@ public class ResidentResource
 
         if (resident is null)
             return false;
-
         _context.Residents.Remove(resident);
         _context.SaveChanges();
         return true;
