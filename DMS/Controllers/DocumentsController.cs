@@ -12,7 +12,8 @@ public class DocumentsController
     private readonly ILogger<DocumentsController> _logger;
     private readonly DocumentsResource _resource;
 
-    public DocumentsController(ILogger<DocumentsController> logger, DocumentsResource resource)
+    public DocumentsController(ILogger<DocumentsController> logger,
+        DocumentsResource resource)
     {
         _logger = logger;
         _resource = resource;

@@ -20,10 +20,13 @@ public class RoomResource
         roomResidents.Load();
         foreach (var resident in roomResidents.ToArray())
         {
-            _context.Transactions.Where(t => t.ResidentId == resident.ResidentId).Load();
-            _context.RatingOperations.Where(t => t.ResidentId == resident.ResidentId).Load();
+            _context.Transactions
+                .Where(t => t.ResidentId == resident.ResidentId).Load();
+            _context.RatingOperations
+                .Where(t => t.ResidentId == resident.ResidentId).Load();
             _context.RatingChangeCategories.Load();
         }
+
         return room;
     }
 

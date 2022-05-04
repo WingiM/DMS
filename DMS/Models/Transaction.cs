@@ -12,7 +12,9 @@ public class Transaction
 
     public Resident? Resident { get; set; }
 
-    [Column("operation_date")] [Required] public DateTime OperationDate { get; set; }
+    [Column("operation_date")]
+    [Required]
+    public DateTime OperationDate { get; set; }
 
     [Column("sum")] public double Sum { get; set; }
 

@@ -30,13 +30,16 @@ public class ApplicationContext : DbContext
 
         modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<SettlementOrder>().Property(s => s.SettlementOrderId)
+        modelBuilder.Entity<SettlementOrder>()
+            .Property(s => s.SettlementOrderId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingOperation>().Property(ro => ro.RatingOperationId)
+        modelBuilder.Entity<RatingOperation>()
+            .Property(ro => ro.RatingOperationId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
+        modelBuilder.Entity<RatingChangeCategory>()
+            .Property(rc => rc.RatingChangeCategoryId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
             .UseIdentityAlwaysColumn();
@@ -44,7 +47,8 @@ public class ApplicationContext : DbContext
         modelBuilder.Entity<Resident>().HasData(new Resident()
         {
             ResidentId = 1, LastName = "Морозов", FirstName = "Даниил",
-            Patronymic = "Артёмович", RoomId = 301, Gender = 'M', BirthDate = DateTime.UtcNow
+            Patronymic = "Артёмович", RoomId = 301, Gender = 'M',
+            BirthDate = DateTime.UtcNow
         }, new Resident()
         {
             ResidentId = 2, LastName = "Васильев", FirstName = "Роман",
@@ -204,16 +208,17 @@ public class ApplicationContext : DbContext
             OrderDate = DateTime.UtcNow, Description = null
         });
 
-        modelBuilder.Entity<RatingChangeCategory>().HasData(new RatingChangeCategory()
-        {
-            RatingChangeCategoryId = 1, Name = "Докладная"
-        }, new RatingChangeCategory()
-        {
-            RatingChangeCategoryId = 2, Name = "Поощрение"
-        }, new RatingChangeCategory()
-        {
-            RatingChangeCategoryId = 3, Name = "Выговор"
-        });
+        modelBuilder.Entity<RatingChangeCategory>().HasData(
+            new RatingChangeCategory()
+            {
+                RatingChangeCategoryId = 1, Name = "Докладная"
+            }, new RatingChangeCategory()
+            {
+                RatingChangeCategoryId = 2, Name = "Поощрение"
+            }, new RatingChangeCategory()
+            {
+                RatingChangeCategoryId = 3, Name = "Выговор"
+            });
 
         modelBuilder.Entity<RatingOperation>().HasData(new RatingOperation()
         {

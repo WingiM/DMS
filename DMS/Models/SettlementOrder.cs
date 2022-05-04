@@ -11,7 +11,10 @@ public class SettlementOrder
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
     public Resident? Resident { get; set; }
 
-    [Required] [Column("room_number", TypeName = "int")] public int RoomId { get; set; }
+    [Required]
+    [Column("room_number", TypeName = "int")]
+    public int RoomId { get; set; }
+
     public Room? Room { get; set; }
 
     [Column("order_date")] [Required] public DateTime OrderDate { get; set; }

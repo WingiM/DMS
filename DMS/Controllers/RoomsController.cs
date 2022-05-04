@@ -8,13 +8,15 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
-public class RoomsController
+public class RoomsController : ControllerBase
 {
-    internal static readonly Func<Room, object> ConvertRoom = room => new
-    {
-        room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
-        Residents = room.Residents.Select(ResidentsController.ConvertResident)
-    };
+    private static readonly Func<Room, DateTime, object> ConvertRoom =
+        (room, date) => new
+        {
+            room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
+            Residents = room.Residents.Select(r =>
+                ResidentsController.ConvertResident(r, date))
+        };
 
     private readonly ILogger<RoomsController> _logger;
     private readonly RoomResource _resource;
@@ -36,7 +38,11 @@ public class RoomsController
             return Results.BadRequest("Room id incorrect");
         }
 
-        return Results.Ok(ConvertRoom(room));
+        Request.Headers.TryGetValue("date", out var date);
+        var resultDate = ResidentsController.GetDocumentsDate(date);
+        Response.Headers.Add("processedDate", resultDate.ToString("u"));
+        
+        return Results.Ok(ConvertRoom(room, resultDate));
     }
 
     [HttpGet]

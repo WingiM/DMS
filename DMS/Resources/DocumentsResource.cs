@@ -8,7 +8,8 @@ public class DocumentsResource
     private readonly ApplicationContext _context;
     private readonly ILogger<DocumentsResource> _logger;
 
-    public DocumentsResource(ApplicationContext context, ILogger<DocumentsResource> logger)
+    public DocumentsResource(ApplicationContext context,
+        ILogger<DocumentsResource> logger)
     {
         _context = context;
         _logger = logger;

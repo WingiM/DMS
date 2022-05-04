@@ -14,8 +14,7 @@ public class Room
 
     [Column("gender")] public char Gender { get; set; }
 
-    [Column("floor_number")]
-    public int FloorNumber { get; set; }
+    [Column("floor_number")] public int FloorNumber { get; set; }
 
     public List<Resident> Residents { get; set; } = new();
 

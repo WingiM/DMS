@@ -2,6 +2,7 @@
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 
 namespace DMS.Controllers;
 
@@ -10,12 +11,26 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class ResidentsController : ControllerBase
 {
-    internal static readonly Func<Resident, object> ConvertResident = res => new
+    private static DateTime DefaultDocumentStartDate = DateTime.Now.Month >= 9
+        ? new DateTime(DateTime.Now.Year, 9, 1)
+        : new DateTime(DateTime.Now.Year - 1, 9, 1);
+    
+
+    internal static readonly Func<Resident, DateTime, object> ConvertResident =
+        (res, date) => new
+        {
+            res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
+            res.Gender,
+            res.BirthDate, res.PassportInformation, res.Tin,
+            Rating = res.CountRating(date),
+            Debt = res.CountDebt(date), Reports = res.CountReports(date)
+        };
+
+    // TODO: parse date from string
+    private static DateTime ParseDate(string date)
     {
-        res.ResidentId, res.FirstName, res.LastName, res.Patronymic, res.Gender,
-        res.BirthDate, res.PassportInformation, res.Tin, Rating = res.CountRating(),
-        Debt = res.CountDebt(), Reports = res.CountReports()
-    };
+        return DateTime.Now;
+    }
 
     private readonly ILogger<ResidentsController> _logger;
     private readonly ResidentResource _resource;
@@ -27,10 +42,20 @@ public class ResidentsController : ControllerBase
         _resource = resource;
     }
 
+    internal static DateTime GetDocumentsDate(StringValues date) =>
+        date.Count == 0
+            ? DefaultDocumentStartDate
+            : ParseDate(date.ElementAt(0));
+
     [HttpGet]
     public IResult GetAllResidents()
     {
-        return Results.Ok(_resource.GetAllResidents().Select(r => ConvertResident(r)));
+        Request.Headers.TryGetValue("date", out var date);
+        var resultDate = GetDocumentsDate(date);
+        Response.Headers.Add("processedDate", resultDate.ToString("u"));
+
+        return Results.Ok(_resource.GetAllResidents().Select(r =>
+            ConvertResident(r, resultDate)));
     }
 
     [HttpPost]
@@ -72,7 +97,11 @@ public class ResidentsController : ControllerBase
         if (res is null)
             return Results.BadRequest("Wrong id");
 
-        return Results.Ok(ConvertResident(res));
+        Request.Headers.TryGetValue("date", out var date);
+        var resultDate = GetDocumentsDate(date);
+        Response.Headers.Add("processedDate", resultDate.ToString("u"));
+        
+        return Results.Ok(ConvertResident(res, resultDate));
     }
 
     [HttpPut]

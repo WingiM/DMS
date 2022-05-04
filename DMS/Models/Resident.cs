@@ -9,15 +9,6 @@ namespace DMS.Models;
 [Table("resident")]
 public class Resident
 {
-    private static readonly DateTime DefaultDocumentStartDate;
-
-    static Resident()
-    {
-        DefaultDocumentStartDate = DateTime.Now.Month >= 9
-            ? new DateTime(DateTime.Now.Year, 9, 1)
-            : new DateTime(DateTime.Now.Year - 1, 9, 1);
-    }
-
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
 
     [Column("last_name", TypeName = "varchar(50)")]
@@ -50,11 +41,6 @@ public class Resident
     public List<EvictionOrder> EvictionOrders { get; set; } = new();
     public List<Transaction> Transactions { get; set; } = new();
 
-    internal int CountRating()
-    {
-        return CountRating(DefaultDocumentStartDate);
-    }
-    
     internal int CountRating(DateTime startDate)
     {
         return RatingOperations
@@ -62,10 +48,6 @@ public class Resident
             .Sum(r => r.ChangeValue);
     }
 
-    internal int CountReports()
-    {
-        return CountReports(DefaultDocumentStartDate);
-    }
     internal int CountReports(DateTime startDate)
     {
         return RatingOperations
@@ -73,10 +55,6 @@ public class Resident
             .Count(ro => ro.CategoryId == 1);
     }
 
-    internal double CountDebt()
-    {
-        return CountDebt(DefaultDocumentStartDate);
-    }
     internal double CountDebt(DateTime startDate)
     {
         return Transactions
