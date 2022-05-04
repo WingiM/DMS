@@ -40,7 +40,7 @@ public class RoomsController : ControllerBase
 
         Request.Headers.TryGetValue("date", out var date);
         var resultDate = ResidentsController.GetDocumentsDate(date);
-        Response.Headers.Add("processedDate", resultDate.ToString("u"));
+        Response.Headers.Add("processed-date", resultDate.ToString("u"));
         
         return Results.Ok(ConvertRoom(room, resultDate));
     }

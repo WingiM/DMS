@@ -1,4 +1,5 @@
-﻿using DMS.Models;
+﻿using System.Globalization;
+using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,11 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class ResidentsController : ControllerBase
 {
-    private static DateTime DefaultDocumentStartDate = DateTime.Now.Month >= 9
-        ? new DateTime(DateTime.Now.Year, 9, 1)
-        : new DateTime(DateTime.Now.Year - 1, 9, 1);
-    
+    private static readonly DateTime DefaultDocumentStartDate =
+        DateTime.Now.Month >= 9
+            ? new DateTime(DateTime.Now.Year, 9, 1)
+            : new DateTime(DateTime.Now.Year - 1, 9, 1);
+
 
     internal static readonly Func<Resident, DateTime, object> ConvertResident =
         (res, date) => new
@@ -29,7 +31,15 @@ public class ResidentsController : ControllerBase
     // TODO: parse date from string
     private static DateTime ParseDate(string date)
     {
-        return DateTime.Now;
+        if (!DateTime.TryParseExact(date, "u", null, DateTimeStyles.None,
+                out var result))
+            return DefaultDocumentStartDate;
+        return result;
+    }
+
+    private void AddResponseProcessedDateHeader(DateTime date)
+    {
+        Response.Headers.Add("processed-date", date.ToString("u"));
     }
 
     private readonly ILogger<ResidentsController> _logger;
@@ -52,7 +62,7 @@ public class ResidentsController : ControllerBase
     {
         Request.Headers.TryGetValue("date", out var date);
         var resultDate = GetDocumentsDate(date);
-        Response.Headers.Add("processedDate", resultDate.ToString("u"));
+        AddResponseProcessedDateHeader(resultDate);
 
         return Results.Ok(_resource.GetAllResidents().Select(r =>
             ConvertResident(r, resultDate)));
@@ -99,8 +109,8 @@ public class ResidentsController : ControllerBase
 
         Request.Headers.TryGetValue("date", out var date);
         var resultDate = GetDocumentsDate(date);
-        Response.Headers.Add("processedDate", resultDate.ToString("u"));
-        
+        AddResponseProcessedDateHeader(resultDate);
+
         return Results.Ok(ConvertResident(res, resultDate));
     }
 
