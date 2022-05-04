@@ -3,8 +3,8 @@ import React from "react";
 
 function template() {
   return (
-      <div onClick={this.props.openRoom} className="room-btn -free">
-          <span>222</span>
+      <div onClick={() => this.props.openRoom(this.props.name)} className="room-btn -free">
+          <span>{this.props.name}</span>
       </div>
   );
 };
