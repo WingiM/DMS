@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+
+.in-room-residents {
+    box-sizing: border-box;
+    max-height: 80%;
+    display: inline-block;
+    background: #FFF;
+    width: 34.21875%;
+    padding: 1.25% 2.8125% 2% 2%;
+    border-radius: var(--blocks-border-radius);
+    margin-top: 7%;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 107, 94, 0.3);
+}
+
+.in-room-residents-scroll-zone {
+    height: var(--rooms-main-block-max-height);
+    overflow: scroll;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 5%;
+    padding-bottom: 15%;
+}
+
+.add-resident-button {
+    border-radius: 50%;
+    padding: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    background: #FFF;
+    box-shadow: 0 0 15px rgba(0, 107, 94, 0.3);
+    outline: none;
+    border: 0;
+    cursor: pointer;
+
+}
+
+.add-resident-button:hover {
+    background-color: #f8f8f8;
+}
+
+.close-residents-button {
+    box-shadow: 0 0 15px rgba(0, 107, 94, 0.2);
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #FFF;
+    cursor: pointer;
+}
