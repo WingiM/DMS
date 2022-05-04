@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using DMS.Models;
+﻿using DMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -17,22 +16,25 @@ public class ResidentResource
         _logger = logger;
     }
 
-    public IEnumerable<Resident> GetAllResidents()
+
+    public IEnumerable<Resident> GetAllResidents(DateTime documentDate)
     {
-        return _context.Residents
-            .Include(r => r.Transactions)
-            .Include(r => r.RatingOperations)
-            .AsSplitQuery();
+        _context.Transactions.Where(t => t.OperationDate > documentDate).Load();
+        _context.RatingOperations.Where(ro => ro.OrderDate > documentDate)
+            .Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents;
     }
 
-    public Resident? GetResidentById(int id)
+    public Resident? GetResidentById(int id, DateTime documentDate)
     {
-        return _context.Residents
-            .Include(r => r.Transactions)
-            .Include(r => r.RatingOperations)
-            .Include(r => r.Room)
-            .AsSplitQuery()
-            .FirstOrDefault(res => res.ResidentId == id);
+        _context.Transactions.Where(t => t.OperationDate > documentDate).Load();
+        _context.RatingOperations.Where(ro => ro.OrderDate > documentDate)
+            .Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents.FirstOrDefault(r => r.ResidentId == id);
     }
 
     public Tuple<bool, string?> AddResident(Resident resident)

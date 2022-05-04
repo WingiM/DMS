@@ -10,12 +10,12 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class RoomsController : ControllerBase
 {
-    private static readonly Func<Room, DateTime, object> ConvertRoom =
-        (room, date) => new
+    private static readonly Func<Room, object> ConvertRoom =
+        room => new
         {
             room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
             Residents = room.Residents.Select(r =>
-                ResidentsController.ConvertResident(r, date))
+                ResidentsController.ConvertResident(r))
         };
 
     private readonly ILogger<RoomsController> _logger;
@@ -32,17 +32,16 @@ public class RoomsController : ControllerBase
     [Route("/api/rooms/{id:int}")]
     public IResult GetWithId(int id)
     {
-        var room = _resource.GetRoomById(id);
+        DateTime resultDate =
+            DormitoryResource.ParseDate(Request.Headers["date"]);
+        
+        var room = _resource.GetRoomWithResidents(id, resultDate);
         if (room is null)
         {
             return Results.BadRequest("Room id incorrect");
         }
 
-        Request.Headers.TryGetValue("date", out var date);
-        var resultDate = ResidentsController.GetDocumentsDate(date);
-        Response.Headers.Add("processed-date", resultDate.ToString("u"));
-        
-        return Results.Ok(ConvertRoom(room, resultDate));
+        return Results.Ok(ConvertRoom(room));
     }
 
     [HttpGet]
