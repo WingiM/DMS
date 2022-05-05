@@ -14,7 +14,9 @@ public class RoomsController : ControllerBase
         room => new
         {
             room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
-            Residents = room.Residents.Select(r =>
+            Residents = room.Residents
+                .OrderBy(r => r.LastName)
+                .Select(r =>
                 ResidentsController.ConvertResident(r))
         };
 

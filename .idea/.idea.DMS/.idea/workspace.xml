@@ -10,8 +10,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5df6510b-7ccf-496e-989e-872805d77029" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +130,7 @@
       <workItem from="1651645790289" duration="1841000" />
       <workItem from="1651690078179" duration="6967000" />
       <workItem from="1651727991106" duration="1124000" />
-      <workItem from="1651755495624" duration="4170000" />
+      <workItem from="1651755495624" duration="6539000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -154,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651696194462</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fix bug when RoomId became null after resident update request&#10;Change ResidentsController.cs PUT request route">
+      <created>1651759876797</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1651759876797</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +196,8 @@
     <MESSAGE value="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller" />
     <MESSAGE value="Data header processing in resident and room requests.&#10;Format files to wrap at 80 symbols" />
     <MESSAGE value="Better date header processing in controllers and resources" />
-    <option name="LAST_COMMIT_MESSAGE" value="Better date header processing in controllers and resources" />
+    <MESSAGE value="Fix bug when RoomId became null after resident update request&#10;Change ResidentsController.cs PUT request route" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug when RoomId became null after resident update request&#10;Change ResidentsController.cs PUT request route" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
