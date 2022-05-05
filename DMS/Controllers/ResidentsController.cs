@@ -14,10 +14,10 @@ public class ResidentsController : ControllerBase
         res => new
         {
             res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
-            res.Gender,
-            res.BirthDate, res.PassportInformation, res.Tin,
-            Rating = res.CountRating(),
-            Debt = res.CountDebt(), Reports = res.CountReports()
+            res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
+            res.RoomId, Evicted = res.RoomId is null,
+            Rating = res.CountRating(), Debt = res.CountDebt(), 
+            Reports = res.CountReports()
         };
 
     private readonly ILogger<ResidentsController> _logger;
@@ -64,6 +64,9 @@ public class ResidentsController : ControllerBase
 
         if (resident is null)
             return Results.BadRequest("Wrong JSON format");
+        if (resident.RoomId is not null)
+            return Results.BadRequest(
+                "Cannot specify room number. Use Settlement Order");
 
         var addResult = _resource.AddResident(resident);
 
@@ -87,9 +90,14 @@ public class ResidentsController : ControllerBase
     }
 
     [HttpPut]
-    [Route("/api/[controller]")]
-    public async Task<IResult> UpdateResidentInfo()
+    [Route("/api/[controller]/{id:int}")]
+    public async Task<IResult> UpdateResidentInfo(int id)
     {
+        var res = _resource.GetResidentById(id);
+        if (res is null)
+            return Results.BadRequest("No resident with this id");
+        var roomId = res.RoomId;
+
         Resident? resident = null;
         StreamReader? reader = null;
         try
@@ -110,12 +118,19 @@ public class ResidentsController : ControllerBase
 
         if (resident is null)
             return Results.BadRequest("Wrong JSON format");
+        if (resident.RoomId is not null)
+            return Results.BadRequest("Cannot update RoomId");
 
+        resident.ResidentId = id;
+        resident.RoomId = roomId;
         var updateResult = _resource.UpdateResident(resident);
 
         if (!updateResult.Item1)
+        {
+            Response.StatusCode = 409;
             return Results.Conflict(updateResult.Item2);
-
+        }
+        
         return Results.Ok("Updated successfully");
     }
 

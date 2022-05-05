@@ -17,24 +17,50 @@ public class ResidentResource
     }
 
 
-    public IEnumerable<Resident> GetAllResidents(DateTime documentDate)
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate)
     {
-        _context.Transactions.Where(t => t.OperationDate > documentDate).Load();
-        _context.RatingOperations.Where(ro => ro.OrderDate > documentDate)
+        _context.Transactions.Where(t => t.OperationDate > documentsStartDate)
+            .Load();
+        _context.RatingOperations.Where(ro => ro.OrderDate > documentsStartDate)
             .Load();
         _context.RatingChangeCategories.Load();
 
-        return _context.Residents;
+        return _context.Residents.OrderBy(r => r.LastName);
     }
 
-    public Resident? GetResidentById(int id, DateTime documentDate)
+    public IEnumerable<Resident> GetAllResidents()
     {
-        _context.Transactions.Where(t => t.OperationDate > documentDate).Load();
-        _context.RatingOperations.Where(ro => ro.OrderDate > documentDate)
+        _context.Transactions.Load();
+        _context.RatingOperations.Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents.OrderBy(r => r.LastName);
+    }
+
+    public Resident? GetResidentById(int id, DateTime documentsStartDate)
+    {
+        _context.Transactions
+            .Where(t =>
+                t.ResidentId == id && t.OperationDate > documentsStartDate)
+            .Load();
+        _context.RatingOperations.Where(ro =>
+                ro.ResidentId == id && ro.OrderDate > documentsStartDate)
             .Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents.FirstOrDefault(r => r.ResidentId == id);
+    }
+
+    public Resident? GetResidentById(int id)
+    {
+        _context.Transactions
+            .Where(t => t.ResidentId == id).Load();
+        _context.RatingOperations.Where(ro => ro.ResidentId == id).Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents
+            .AsNoTracking()
+            .FirstOrDefault(r => r.ResidentId == id);
     }
 
     public Tuple<bool, string?> AddResident(Resident resident)
