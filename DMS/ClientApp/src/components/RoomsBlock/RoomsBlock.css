@@ -59,7 +59,7 @@ body {
 }
 
 .rooms-btn-block-scroll-zone {
-    max-height: var(--rooms-main-block-max-height);
+    height: var(--rooms-main-block-max-height);
     overflow: scroll;
     overflow-x: hidden;
     padding-left: 5%;
@@ -87,10 +87,6 @@ body {
     display: table;
 }
 
-.nav li.first::before {
-    left: 0;
-}
-
 .nav:after {
     clear:both;
     overflow:hidden;
@@ -107,6 +103,11 @@ body {
     position: relative;
 
 }
+
+.nav li:first-child::before {
+    left: 0;
+}
+
 .nav .active {
     z-index: 3;
 }

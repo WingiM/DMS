@@ -113,3 +113,17 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+input[type="submit"] {
+    background-color: #1ECBAD;
+    color: #FFF;
+    float: right;
+    text-align: center;
+    padding: 1.2%;
+    line-height: 100%;
+    transition: background-color 0.5s;
+}
+
+input[type="submit"]:hover {
+    background-color: #19A38BFF;
+}

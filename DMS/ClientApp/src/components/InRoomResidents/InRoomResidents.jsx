@@ -9,11 +9,25 @@ function template() {
         this.props.show ?
         <div className="in-room-residents">
             <button onClick={this.props.closeButtonClickHandler} className="close-residents-button"><img alt="close" src={closeButtonImg}/></button>
-            <div className="rooms-header">ПРОЖИВАЮЩИЕ 000</div>
+            <div className="rooms-header">ПРОЖИВАЮЩИЕ {this.props.room["roomId"]}</div>
             <div className="in-room-residents-scroll-zone">
-                <Resident/>
-                <Resident/>
-                <Resident/>
+                {
+                    this.props.room["residents"] !== undefined ?
+                    this.props.room["residents"].map(resident => 
+                    <Resident key={resident} 
+                              id={resident["residentId"]} 
+                              lastname={resident["lastName"]} 
+                              firstName={resident["firstName"]}
+                              patronymic={resident["patronymic"]}
+                              gender={resident["gender"]}
+                              birthDate={resident["birthDate"]}
+                              passportInformation={resident["passportInformation"]}
+                              tin={resident["tin"]}
+                              rating={resident["rating"]}
+                              debt={resident["debt"]}
+                              reports={resident["reports"]}
+                    />) : ''
+                }
                 <button className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
             </div>
 

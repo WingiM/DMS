@@ -4,6 +4,15 @@ import template from "./RoomsBlock.jsx";
 class RoomsBlock extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            floors: [],
+            rooms: []
+        }
+    }
+    
+    componentDidMount() {
+        this.fetchFloors()
+            .then((data) => this.setState({floors: data}))
     }
 
     render() {
@@ -22,6 +31,33 @@ class RoomsBlock extends React.Component {
         }
         catch (TypeError) {
         }
+        
+        this.fetchRooms(e.currentTarget.id)
+            .then((data) => this.setState({rooms: data}))
+    }
+    
+     async fetchFloors() {
+        const requestUrl = "api/rooms/floors";
+        const response = await fetch(requestUrl, {
+            method: "GET",
+            headers: {
+                "Authorization" : localStorage.getItem("token")
+            }
+        });
+        const data = await response.json()
+        return data.value;
+    }
+    
+    async fetchRooms(floor) {
+        const requestUrl = "api/rooms/floors/" + floor
+        const response = await fetch(requestUrl, {
+            method: "GET",
+            headers: {
+                "Authorization" : localStorage.getItem("token")
+            }
+        });
+        const data = await response.json()
+        return data.value;
     }
 }
 

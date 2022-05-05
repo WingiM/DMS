@@ -5,8 +5,12 @@ import './scripts'
 
 import settingIco from './img/settingsIco.svg'
 import wavesIco from './img/waves.svg'
+import {Navigate} from "react-router-dom";
 
 function template() {
+    if (localStorage.getItem("token") === null) {
+        return <Navigate to="/login" />
+    }
     return (
         <div className="sidebar">
             <a id="settings" href="#settings"><img alt="settings"
