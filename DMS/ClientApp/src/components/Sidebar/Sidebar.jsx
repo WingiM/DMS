@@ -1,19 +1,20 @@
-import { Link } from "react-router-dom"
-
 import "./Sidebar.css";
 import "./progresscircle"
 import React from "react";
-import $ from 'jquery';
 import './scripts'
 
 import settingIco from './img/settingsIco.svg'
 import wavesIco from './img/waves.svg'
+import {Navigate} from "react-router-dom";
 
 function template() {
+    if (localStorage.getItem("token") === null) {
+        return <Navigate to="/login" />
+    }
     return (
         <div className="sidebar">
-            <Link to="/settings"><a id="settings"><img alt="settings"
-                                                   src={settingIco}/></a></Link>
+            <a id="settings" href="/settings"><img alt="settings"
+                                                   src={settingIco}/></a>
             <span id="sidebar-header">DMS</span>
 
             <div className="stats-block">
@@ -33,21 +34,21 @@ function template() {
             </div>
 
             <div className="sidebar-btn-block">
-                <a id="residents" className="sidebar-btn" href="#residents">
+                <a id="rooms" onClick={this.props.showRooms}
+                   className="sidebar-btn" href="#rooms">
+                    Комнаты
+                </a>
+                <a id="residents"
+                   className="sidebar-btn" href="#residents" onClick={this.props.showResidents}>
                     Проживающие
                 </a>
-                <a id="documents" className="sidebar-btn" href="#documents">
+                <a id="documents"
+                   className="sidebar-btn" href="#documents">
                     Документы
                 </a>
             </div>
 
             <img id="waves" src={wavesIco} alt="waves"/>
-            <script>
-                $(function(){
-                    $('.circlechart').circlechart()
-            });
-            </script>
-
         </div>
 
     );

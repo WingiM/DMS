@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import '../custom.css'
 import Rooms from "./Rooms";
 import Settings from "./Settings";
+import Residents from "./Residents";
 
 export class Layout extends Component {
     static displayName = Layout.name;
@@ -21,12 +22,9 @@ export class Layout extends Component {
                     <Routes>
                         <Route path='/' element={<Rooms/>}/>
                         <Route path="/settings" element={<Settings/>}/>
+                        <Route path="/residents" element={<Residents/>}/>
                     </Routes>
                 </Fragment>
-            // <React.StrictMode>
-            //     <Sidebar/>
-            //     {this.toRender}
-            // </React.StrictMode>
         );
     }
 }

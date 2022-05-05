@@ -1,6 +1,7 @@
 import $ from "jquery";
+import React from "react";
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function(event) {
     setRootVars()
 
     $(function(){

@@ -11,6 +11,7 @@ public class RatingOperation
     public int RatingOperationId { get; set; }
 
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
+
     public Resident? Resident { get; set; }
 
     [Column("change_value")] public int ChangeValue { get; set; }
@@ -21,6 +22,7 @@ public class RatingOperation
     public string? Description { get; set; }
 
     [Column("category_id")] public int CategoryId { get; set; }
+
     public RatingChangeCategory? Category { get; set; }
 
     public RatingOperation()

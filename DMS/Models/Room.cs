@@ -6,16 +6,15 @@ namespace DMS.Models;
 [Table("room")]
 public class Room
 {
-    [Column("room_number", TypeName = "varchar(10)")]
+    [Column("room_number", TypeName = "int")]
     [Required]
-    public string RoomId { get; set; }
+    public int RoomId { get; set; }
 
     [Column("capacity")] public int Capacity { get; set; }
 
     [Column("gender")] public char Gender { get; set; }
 
-    [Column("floor_number", TypeName = "varchar(1)")]
-    public string FloorNumber { get; set; }
+    [Column("floor_number")] public int FloorNumber { get; set; }
 
     public List<Resident> Residents { get; set; } = new();
 

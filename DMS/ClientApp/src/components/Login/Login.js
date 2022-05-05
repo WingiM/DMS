@@ -14,21 +14,22 @@ export class Login extends Component {
     }
 
     loginHandler = async e => {
-        console.log(123);
         e.preventDefault();
         await fetch("/api/login", {
-            method: "POST", 
-            headers: {"password": e},
+            method: "POST",
+            headers: {"password": this.state.password},
         }).then(async resp => {
             let responseJson = await resp.json();
             if (resp.status === 200) {
-                localStorage.setItem("token", "Bearer: " + responseJson["value"]["access_token"]);
+                localStorage.setItem("password", this.state.password);
+                localStorage.setItem("token", "Bearer " + responseJson["value"]["access_token"]);
                 window.location = "/"
             } else {
                 this.setState({isVisible: true})
             }
         })
     }
+    
 
     render() {
         if (localStorage.getItem("token") !== null) {
