@@ -29,10 +29,12 @@ class App extends React.Component {
         this.setState({showRooms: true})
     }
 
-    openRoomButtonClickHandler(room) {
+    async openRoomButtonClickHandler(room) {
+        this.setState({showInRoomResidents: false})
+        
+        const data = await this.fetchRoom(room)
+        this.setState({activeRoom: data})
         this.setState({showInRoomResidents: true})
-        this.fetchRoom(room)
-            .then((data) => this.setState({activeRoom: data}))
     }
 
     closeRoomButtonClickHandler() {

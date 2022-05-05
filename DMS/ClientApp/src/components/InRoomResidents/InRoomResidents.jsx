@@ -20,6 +20,12 @@ function template() {
                               firstName={resident["firstName"]}
                               patronymic={resident["patronymic"]}
                               gender={resident["gender"]}
+                              birthDate={resident["birthDate"]}
+                              passportInformation={resident["passportInformation"]}
+                              tin={resident["tin"]}
+                              rating={resident["rating"]}
+                              debt={resident["debt"]}
+                              reports={resident["reports"]}
                     />) : ''
                 }
                 <button className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
