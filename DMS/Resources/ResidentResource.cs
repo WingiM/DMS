@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using DMS.Models;
+﻿using DMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -17,22 +16,51 @@ public class ResidentResource
         _logger = logger;
     }
 
+
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate)
+    {
+        _context.Transactions.Where(t => t.OperationDate > documentsStartDate)
+            .Load();
+        _context.RatingOperations.Where(ro => ro.OrderDate > documentsStartDate)
+            .Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents.OrderBy(r => r.LastName);
+    }
+
     public IEnumerable<Resident> GetAllResidents()
     {
-        return _context.Residents
-            .Include(r => r.Transactions)
-            .Include(r => r.RatingOperations)
-            .AsSplitQuery();
+        _context.Transactions.Load();
+        _context.RatingOperations.Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents.OrderBy(r => r.LastName);
+    }
+
+    public Resident? GetResidentById(int id, DateTime documentsStartDate)
+    {
+        _context.Transactions
+            .Where(t =>
+                t.ResidentId == id && t.OperationDate > documentsStartDate)
+            .Load();
+        _context.RatingOperations.Where(ro =>
+                ro.ResidentId == id && ro.OrderDate > documentsStartDate)
+            .Load();
+        _context.RatingChangeCategories.Load();
+
+        return _context.Residents.FirstOrDefault(r => r.ResidentId == id);
     }
 
     public Resident? GetResidentById(int id)
     {
+        _context.Transactions
+            .Where(t => t.ResidentId == id).Load();
+        _context.RatingOperations.Where(ro => ro.ResidentId == id).Load();
+        _context.RatingChangeCategories.Load();
+
         return _context.Residents
-            .Include(r => r.Transactions)
-            .Include(r => r.RatingOperations)
-            .Include(r => r.Room)
-            .AsSplitQuery()
-            .FirstOrDefault(res => res.ResidentId == id);
+            .AsNoTracking()
+            .FirstOrDefault(r => r.ResidentId == id);
     }
 
     public Tuple<bool, string?> AddResident(Resident resident)

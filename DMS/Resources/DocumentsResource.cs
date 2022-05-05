@@ -15,14 +15,15 @@ public class DocumentsResource
         _logger = logger;
     }
 
-    public IEnumerable<IQueryable> GetAllDocuments()
+    public IEnumerable<Resident> GetAllDocuments()
     {
-        return new IQueryable[]
-        {
-            _context.SettlementOrders,
-            _context.EvictionOrders,
-            _context.RatingOperations
-        };
+        return _context.Residents
+            .Include(r => r.Transactions)
+            .Include(r => r.RatingOperations)
+            .ThenInclude(ro => ro.Category)
+            .Include(r => r.SettlementOrders)
+            .Include(r => r.EvictionOrders)
+            .AsSplitQuery();
     }
 
     public IQueryable GetAllRatingChangeCategories()

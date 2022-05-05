@@ -4,6 +4,7 @@ using DMS.Resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,9 +32,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling =
-        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+    {
+        options.SerializerSettings.ReferenceLoopHandling =
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.ContractResolver =
+            new DefaultContractResolver();
+    }
+);
 
 var app = builder.Build();
 

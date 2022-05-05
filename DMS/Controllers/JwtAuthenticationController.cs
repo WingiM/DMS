@@ -42,7 +42,7 @@ namespace DMS.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             var response = new
             {
-                access_token = encodedJwt
+                AccessToken = encodedJwt
             };
 
             return Results.Ok(response);
