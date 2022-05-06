@@ -23,12 +23,12 @@ function template() {
                 <div className="stats-intel-block">
                     <div className="stats-intel">
                         <span className="marked-span filled">занято</span><br/>
-                        <span className="relative-span">304</span><br/>
+                        <span className="relative-span">{this.props.settled}</span><br/>
                         <span className="marked-span unfilled">свободно</span><br/>
-                        <span className="relative-span">93</span><br/>
+                        <span className="relative-span">{this.props.total}</span><br/>
                     </div>
                     <div className="circlechart"
-                         data-percentage="78">
+                         data-percentage={this.props.total / this.props.settled | 0}>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ function template() {
                     Комнаты
                 </a>
                 <a id="residents"
-                   className="sidebar-btn" href="#residents">
+                   className="sidebar-btn" onClick={this.props.showResidents} href="#residents">
                     Проживающие
                 </a>
                 <a id="documents"

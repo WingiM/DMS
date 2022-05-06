@@ -54,9 +54,9 @@ class Resident extends React.Component {
             PassportInformation: this.state.passportInformation,
             Tin: this.state.tin
         }
-        const requestUrl = "api/residents"
+        const requestUrl = "api/residents/" + this.props.id
         const response = await fetch(requestUrl, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Authorization": localStorage.getItem("token"),
                 "Content-Type": 'application/json'
