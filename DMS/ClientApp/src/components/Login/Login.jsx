@@ -18,12 +18,12 @@ function template() {
                             <img src={logo} style={{position: "absolute", top: "4%", left: 0}} alt=""/>
                         </div>
                     </div>
-                    <div className="row" style={{textAlign: "center", marginTop: "5.07071%", height: "75.773282%"}}>
+                    <div className="row" style={{textAlign: "center", marginTop: "5.07071%", height: "75.773282%"}} onKeyDown={e => this.keyUpController(e)}>
                         <p className="authorization-text">Авторизация</p>
                             <input style={{zIndex: 4,}} type="password" onChange={ e => this.setState({password: e.target.value, isVisible: false}) }
                                    className="password-input" placeholder="пароль"/> <br/>
                             <span className={`incorrect-password ${state}`}>неверный пароль</span> <br/>
-                            <button className="login-btn" type={"submit"} onClick={this.loginHandler}>Войти</button>
+                            <button className="login-btn" type={"submit"} onClick={this.loginHandler} >Войти</button>
                     </div>
                 </div>
                 <div className="col-1-3" style={{height: "100%", position: "relative"}}>

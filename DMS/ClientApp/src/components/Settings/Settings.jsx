@@ -22,6 +22,14 @@ function template() {
                       <span>Вместимость комнаты:</span>
                       <input type="text" placeholder="..."/>
                   </div>
+                  <div className="settings-container-block" style={{marginBottom: "10px", height: "40%"}}>
+                      <span>Стоимость проживания</span>
+                      <ul style={{marginTop: "5%"}}>
+                          <li> <span>для бюджета</span> <input type="text" placeholder="..."/></li>
+                          <li> <span>для коммерции</span> <input type="text" placeholder="..."/></li>
+                      </ul>
+                      
+                  </div>
               </div> 
               <button className="settings-save-btn">Сохранить</button>
           </div>

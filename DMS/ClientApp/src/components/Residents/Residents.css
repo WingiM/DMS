@@ -103,7 +103,7 @@
     margin-top: calc(35 / 1300 * 100%);
     max-width: calc(1290 / 1315 * 100%);
     height: 500px;
-    margin-right: 0;
+    margin-left: 10px;
 
 }
 
@@ -138,7 +138,7 @@
     padding: 1% 2%;
 }
 
-.residents-list .resident-content input {
+.residents-list .resident-content input[type="text"], input[type="number"], input[type="date"] {
     height: 20px;
 }
 
@@ -196,7 +196,31 @@
     .residents-list .resident-content-row input {
         font-size: 12px;
     }
+    
+    .residents-list input[type="submit"] {
+        height: 25px;
+        width: 106px;
+    }
+    
 }
 ::-webkit-scrollbar-track {
     margin-top: 30px;
+}
+
+.residents-list input[type="submit"] {
+    height: 32px;
+    width: 136px;
+    background-color: #1ECBAD;
+    color: #FFF;
+    float: left;
+    margin-left: 35%;
+    text-align: center;
+    padding: 1.2%;
+    line-height: 100%;
+    transition: background-color 0.5s;
+    margin-top: 9%;
+}
+
+input[type="submit"]:hover {
+    background-color: #19A38BFF;
 }
