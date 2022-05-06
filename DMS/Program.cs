@@ -15,6 +15,12 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 builder.Services.AddTransient<RoomResource>();
 builder.Services.AddTransient<ResidentResource>();
 builder.Services.AddTransient<DocumentsResource>();
+builder.Services.AddTransient<DormitoryResource>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration =
+        builder.Configuration.GetConnectionString("RedisDefaultConnection");
+});
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

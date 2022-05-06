@@ -9,8 +9,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5df6510b-7ccf-496e-989e-872805d77029" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/DMS.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/DMS.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +146,7 @@
       <workItem from="1651690078179" duration="6967000" />
       <workItem from="1651727991106" duration="1124000" />
       <workItem from="1651755495624" duration="6539000" />
+      <workItem from="1651809334967" duration="3939000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
