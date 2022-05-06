@@ -41,25 +41,19 @@ public class Resident
     public List<EvictionOrder> EvictionOrders { get; set; } = new();
     public List<Transaction> Transactions { get; set; } = new();
 
-    internal int CountRating(DateTime startDate)
+    internal int CountRating()
     {
-        return RatingOperations
-            .Where(ro => ro.OrderDate > startDate)
-            .Sum(r => r.ChangeValue);
+        return RatingOperations.Sum(r => r.ChangeValue);
     }
 
-    internal int CountReports(DateTime startDate)
+    internal int CountReports()
     {
-        return RatingOperations
-            .Where(ro => ro.OrderDate > startDate)
-            .Count(ro => ro.CategoryId == 1);
+        return RatingOperations.Count(ro => ro.CategoryId == 1);
     }
 
-    internal double CountDebt(DateTime startDate)
+    internal double CountDebt()
     {
-        return Transactions
-            .Where(t => t.OperationDate > startDate)
-            .Sum(t => t.Sum);
+        return Transactions.Sum(t => t.Sum);
     }
 
     public Resident()

@@ -22,14 +22,13 @@ export class Login extends Component {
             let responseJson = await resp.json();
             if (resp.status === 200) {
                 localStorage.setItem("password", this.state.password);
-                localStorage.setItem("token", "Bearer " + responseJson["value"]["access_token"]);
+                localStorage.setItem("token", "Bearer " + responseJson["Value"]["AccessToken"]);
                 window.location = "/"
             } else {
                 this.setState({isVisible: true})
             }
         })
     }
-    
 
     render() {
         if (localStorage.getItem("token") !== null) {

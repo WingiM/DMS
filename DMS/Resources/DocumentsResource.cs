@@ -15,16 +15,6 @@ public class DocumentsResource
         _logger = logger;
     }
 
-    public IEnumerable<IQueryable> GetAllDocuments()
-    {
-        return new IQueryable[]
-        {
-            _context.SettlementOrders,
-            _context.EvictionOrders,
-            _context.RatingOperations
-        };
-    }
-
     public IQueryable GetAllRatingChangeCategories()
     {
         return _context.RatingChangeCategories;

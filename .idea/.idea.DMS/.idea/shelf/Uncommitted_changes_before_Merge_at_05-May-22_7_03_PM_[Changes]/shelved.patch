@@ -1,0 +1,219 @@
+Index: DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from \"react\";\r\nimport template from \"./RoomsBlock.jsx\";\r\n\r\nclass RoomsBlock extends React.Component {\r\n    constructor(props) {\r\n        super(props);\r\n        this.state = {\r\n            floors: [],\r\n            rooms: []\r\n        }\r\n    }\r\n    \r\n    componentDidMount() {\r\n        this.fetchFloors()\r\n            .then((data) => this.setState({floors: data}))\r\n    }\r\n\r\n    render() {\r\n        return template.call(this);\r\n    }\r\n\r\n    tabClick(e) {\r\n        try {\r\n            e.preventDefault();\r\n            try {\r\n                document.querySelector('.active').classList.remove('active');\r\n            }\r\n            catch (TypeError) {\r\n            }\r\n            document.getElementById(e.currentTarget.id).classList.add('active');\r\n        }\r\n        catch (TypeError) {\r\n        }\r\n        \r\n        this.fetchRooms(e.currentTarget.id)\r\n            .then((data) => this.setState({rooms: data}))\r\n    }\r\n    \r\n     async fetchFloors() {\r\n        const requestUrl = \"api/rooms/floors\";\r\n        const response = await fetch(requestUrl, {\r\n            method: \"GET\",\r\n            headers: {\r\n                \"Authorization\" : localStorage.getItem(\"token\")\r\n            }\r\n        });\r\n        const data = await response.json()\r\n        return data.value;\r\n    }\r\n    \r\n    async fetchRooms(floor) {\r\n        const requestUrl = \"api/rooms/floors/\" + floor\r\n        const response = await fetch(requestUrl, {\r\n            method: \"GET\",\r\n            headers: {\r\n                \"Authorization\" : localStorage.getItem(\"token\")\r\n            }\r\n        });\r\n        const data = await response.json()\r\n        return data.value;\r\n    }\r\n}\r\n\r\nexport default RoomsBlock;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js b/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js
+--- a/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js	(date 1651765954515)
+@@ -45,7 +45,7 @@
+             }
+         });
+         const data = await response.json()
+-        return data.value;
++        return data.Value;
+     }
+     
+     async fetchRooms(floor) {
+@@ -57,7 +57,7 @@
+             }
+         });
+         const data = await response.json()
+-        return data.value;
++        return data.Value;
+     }
+ }
+ 
+Index: DMS/ClientApp/src/App.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\r\nimport './custom.css'\r\nimport Sidebar from \"./components/Sidebar\";\r\nimport RoomsBlock from \"./components/RoomsBlock\"\r\nimport InRoomResidents from \"./components/InRoomResidents\";\r\nimport {Navigate, Route, Routes} from \"react-router-dom\";\r\nimport Login from \"./components/Login\";\r\n\r\nclass App extends React.Component {\r\n    static displayName = App.name;\r\n\r\n    constructor(props) {\r\n        super(props);\r\n\r\n        this.state = {\r\n            showRooms: false,\r\n            showInRoomResidents: false,\r\n            activeRoom: [],\r\n        }\r\n\r\n        this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);\r\n        this.openRoomButtonClickHandler = this.openRoomButtonClickHandler.bind(this);\r\n        this.closeRoomButtonClickHandler = this.closeRoomButtonClickHandler.bind(this);\r\n    }\r\n    \r\n    //handlers\r\n\r\n    showRoomsButtonClickHandler() {\r\n        this.setState({showRooms: true})\r\n    }\r\n\r\n    async openRoomButtonClickHandler(room) {\r\n        this.setState({showInRoomResidents: false})\r\n        \r\n        const data = await this.fetchRoom(room)\r\n        this.setState({activeRoom: data})\r\n        this.setState({showInRoomResidents: true})\r\n    }\r\n\r\n    closeRoomButtonClickHandler() {\r\n        this.setState({showInRoomResidents : false})\r\n    }\r\n    \r\n    // fetch functions\r\n    \r\n    async fetchRoom(room) {\r\n        const requestUrl = \"api/rooms/\" + room\r\n        const response = await fetch(requestUrl, {\r\n            method: \"GET\",\r\n            headers: {\r\n                \"Authorization\" : localStorage.getItem(\"token\")\r\n            }\r\n        })\r\n        \r\n        const data = await response.json()\r\n        return data.value\r\n    }\r\n\r\n    render() {\r\n        \r\n        return (\r\n            <Routes>\r\n                <Route path=\"/login\" element={<Login/>}/>\r\n                <Route path=\"/\" element={\r\n                    <Routes>\r\n                        <Route path=\"/login\" element={<Login/>}/>\r\n                        <Route path=\"/\" element={\r\n                            <React.StrictMode>\r\n                                <Sidebar\r\n                                    showRooms={this.showRoomsButtonClickHandler}\r\n                                />\r\n                                <RoomsBlock\r\n                                    show={this.state.showRooms}\r\n                                    openRoom = {this.openRoomButtonClickHandler}\r\n                                />\r\n                                <InRoomResidents\r\n                                    show={this.state.showInRoomResidents}\r\n                                    closeButtonClickHandler = {this.closeRoomButtonClickHandler}\r\n                                    room={this.state.activeRoom}\r\n                                />\r\n                            </React.StrictMode>\r\n                        }/>\r\n                        \r\n                    </Routes>\r\n                }/>\r\n                <Route path=\"*\" element={<Navigate to=\"/\"/>}/>\r\n            </Routes>\r\n        )\r\n    }\r\n}\r\n\r\nexport default App;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DMS/ClientApp/src/App.js b/DMS/ClientApp/src/App.js
+--- a/DMS/ClientApp/src/App.js	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/DMS/ClientApp/src/App.js	(date 1651766370266)
+@@ -53,7 +53,7 @@
+         })
+         
+         const data = await response.json()
+-        return data.value
++        return data.Value
+     }
+ 
+     render() {
+@@ -61,7 +61,7 @@
+         return (
+             <Routes>
+                 <Route path="/login" element={<Login/>}/>
+-                <Route path="/" element={
++                <Route path="*" element={
+                     <Routes>
+                         <Route path="/login" element={<Login/>}/>
+                         <Route path="/" element={
+@@ -83,7 +83,6 @@
+                         
+                     </Routes>
+                 }/>
+-                <Route path="*" element={<Navigate to="/"/>}/>
+             </Routes>
+         )
+     }
+Index: DMS/ClientApp/src/components/Resident/Resident.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from \"react\";\r\nimport template from \"./Resident.jsx\";\r\n\r\nclass Resident extends React.Component {\r\n    constructor(props) {\r\n        super(props);\r\n\r\n        this.state = {\r\n            submitFail: false,\r\n            lastname: this.props.lastname,\r\n            firstName: this.props.firstName,\r\n            patronymic: this.props.patronymic,\r\n            gender: this.props.gender,\r\n            birthDate: this.props.birthDate,\r\n            passportInformation: this.props.passportInformation,\r\n            tin: this.props.tin,\r\n            rating: this.props.rating,\r\n            debt: this.props.debt,\r\n            reports: this.props.reports\r\n        }\r\n\r\n        this.handleSubmit = this.handleSubmit.bind(this)\r\n        this.handleChange = this.handleChange.bind(this)\r\n    }\r\n\r\n    render() {\r\n        return template.call(this);\r\n    }\r\n\r\n    openCollapsible(e) {\r\n        let elem = e.currentTarget\r\n        elem.classList.toggle(\"active\");\r\n        let content = elem.nextElementSibling;\r\n        if (content.style.maxHeight) {\r\n            content.style.maxHeight = null;\r\n        } else {\r\n            content.style.maxHeight = content.scrollHeight + \"px\";\r\n        }\r\n    }\r\n\r\n    handleChange(event) {\r\n        this.setState({[event.target.name]: event.target.value})\r\n    }\r\n\r\n    async handleSubmit(event) {\r\n        event.preventDefault()\r\n        \r\n        const data = {\r\n            LastName: this.state.lastname,\r\n            FirstName: this.state.firstName,\r\n            Patronymic: this.state.patronymic,\r\n            Gender: this.state.gender,\r\n            BirthDate: this.state.birthDate,\r\n            PassportInformation: this.state.passportInformation,\r\n            Tin: this.state.tin\r\n        }\r\n        const requestUrl = \"api/residents\"\r\n        const response = await fetch(requestUrl, {\r\n            method: \"POST\",\r\n            headers: {\r\n                \"Authorization\": localStorage.getItem(\"token\"),\r\n                \"Content-Type\": 'application/json'\r\n            },\r\n            body: JSON.stringify(data)\r\n        })\r\n        const json = await response.json();\r\n        console.log(json)\r\n    }\r\n}\r\n\r\nexport default Resident;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DMS/ClientApp/src/components/Resident/Resident.js b/DMS/ClientApp/src/components/Resident/Resident.js
+--- a/DMS/ClientApp/src/components/Resident/Resident.js	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/DMS/ClientApp/src/components/Resident/Resident.js	(date 1651766157426)
+@@ -54,9 +54,9 @@
+             PassportInformation: this.state.passportInformation,
+             Tin: this.state.tin
+         }
+-        const requestUrl = "api/residents"
++        const requestUrl = "api/residents/" + this.props.id
+         const response = await fetch(requestUrl, {
+-            method: "POST",
++            method: "PUT",
+             headers: {
+                 "Authorization": localStorage.getItem("token"),
+                 "Content-Type": 'application/json'
+Index: DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import \"./InRoomResidents.css\";\r\nimport React from \"react\";\r\nimport addButtonImg from './img/addResidentButton.svg'\r\nimport closeButtonImg from './img/cross.svg'\r\nimport Resident from \"../Resident/Resident\";\r\n\r\nfunction template() {\r\n    return (\r\n        this.props.show ?\r\n        <div className=\"in-room-residents\">\r\n            <button onClick={this.props.closeButtonClickHandler} className=\"close-residents-button\"><img alt=\"close\" src={closeButtonImg}/></button>\r\n            <div className=\"rooms-header\">ПРОЖИВАЮЩИЕ {this.props.room[\"roomId\"]}</div>\r\n            <div className=\"in-room-residents-scroll-zone\">\r\n                {\r\n                    this.props.room[\"residents\"] !== undefined ?\r\n                    this.props.room[\"residents\"].map(resident => \r\n                    <Resident key={resident} \r\n                              id={resident[\"residentId\"]} \r\n                              lastname={resident[\"lastName\"]} \r\n                              firstName={resident[\"firstName\"]}\r\n                              patronymic={resident[\"patronymic\"]}\r\n                              gender={resident[\"gender\"]}\r\n                              birthDate={resident[\"birthDate\"]}\r\n                              passportInformation={resident[\"passportInformation\"]}\r\n                              tin={resident[\"tin\"]}\r\n                              rating={resident[\"rating\"]}\r\n                              debt={resident[\"debt\"]}\r\n                              reports={resident[\"reports\"]}\r\n                    />) : ''\r\n                }\r\n                <button className=\"add-resident-button\"><img alt=\"plus\" src={addButtonImg}/></button>\r\n            </div>\r\n\r\n        </div> : ''\r\n    );\r\n}\r\n\r\nexport default template;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx b/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx
+--- a/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx	(date 1651765822078)
+@@ -9,23 +9,23 @@
+         this.props.show ?
+         <div className="in-room-residents">
+             <button onClick={this.props.closeButtonClickHandler} className="close-residents-button"><img alt="close" src={closeButtonImg}/></button>
+-            <div className="rooms-header">ПРОЖИВАЮЩИЕ {this.props.room["roomId"]}</div>
++            <div className="rooms-header">ПРОЖИВАЮЩИЕ {this.props.room["RoomId"]}</div>
+             <div className="in-room-residents-scroll-zone">
+                 {
+-                    this.props.room["residents"] !== undefined ?
+-                    this.props.room["residents"].map(resident => 
++                    this.props.room["Residents"] !== undefined ?
++                    this.props.room["Residents"].map(resident => 
+                     <Resident key={resident} 
+-                              id={resident["residentId"]} 
+-                              lastname={resident["lastName"]} 
+-                              firstName={resident["firstName"]}
+-                              patronymic={resident["patronymic"]}
+-                              gender={resident["gender"]}
+-                              birthDate={resident["birthDate"]}
+-                              passportInformation={resident["passportInformation"]}
+-                              tin={resident["tin"]}
+-                              rating={resident["rating"]}
+-                              debt={resident["debt"]}
+-                              reports={resident["reports"]}
++                              id={resident["ResidentId"]} 
++                              lastname={resident["LastName"]} 
++                              firstName={resident["FirstName"]}
++                              patronymic={resident["Patronymic"]}
++                              gender={resident["Gender"]}
++                              birthDate={resident["BirthDate"]}
++                              passportInformation={resident["PassportInformation"]}
++                              tin={resident["Tin"]}
++                              rating={resident["Rating"]}
++                              debt={resident["Debt"]}
++                              reports={resident["Reports"]}
+                     />) : ''
+                 }
+                 <button className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
+Index: DMS/ClientApp/src/components/Login/Login.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {Component} from \"react\";\r\nimport template from \"./Login.jsx\";\r\nimport {Redirect, Navigate} from \"react-router-dom\";\r\n\r\nexport class Login extends Component {\r\n    static displayName = Login.name;\r\n\r\n    constructor(props) {\r\n        super(props);\r\n        this.state = {\r\n            password: \"\",\r\n            isVisible: false\r\n        }\r\n    }\r\n\r\n    loginHandler = async e => {\r\n        console.log(123);\r\n        e.preventDefault();\r\n        await fetch(\"/api/login\", {\r\n            method: \"POST\", \r\n            headers: {\"password\": e},\r\n        }).then(async resp => {\r\n            let responseJson = await resp.json();\r\n            if (resp.status === 200) {\r\n                localStorage.setItem(\"token\", \"Bearer \" + responseJson[\"value\"][\"access_token\"]);\r\n                window.location = \"/\"\r\n            } else {\r\n                this.setState({isVisible: true})\r\n            }\r\n        })\r\n    }\r\n\r\n    render() {\r\n        if (localStorage.getItem(\"token\") !== null) {\r\n            return <Navigate to=\"/\" replace />\r\n        }\r\n        \r\n        return template.call(this);\r\n    }\r\n}\r\nexport default Login;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DMS/ClientApp/src/components/Login/Login.js b/DMS/ClientApp/src/components/Login/Login.js
+--- a/DMS/ClientApp/src/components/Login/Login.js	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/DMS/ClientApp/src/components/Login/Login.js	(date 1651765748042)
+@@ -22,7 +22,7 @@
+         }).then(async resp => {
+             let responseJson = await resp.json();
+             if (resp.status === 200) {
+-                localStorage.setItem("token", "Bearer " + responseJson["value"]["access_token"]);
++                localStorage.setItem("token", "Bearer " + responseJson["Value"]["AccessToken"]);
+                 window.location = "/"
+             } else {
+                 this.setState({isVisible: true})
+Index: .idea/.idea.DMS/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoGeneratedRunConfigurationManager\">\r\n    <projectFile>DMS.csproj</projectFile>\r\n    <projectFile>DMS/DMS.csproj</projectFile>\r\n    <projectFile>DataManipulation/DataManipulation.csproj</projectFile>\r\n    <projectFile profileName=\"DMS\">DMS/DMS.csproj</projectFile>\r\n    <projectFile profileName=\"IIS Express\">DMS/DMS.csproj</projectFile>\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"296ce6c4-bfa7-4ba9-8b51-b5f486d838ab\" name=\"Changes\" comment=\"Update clientApp\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/ClientApp/src/App.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/ClientApp/src/App.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/project.assets.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/project.assets.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/project.nuget.cache\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/project.nuget.cache\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/project.packagespec.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/project.packagespec.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/DMS/obj/rider.project.restore.info\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/DMS/obj/rider.project.restore.info\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/DMS/ClientApp/package-lock.json\" root0=\"SKIP_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs\" root0=\"FORCE_HIGHLIGHTING\" />\r\n  </component>\r\n  <component name=\"MacroExpansionManager\">\r\n    <option name=\"directoryName\" value=\"eoqeqiit\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"28iCE020DEhE0blEbpwN51Ibeq2\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\" selected=\".NET Launch Settings Profile.DMS\">\r\n    <configuration name=\"DMS\" type=\"LaunchSettings\" factoryName=\".NET Launch Settings Profile\">\r\n      <option name=\"LAUNCH_PROFILE_PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/DMS/DMS.csproj\" />\r\n      <option name=\"LAUNCH_PROFILE_TFM\" value=\"net6.0\" />\r\n      <option name=\"LAUNCH_PROFILE_NAME\" value=\"DMS\" />\r\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n      <option name=\"USE_MONO\" value=\"0\" />\r\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\r\n      <option name=\"GENERATE_APPLICATIONHOST_CONFIG\" value=\"1\" />\r\n      <option name=\"SHOW_IIS_EXPRESS_OUTPUT\" value=\"0\" />\r\n      <option name=\"SEND_DEBUG_REQUEST\" value=\"1\" />\r\n      <option name=\"ADDITIONAL_IIS_EXPRESS_ARGUMENTS\" value=\"\" />\r\n      <method v=\"2\">\r\n        <option name=\"Build\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"DMS: IIS Express\" type=\"LaunchSettings\" factoryName=\".NET Launch Settings Profile\">\r\n      <option name=\"LAUNCH_PROFILE_PROJECT_FILE_PATH\" value=\"$PROJECT_DIR$/DMS/DMS.csproj\" />\r\n      <option name=\"LAUNCH_PROFILE_TFM\" value=\"net6.0\" />\r\n      <option name=\"LAUNCH_PROFILE_NAME\" value=\"IIS Express\" />\r\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\r\n      <option name=\"USE_MONO\" value=\"0\" />\r\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\r\n      <option name=\"GENERATE_APPLICATIONHOST_CONFIG\" value=\"1\" />\r\n      <option name=\"SHOW_IIS_EXPRESS_OUTPUT\" value=\"0\" />\r\n      <option name=\"SEND_DEBUG_REQUEST\" value=\"1\" />\r\n      <option name=\"ADDITIONAL_IIS_EXPRESS_ARGUMENTS\" value=\"\" />\r\n      <method v=\"2\">\r\n        <option name=\"Build\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"296ce6c4-bfa7-4ba9-8b51-b5f486d838ab\" name=\"Changes\" comment=\"\" />\r\n      <created>1651689910181</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1651689910181</updated>\r\n      <workItem from=\"1651689919038\" duration=\"10894000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Update clientApp\">\r\n      <created>1651690100897</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651690100897</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"UnityCheckinConfiguration\" checkUnsavedScenes=\"false\" />\r\n  <component name=\"UnityProjectConfiguration\" hasMinimizedUI=\"false\" />\r\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"Both\" />\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Update clientApp\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Update clientApp\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.DMS/.idea/workspace.xml b/.idea/.idea.DMS/.idea/workspace.xml
+--- a/.idea/.idea.DMS/.idea/workspace.xml	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/.idea/.idea.DMS/.idea/workspace.xml	(date 1651766452734)
+@@ -13,18 +13,9 @@
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.assets.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -33,12 +24,18 @@
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="Client" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-    <option name="UPDATE_TYPE" value="REBASE" />
+   </component>
+   <component name="HighlightingSettingsPerFile">
+     <setting file="file://$PROJECT_DIR$/DMS/ClientApp/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+     <setting file="file://$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
+   </component>
+   <component name="MacroExpansionManager">
+     <option name="directoryName" value="eoqeqiit" />
+Index: DMS/obj/rider.project.restore.info
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>16516901814588515
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DMS/obj/rider.project.restore.info b/DMS/obj/rider.project.restore.info
+--- a/DMS/obj/rider.project.restore.info	(revision ccc84dde068149a10cae2b7c562105d30cc09b73)
++++ b/DMS/obj/rider.project.restore.info	(date 1651765644897)
+@@ -1,1 +1,1 @@
+-16516901814588515
+\ No newline at end of file
++16517656448947437
+\ No newline at end of file

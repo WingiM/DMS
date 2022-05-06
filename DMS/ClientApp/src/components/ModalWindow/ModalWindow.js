@@ -1,0 +1,18 @@
+import React    from "react";
+import template from "./ModalWindow.jsx";
+
+class ModalWindow extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      show: false,
+    }
+  }
+  
+  render() {
+    return template.call(this);
+  }
+}
+
+export default ModalWindow;

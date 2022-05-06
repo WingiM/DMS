@@ -30,8 +30,8 @@
     transition: max-height 0.2s ease-out;
     color: #3A7890;
     font-size: 17px;
-}
 
+}
 
 .resident-content input {
     background: #D9FFFA;
@@ -48,7 +48,6 @@
     vertical-align: center;
     float: right;
 }
-
 
 .resident-content-row {
     box-sizing: border-box;
@@ -115,3 +114,16 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+input[type="submit"] {
+    background-color: #1ECBAD;
+    color: #FFF;
+    float: right;
+    text-align: center;
+    padding: 1.2%;
+    line-height: 100%;
+    transition: background-color 0.5s;
+}
+
+input[type="submit"]:hover {
+    background-color: #19A38BFF;
+}

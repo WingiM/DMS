@@ -1,9 +1,7 @@
-﻿using System.Globalization;
-using DMS.Models;
+﻿using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 
 namespace DMS.Controllers;
 
@@ -12,35 +10,15 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class ResidentsController : ControllerBase
 {
-    private static readonly DateTime DefaultDocumentStartDate =
-        DateTime.Now.Month >= 9
-            ? new DateTime(DateTime.Now.Year, 9, 1)
-            : new DateTime(DateTime.Now.Year - 1, 9, 1);
-
-
-    internal static readonly Func<Resident, DateTime, object> ConvertResident =
-        (res, date) => new
+    internal static readonly Func<Resident, object> ConvertResident =
+        res => new
         {
             res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
-            res.Gender,
-            res.BirthDate, res.PassportInformation, res.Tin,
-            Rating = res.CountRating(date),
-            Debt = res.CountDebt(date), Reports = res.CountReports(date)
+            res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
+            res.RoomId, Evicted = res.RoomId is null,
+            Rating = res.CountRating(), Debt = res.CountDebt(), 
+            Reports = res.CountReports()
         };
-
-    // TODO: parse date from string
-    private static DateTime ParseDate(string date)
-    {
-        if (!DateTime.TryParseExact(date, "u", null, DateTimeStyles.None,
-                out var result))
-            return DefaultDocumentStartDate;
-        return result;
-    }
-
-    private void AddResponseProcessedDateHeader(DateTime date)
-    {
-        Response.Headers.Add("processed-date", date.ToString("u"));
-    }
 
     private readonly ILogger<ResidentsController> _logger;
     private readonly ResidentResource _resource;
@@ -52,50 +30,49 @@ public class ResidentsController : ControllerBase
         _resource = resource;
     }
 
-    internal static DateTime GetDocumentsDate(StringValues date) =>
-        date.Count == 0
-            ? DefaultDocumentStartDate
-            : ParseDate(date.ElementAt(0));
-
-    [HttpGet]
-    public IResult GetAllResidents()
+    private async Task<string?> ParseRequestBody()
     {
-        Request.Headers.TryGetValue("date", out var date);
-        var resultDate = GetDocumentsDate(date);
-        AddResponseProcessedDateHeader(resultDate);
-
-        return Results.Ok(_resource.GetAllResidents().Select(r =>
-            ConvertResident(r, resultDate)));
-    }
-
-    [HttpPost]
-    public async Task<IResult> AddResident()
-    {
-        Resident? resident = null;
-        StreamReader? reader = null;
+        string? data = null;
+        using StreamReader reader = new StreamReader(Request.Body);
         try
         {
-            reader = new StreamReader(Request.Body);
-            var message = await reader.ReadToEndAsync();
-            resident =
-                System.Text.Json.JsonSerializer.Deserialize<Resident>(message);
+            data = await reader.ReadToEndAsync();
         }
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information, e.ToString());
         }
-        finally
-        {
-            reader?.Close();
-        }
 
-        if (resident is null)
-            return Results.BadRequest("Wrong JSON format");
+        return data;
+    }
 
-        var addResult = _resource.AddResident(resident);
+    [HttpGet]
+    public IResult GetAllResidents()
+    {
+        DateTime resultDate =
+            DormitoryResource.ParseDate(Request.Headers["date"]);
+
+        return Results.Ok(
+            _resource.GetAllResidents(resultDate).Select(ConvertResident)
+        );
+    }
+
+    [HttpPost]
+    public async Task<IResult> AddResident()
+    {
+        var data = await ParseRequestBody();
+
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
+        
+        var addResult = _resource.AddResident(data);
 
         if (!addResult.Item1)
+        {
+            Response.StatusCode = 409;
             return Results.Conflict(addResult.Item2);
+        }
+            
         return Results.Ok("Added successfully");
     }
 
@@ -103,47 +80,33 @@ public class ResidentsController : ControllerBase
     [Route("/api/[controller]/{id:int}")]
     public IResult GetResidentById(int id)
     {
-        var res = _resource.GetResidentById(id);
+        DateTime resultDate =
+            DormitoryResource.ParseDate(Request.Headers["date"]);
+
+        var res = _resource.GetResidentById(id, resultDate);
         if (res is null)
             return Results.BadRequest("Wrong id");
 
-        Request.Headers.TryGetValue("date", out var date);
-        var resultDate = GetDocumentsDate(date);
-        AddResponseProcessedDateHeader(resultDate);
-
-        return Results.Ok(ConvertResident(res, resultDate));
+        return Results.Ok(ConvertResident(res));
     }
 
     [HttpPut]
-    [Route("/api/[controller]")]
-    public async Task<IResult> UpdateResidentInfo()
+    [Route("/api/[controller]/{id:int}")]
+    public async Task<IResult> UpdateResidentInfo(int id)
     {
-        Resident? resident = null;
-        StreamReader? reader = null;
-        try
-        {
-            reader = new StreamReader(Request.Body);
-            var message = await reader.ReadToEndAsync();
-            resident =
-                System.Text.Json.JsonSerializer.Deserialize<Resident>(message);
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Information, e.ToString());
-        }
-        finally
-        {
-            reader?.Close();
-        }
+        var data = await ParseRequestBody();
 
-        if (resident is null)
-            return Results.BadRequest("Wrong JSON format");
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
 
-        var updateResult = _resource.UpdateResident(resident);
+        var updateResult = _resource.UpdateResident(id, data);
 
         if (!updateResult.Item1)
+        {
+            Response.StatusCode = 409;
             return Results.Conflict(updateResult.Item2);
-
+        }
+        
         return Results.Ok("Updated successfully");
     }
 

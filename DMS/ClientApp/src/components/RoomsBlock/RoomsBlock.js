@@ -45,7 +45,7 @@ class RoomsBlock extends React.Component {
             }
         });
         const data = await response.json()
-        return data.value;
+        return data.Value;
     }
     
     async fetchRooms(floor) {
@@ -57,7 +57,7 @@ class RoomsBlock extends React.Component {
             }
         });
         const data = await response.json()
-        return data.value;
+        return data.Value;
     }
 }
 
