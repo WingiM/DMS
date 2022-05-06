@@ -15,17 +15,6 @@ public class DocumentsResource
         _logger = logger;
     }
 
-    public IEnumerable<Resident> GetAllDocuments()
-    {
-        return _context.Residents
-            .Include(r => r.Transactions)
-            .Include(r => r.RatingOperations)
-            .ThenInclude(ro => ro.Category)
-            .Include(r => r.SettlementOrders)
-            .Include(r => r.EvictionOrders)
-            .AsSplitQuery();
-    }
-
     public IQueryable GetAllRatingChangeCategories()
     {
         return _context.RatingChangeCategories;

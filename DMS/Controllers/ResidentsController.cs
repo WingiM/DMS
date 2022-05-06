@@ -30,6 +30,22 @@ public class ResidentsController : ControllerBase
         _resource = resource;
     }
 
+    private async Task<string?> ParseRequestBody()
+    {
+        string? data = null;
+        using StreamReader reader = new StreamReader(Request.Body);
+        try
+        {
+            data = await reader.ReadToEndAsync();
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Information, e.ToString());
+        }
+
+        return data;
+    }
+
     [HttpGet]
     public IResult GetAllResidents()
     {
@@ -44,34 +60,19 @@ public class ResidentsController : ControllerBase
     [HttpPost]
     public async Task<IResult> AddResident()
     {
-        Resident? resident = null;
-        StreamReader? reader = null;
-        try
-        {
-            reader = new StreamReader(Request.Body);
-            var message = await reader.ReadToEndAsync();
-            resident =
-                System.Text.Json.JsonSerializer.Deserialize<Resident>(message);
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Information, e.ToString());
-        }
-        finally
-        {
-            reader?.Close();
-        }
+        var data = await ParseRequestBody();
 
-        if (resident is null)
-            return Results.BadRequest("Wrong JSON format");
-        if (resident.RoomId is not null)
-            return Results.BadRequest(
-                "Cannot specify room number. Use Settlement Order");
-
-        var addResult = _resource.AddResident(resident);
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
+        
+        var addResult = _resource.AddResident(data);
 
         if (!addResult.Item1)
+        {
+            Response.StatusCode = 409;
             return Results.Conflict(addResult.Item2);
+        }
+            
         return Results.Ok("Added successfully");
     }
 
@@ -93,37 +94,12 @@ public class ResidentsController : ControllerBase
     [Route("/api/[controller]/{id:int}")]
     public async Task<IResult> UpdateResidentInfo(int id)
     {
-        var res = _resource.GetResidentById(id);
-        if (res is null)
-            return Results.BadRequest("No resident with this id");
-        var roomId = res.RoomId;
+        var data = await ParseRequestBody();
 
-        Resident? resident = null;
-        StreamReader? reader = null;
-        try
-        {
-            reader = new StreamReader(Request.Body);
-            var message = await reader.ReadToEndAsync();
-            resident =
-                System.Text.Json.JsonSerializer.Deserialize<Resident>(message);
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Information, e.ToString());
-        }
-        finally
-        {
-            reader?.Close();
-        }
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
 
-        if (resident is null)
-            return Results.BadRequest("Wrong JSON format");
-        if (resident.RoomId is not null)
-            return Results.BadRequest("Cannot update RoomId");
-
-        resident.ResidentId = id;
-        resident.RoomId = roomId;
-        var updateResult = _resource.UpdateResident(resident);
+        var updateResult = _resource.UpdateResident(id, data);
 
         if (!updateResult.Item1)
         {

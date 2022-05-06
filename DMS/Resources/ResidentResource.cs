@@ -1,4 +1,5 @@
-﻿using DMS.Models;
+﻿using System.Text.Json;
+using DMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -63,12 +64,13 @@ public class ResidentResource
             .FirstOrDefault(r => r.ResidentId == id);
     }
 
-    public Tuple<bool, string?> AddResident(Resident resident)
+    public Tuple<bool, string?> AddResident(string data)
     {
         string? errorMessage;
         try
         {
-            _context.Residents.Add(resident);
+            var resident = JsonSerializer.Deserialize<Resident>(data);
+            _context.Residents.Add(resident!);
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
         }
@@ -77,17 +79,24 @@ public class ResidentResource
             _logger.Log(LogLevel.Information,
                 "Failed to insert resident:\n " + e);
             errorMessage = GetErrorMessage(e);
-            _logger.Log(LogLevel.Information, errorMessage);
         }
 
         return new Tuple<bool, string?>(false, errorMessage);
     }
 
-    public Tuple<bool, string?> UpdateResident(Resident resident)
+    public Tuple<bool, string?> UpdateResident(int id, string data)
     {
         string? errorMessage;
         try
         {
+            var stored = _context.Residents.AsNoTracking()
+                .FirstOrDefault(r => r.ResidentId == id);
+            if (stored is null)
+                throw new IndexOutOfRangeException("No resident with such id");
+
+            var resident = JsonSerializer.Deserialize<Resident>(data);
+            resident!.ResidentId = stored.ResidentId;
+            resident.RoomId = stored.RoomId;
             _context.Residents.Update(resident);
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
@@ -110,7 +119,13 @@ public class ResidentResource
                 return pe.MessageText;
             case InvalidCastException ice:
                 return ice.Message;
+            case JsonException je:
+                return je.Message;
+            case IndexOutOfRangeException oor:
+                return oor.Message;
             default:
+                if (e is IndexOutOfRangeException)
+                    return e.Message;
                 return "Unknown error";
         }
     }

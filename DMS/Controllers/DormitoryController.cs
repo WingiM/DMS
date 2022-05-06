@@ -20,12 +20,20 @@ public class DormitoryController : ControllerBase
     }
 
     [HttpGet]
+    public IResult GetDormitoryCapacity()
+    {
+        return Results.Ok(_resource.GetDormitoryCapacity());
+    }
+
+    [HttpGet]
+    [Route("/api/stats/constants")]
     public IResult GetConstants()
     {
         return Results.Ok(_resource.GetConstants());
     }
 
     [HttpPost]
+    [Route("/api/stats/constants")]
     public async Task<IResult> SetConstants()
     {
         Dictionary<string, string?>? result = null;

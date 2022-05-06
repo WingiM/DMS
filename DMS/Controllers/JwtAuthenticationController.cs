@@ -26,7 +26,7 @@ namespace DMS.Controllers
             Request.Headers.TryGetValue("password", out var pass);
             // HMACSHA256 encryptor = new HMACSHA256();
             // encryptor.Key =
-            //     Encoding.UTF8.GetBytes(configuration["Encryption:Key"]);
+            //     Encoding.UTF8.GetBytes(configuration["Encryption:AnalogKey"]);
             // var hash = encryptor.ComputeHash(Encoding.UTF8.GetBytes(pass));
             // if (!hash.SequenceEqual(_cache.Get("encryptedPassword")))
             // {
