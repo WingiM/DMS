@@ -20,7 +20,8 @@ public class ResidentResource
         return _context.Residents.Select(r => new
         {
             r.ResidentId, r.LastName, r.FirstName, r.Patronymic, r.Gender,
-            r.PassportInformation, r.Tin, r.BirthDate
+            //r.PassportInformation, 
+            r.Tin, r.BirthDate
         });
     }
 
