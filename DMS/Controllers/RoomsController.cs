@@ -8,7 +8,7 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
-public class RoomsController : ControllerBase
+public class RoomsController : MyBaseController
 {
     private static readonly Func<Room, object> ConvertRoom =
         room => new
@@ -16,8 +16,7 @@ public class RoomsController : ControllerBase
             room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
             Residents = room.Residents
                 .OrderBy(r => r.LastName)
-                .Select(r =>
-                ResidentsController.ConvertResident(r))
+                .Select(r => ConvertResident(r))
         };
 
     private readonly ILogger<RoomsController> _logger;
@@ -34,8 +33,7 @@ public class RoomsController : ControllerBase
     [Route("/api/rooms/{id:int}")]
     public IResult GetWithId(int id)
     {
-        DateTime resultDate =
-            DormitoryResource.ParseDate(Request.Headers["date"]);
+        DateTime resultDate = ParseDate(Request.Headers["date"]);
         
         var room = _resource.GetRoomWithResidents(id, resultDate);
         if (room is null)
