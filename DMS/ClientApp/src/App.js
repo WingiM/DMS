@@ -6,22 +6,20 @@ import InRoomResidents from "./components/InRoomResidents";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "./components/Login";
 import Residents from "./components/Residents";
+import {Modal} from "reactstrap";
+import ModalWindow from "./components/ModalWindow";
 
 class App extends React.Component {
     static displayName = App.name;
 
     constructor(props) {
         super(props);
-        
-        this.fetchStats();
 
         this.state = {
             showRooms: false,
             showInRoomResidents: false,
             showResidents: false,
             activeRoom: [],
-            settled: 0,
-            total: 0,
         }
 
         this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
@@ -33,14 +31,17 @@ class App extends React.Component {
     //handlers
 
     showResidentsBlockButtonClickHandler() {
-        this.setState({showRooms: false})
-        this.setState({showInRoomResidents: false})
-        this.setState({showResidents: true})
+        this.setState({
+            showRooms: false,
+            showInRoomResidents: false,
+            showResidents: true
+        })
     }
 
     showRoomsButtonClickHandler() {
-        this.setState({showResidents: false})
-        this.setState({showRooms: true})
+        this.setState({
+            showResidents: false,
+            showRooms: true})
     }
 
     async openRoomButtonClickHandler(room) {
@@ -92,8 +93,14 @@ class App extends React.Component {
         })
 
         const data = await response.json()
-        this.setState({settled: data.Value["Settled"]})
-        this.setState({total: data.Value["Total"]})
+        const value = await data.Value
+        this.setState({
+            settled: value["Settled"],
+            total: value["Total"],
+            free: value["Total"] - value["Settled"],
+            percentage: value["Settled"] / value["Total"] * 100 | 0
+        })
+        console.log(this.state.percentage)
     }
 
     render() {
@@ -109,8 +116,6 @@ class App extends React.Component {
                                 <Sidebar
                                     showRooms={this.showRoomsButtonClickHandler}
                                     showResidents={this.showResidentsBlockButtonClickHandler}
-                                    settled={this.state.settled}
-                                    total={this.state.total}
                                 />
                                 <Residents show={this.state.showResidents}/>
                                 <RoomsBlock

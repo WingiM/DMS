@@ -1,6 +1,7 @@
 import "./Resident.css";
 import dotsImg from './img/resident3Dots.svg'
 import React from "react";
+import ModalWindow from "../ModalWindow";
 
 function template() {
   return (

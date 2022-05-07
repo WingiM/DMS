@@ -3,11 +3,17 @@ import React from "react";
 import addButtonImg from './img/addResidentButton.svg'
 import closeButtonImg from './img/cross.svg'
 import Resident from "../Resident/Resident";
+import ModalWindow from "../ModalWindow";
 
 function template() {
     return (
         this.props.show ?
         <div className="in-room-residents">
+            <ModalWindow 
+                show={this.state.showModal} 
+                toggleHandler={this.toggleModal}
+                residents={this.state.residents}
+            />
             <button onClick={this.props.closeButtonClickHandler} className="close-residents-button"><img alt="close" src={closeButtonImg}/></button>
             <div className="rooms-header">ПРОЖИВАЮЩИЕ {this.props.room["RoomId"]}</div>
             <div className="in-room-residents-scroll-zone">
@@ -28,7 +34,7 @@ function template() {
                               reports={resident["Reports"]}
                     />) : ''
                 }
-                <button className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
+                <button onClick={this.toggleModal} className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
             </div>
 
         </div> : ''

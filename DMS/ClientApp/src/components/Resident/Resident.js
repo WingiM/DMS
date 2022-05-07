@@ -37,6 +37,8 @@ class Resident extends React.Component {
             content.style.maxHeight = content.scrollHeight + "px";
         }
     }
+    
+    //handlers
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value})

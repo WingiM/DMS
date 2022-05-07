@@ -1,8 +1,10 @@
 .room-btn {
+    outline: none;
     box-sizing: border-box;
     border-radius: var(--blocks-border-radius);
     display: inline-block;
-
+    border: 7px solid #70E2CE;
+    
     color: #FFF;
     font-weight: lighter;
     font-size: 38px;
@@ -15,11 +17,13 @@
     width: var(--room-btn-size);
     height: var(--room-btn-size);
     cursor: pointer;
+    
+    transition: border-color 0.3s;
 }
 
 .room-btn span {
     display: inline-block;
-    margin-top: 30%;
+    line-height: calc(var(--room-btn-size) - 7);
 }
 
 .-full {
@@ -28,4 +32,12 @@
 
 .-free {
     background: #70E2CE;
+}
+
+.-free:focus {
+    border-color: #D6D6D6;
+}
+
+.-full:focus {
+    border-color: #70E2CE;
 }
