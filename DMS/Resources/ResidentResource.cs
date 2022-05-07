@@ -34,6 +34,8 @@ public class ResidentResource
         _context.Transactions.Load();
         _context.RatingOperations.Load();
         _context.RatingChangeCategories.Load();
+        _context.SettlementOrders.Load();
+        _context.EvictionOrders.Load();
 
         return _context.Residents.OrderBy(r => r.LastName);
     }
@@ -60,7 +62,6 @@ public class ResidentResource
         _context.RatingChangeCategories.Load();
 
         return _context.Residents
-            .AsNoTracking()
             .FirstOrDefault(r => r.ResidentId == id);
     }
 
@@ -92,7 +93,7 @@ public class ResidentResource
             var stored = _context.Residents.AsNoTracking()
                 .FirstOrDefault(r => r.ResidentId == id);
             if (stored is null)
-                throw new IndexOutOfRangeException("No resident with such id");
+                return new Tuple<bool, string?>(false, "No resident with this id");
 
             var resident = JsonSerializer.Deserialize<Resident>(data);
             resident!.ResidentId = stored.ResidentId;
@@ -124,8 +125,6 @@ public class ResidentResource
             case IndexOutOfRangeException oor:
                 return oor.Message;
             default:
-                if (e is IndexOutOfRangeException)
-                    return e.Message;
                 return "Unknown error";
         }
     }
