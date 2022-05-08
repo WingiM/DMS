@@ -47,7 +47,7 @@ namespace DMS.Migrations
 
                     b.HasIndex("ResidentId");
 
-                    b.ToTable("eviction_order");
+                    b.ToTable("eviction_order", (string)null);
 
                     b.HasData(
                         new
@@ -194,7 +194,7 @@ namespace DMS.Migrations
 
                     b.HasKey("RatingChangeCategoryId");
 
-                    b.ToTable("rating_change_category");
+                    b.ToTable("rating_change_category", (string)null);
 
                     b.HasData(
                         new
@@ -249,7 +249,7 @@ namespace DMS.Migrations
 
                     b.HasIndex("ResidentId");
 
-                    b.ToTable("rating_operation");
+                    b.ToTable("rating_operation", (string)null);
 
                     b.HasData(
                         new
@@ -352,7 +352,7 @@ namespace DMS.Migrations
                     b.HasIndex("Tin")
                         .IsUnique();
 
-                    b.ToTable("resident");
+                    b.ToTable("resident", (string)null);
 
                     b.HasData(
                         new
@@ -503,7 +503,7 @@ namespace DMS.Migrations
 
                     b.HasKey("RoomId");
 
-                    b.ToTable("room");
+                    b.ToTable("room", (string)null);
 
                     b.HasData(
                         new
@@ -616,7 +616,7 @@ namespace DMS.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("settlement_order");
+                    b.ToTable("settlement_order", (string)null);
 
                     b.HasData(
                         new
@@ -723,7 +723,7 @@ namespace DMS.Migrations
 
                     b.HasIndex("ResidentId");
 
-                    b.ToTable("transaction");
+                    b.ToTable("transaction", (string)null);
 
                     b.HasData(
                         new

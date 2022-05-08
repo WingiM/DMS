@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DMS.Models;
 
 [Index("SeriesAndNumber", IsUnique = true)]
-[Table("resident")]
+[Table("PassportInformation")]
 public class PassportInformation
 {
     [Column("passport_information_id")]
@@ -30,5 +31,6 @@ public class PassportInformation
     [Required]
     public int ResidentId { get; set; }
     
+    [JsonIgnore]
     public Resident? Resident { get; set; }
 }

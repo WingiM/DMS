@@ -26,6 +26,7 @@ public class RoomResource
                 .Where(t => t.ResidentId == resident.ResidentId
                             && t.OrderDate > documentDate).Load();
             _context.RatingChangeCategories.Load();
+            _context.Passports.Load();
         }
 
         return room;
