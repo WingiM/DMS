@@ -6,7 +6,7 @@ namespace DMS.Models;
 [Table("rating_operation")]
 public class RatingOperation
 {
-    [Column("operation_id")]
+    [Column("operation_id", TypeName = "int")]
     [Required]
     public int RatingOperationId { get; set; }
 

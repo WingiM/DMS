@@ -27,20 +27,20 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseSerialColumns();
-
-        // modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
-        //     .UseIdentityAlwaysColumn();
-        // modelBuilder.Entity<SettlementOrder>().Property(s => s.SettlementOrderId)
-        //     .UseIdentityAlwaysColumn();
-        // modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
-        //     .UseIdentityAlwaysColumn();
-        // modelBuilder.Entity<RatingOperation>().Property(ro => ro.RatingOperationId)
-        //     .UseIdentityAlwaysColumn();
-        // modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
-        //     .UseIdentityAlwaysColumn();
-        // modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
-        //     .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<Room>().Property(r => r.RoomId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<SettlementOrder>().Property(s => s.SettlementOrderId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<RatingOperation>().Property(ro => ro.RatingOperationId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
+            .UseIdentityAlwaysColumn();
 
         modelBuilder.Entity<Resident>().HasData(new Resident()
         {

@@ -6,7 +6,7 @@ namespace DMS.Models;
 [Table("settlement_order")]
 public class SettlementOrder
 {
-    [Column("order_id")] [Required]
+    [Column("order_id", TypeName = "int")] [Required]
     public int SettlementOrderId { get; set; }
 
     [Column("resident_id")] [Required]

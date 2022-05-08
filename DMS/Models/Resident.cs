@@ -8,7 +8,7 @@ namespace DMS.Models;
 [Table("resident")]
 public class Resident
 {
-    [Column("resident_id")] [Required] 
+    [Column("resident_id", TypeName = "int")] [Required] 
     public int ResidentId { get; set; }
 
     [Column("last_name", TypeName = "varchar(50)")]

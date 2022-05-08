@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace DMS.Models;
 
 [Index("SeriesAndNumber", IsUnique = true)]
-[Table("PassportInformation")]
+[Table("passport_information")]
 public class PassportInformation
 {
     [Column("passport_information_id")]
