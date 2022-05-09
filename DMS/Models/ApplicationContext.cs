@@ -29,8 +29,6 @@ public class ApplicationContext : DbContext
     {
         modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<Room>().Property(r => r.RoomId)
-            .UseIdentityAlwaysColumn();
         modelBuilder.Entity<SettlementOrder>().Property(s => s.SettlementOrderId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
