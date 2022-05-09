@@ -4,8 +4,6 @@ namespace DMS.Models;
 
 public class ApplicationContext : DbContext
 {
-    private readonly IConfiguration Configuration;
-
     public DbSet<Room> Rooms { get; set; } = null!;
     public DbSet<Resident> Residents { get; set; } = null!;
 
@@ -17,29 +15,29 @@ public class ApplicationContext : DbContext
     public DbSet<EvictionOrder> EvictionOrders { get; set; } = null!;
     public DbSet<SettlementOrder> SettlementOrders { get; set; } = null!;
 
+    public DbSet<PassportInformation> Passports { get; set; } =
+        null!;
+
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
         // Database.EnsureDeleted();
-        // Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseSerialColumns();
-
         modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<SettlementOrder>()
-            .Property(s => s.SettlementOrderId)
+        modelBuilder.Entity<Room>().Property(r => r.RoomId)
+            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<SettlementOrder>().Property(s => s.SettlementOrderId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingOperation>()
-            .Property(ro => ro.RatingOperationId)
+        modelBuilder.Entity<RatingOperation>().Property(ro => ro.RatingOperationId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingChangeCategory>()
-            .Property(rc => rc.RatingChangeCategoryId)
+        modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
             .UseIdentityAlwaysColumn();
@@ -277,5 +275,38 @@ public class ApplicationContext : DbContext
             TransactionId = 6, ResidentId = 5,
             OperationDate = DateTime.UtcNow, Sum = 18234.13
         });
+
+        modelBuilder.Entity<PassportInformation>().HasData(
+            new PassportInformation()
+            {
+                PassportInformationId = 1, SeriesAndNumber = "1234567890",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 23124,
+                IssueDate = DateTime.UtcNow, Address = "asdasdasdas",
+                ResidentId = 1
+            }, new PassportInformation()
+            {
+                PassportInformationId = 2, SeriesAndNumber = "1523123123",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 23124,
+                IssueDate = DateTime.UtcNow, Address = "sadgsdfgfdg",
+                ResidentId = 2
+            }, new PassportInformation()
+            {
+                PassportInformationId = 3, SeriesAndNumber = "7916239123",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 23423,
+                IssueDate = DateTime.UtcNow, Address = "sdghgfhgfhfgdh",
+                ResidentId = 3
+            }, new PassportInformation()
+            {
+                PassportInformationId = 4, SeriesAndNumber = "9817349817",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 54334,
+                IssueDate = DateTime.UtcNow, Address = "asdfsdfdsaf",
+                ResidentId = 4
+            }, new PassportInformation()
+            {
+                PassportInformationId = 5, SeriesAndNumber = "1807231987",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 98172,
+                IssueDate = DateTime.UtcNow, Address = "gdfsgfdsgdsf",
+                ResidentId = 5
+            });
     }
 }

@@ -26,6 +26,7 @@ public class RoomResource
                 .Where(t => t.ResidentId == resident.ResidentId
                             && t.OrderDate > documentDate).Load();
             _context.RatingChangeCategories.Load();
+            _context.Passports.Load();
         }
 
         return room;
@@ -38,6 +39,7 @@ public class RoomResource
 
     public IEnumerable<Room> GetAllRoomsOnFloor(int roomNumber)
     {
+        _context.Residents.Load();
         return _context.Rooms.Where(r => r.FloorNumber == roomNumber);
     }
 }

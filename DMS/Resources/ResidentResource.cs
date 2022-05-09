@@ -24,6 +24,7 @@ public class ResidentResource
             .Load();
         _context.RatingOperations.Where(ro => ro.OrderDate > documentsStartDate)
             .Load();
+        _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents.OrderBy(r => r.LastName);
@@ -36,6 +37,7 @@ public class ResidentResource
         _context.RatingChangeCategories.Load();
         _context.SettlementOrders.Load();
         _context.EvictionOrders.Load();
+        _context.Passports.Load();
 
         return _context.Residents.OrderBy(r => r.LastName);
     }
@@ -49,6 +51,7 @@ public class ResidentResource
         _context.RatingOperations.Where(ro =>
                 ro.ResidentId == id && ro.OrderDate > documentsStartDate)
             .Load();
+        _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents.FirstOrDefault(r => r.ResidentId == id);
@@ -59,6 +62,7 @@ public class ResidentResource
         _context.Transactions
             .Where(t => t.ResidentId == id).Load();
         _context.RatingOperations.Where(ro => ro.ResidentId == id).Load();
+        _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents
@@ -98,6 +102,13 @@ public class ResidentResource
             var resident = JsonSerializer.Deserialize<Resident>(data);
             resident!.ResidentId = stored.ResidentId;
             resident.RoomId = stored.RoomId;
+            if (resident.PassportInformation is not null)
+            {
+                resident.PassportInformation.PassportInformationId =
+                    _context.Passports.AsNoTracking().FirstOrDefault(p =>
+                        p.ResidentId == id)!.PassportInformationId;
+                _context.Update(resident.PassportInformation);
+            }
             _context.Residents.Update(resident);
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
@@ -124,9 +135,8 @@ public class ResidentResource
                 return je.Message;
             case IndexOutOfRangeException oor:
                 return oor.Message;
-            default:
-                return "Unknown error";
         }
+        return e.Message;
     }
 
     public bool DeleteResident(int id)

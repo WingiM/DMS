@@ -16,7 +16,7 @@ public abstract class MyBaseController : ControllerBase
         {
             res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
             res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
-            res.RoomId, Evicted = res.RoomId is null,
+            res.RoomId, res.IsCommercial, Evicted = res.RoomId is null,
             Rating = res.CountRating(), Debt = res.CountDebt(),
             Reports = res.CountReports()
         };

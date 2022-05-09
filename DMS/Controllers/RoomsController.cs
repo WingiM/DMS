@@ -34,7 +34,7 @@ public class RoomsController : MyBaseController
     public IResult GetWithId(int id)
     {
         DateTime resultDate = ParseDate(Request.Headers["date"]);
-        
+
         var room = _resource.GetRoomWithResidents(id, resultDate);
         if (room is null)
         {
@@ -54,7 +54,8 @@ public class RoomsController : MyBaseController
             return Results.BadRequest("Floor number incorrect");
         }
 
-        return Results.Ok(res.Select(r => r.RoomId));
+        return Results.Ok(res.Select(r => new
+            { r.RoomId, IsFull = r.Capacity == r.Residents.Count }));
     }
 
     [HttpGet]

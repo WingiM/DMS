@@ -6,7 +6,7 @@ namespace DMS.Models;
 [Table("eviction_order")]
 public class EvictionOrder
 {
-    [Column("order_id")] [Required] public int EvictionOrderId { get; set; }
+    [Column("order_id", TypeName = "int")] [Required] public int EvictionOrderId { get; set; }
 
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
 
