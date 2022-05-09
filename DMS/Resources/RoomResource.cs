@@ -39,6 +39,7 @@ public class RoomResource
 
     public IEnumerable<Room> GetAllRoomsOnFloor(int roomNumber)
     {
+        _context.Residents.Load();
         return _context.Rooms.Where(r => r.FloorNumber == roomNumber);
     }
 }
