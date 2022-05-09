@@ -3,7 +3,6 @@ import React from "react";
 import Resident from "../Resident";
 
 function template() {
-
     return (
         this.props.show ?
             <div className="residents">
@@ -24,112 +23,24 @@ function template() {
                     </div>
                     <div className="residents-list-scroll">
                         <div className="residents-list">
-                            <Resident key="12"
-                                      id="2"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"
-                            />
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"
-                            />
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"
-                            />
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="10"
-                                      id="11"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-                            <Resident key="12"
-                                      id="12"
-                                      lastname="ASDa"
-                                      firstName="asd"
-                                      patronymic="asd"
-                                      gender="Ж"/>
-
+                            {
+                                this.props.residentsList !== undefined ?
+                                    this.props.residentsList.map(resident =>
+                                        <Resident key={resident}
+                                                  readOnly={false}
+                                                  id={resident["ResidentId"]}
+                                                  lastname={resident["LastName"]}
+                                                  firstName={resident["FirstName"]}
+                                                  patronymic={resident["Patronymic"]}
+                                                  gender={resident["Gender"]}
+                                                  birthDate={resident["BirthDate"]}
+                                                  passportInformation={resident["PassportInformation"] === null ? '' : resident["PassportInformation"]["SeriesAndNumber"]}
+                                                  tin={resident["Tin"]}
+                                                  rating={resident["Rating"]}
+                                                  debt={resident["Debt"]}
+                                                  reports={resident["Reports"]}
+                                        />) : ''
+                            }
                         </div>
                     </div>
 

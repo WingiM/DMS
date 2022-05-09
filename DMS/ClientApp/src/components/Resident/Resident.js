@@ -7,6 +7,7 @@ class Resident extends React.Component {
 
         this.state = {
             submitFail: false,
+            id: this.props.id,
             lastname: this.props.lastname,
             firstName: this.props.firstName,
             patronymic: this.props.patronymic,
@@ -53,7 +54,7 @@ class Resident extends React.Component {
             Patronymic: this.state.patronymic,
             Gender: this.state.gender,
             BirthDate: this.state.birthDate,
-            PassportInformation: this.state.passportInformation,
+            PassportInformation: {PassportInformationId: this.state.id, SeriesAndNumber: this.state.passportInformation},
             Tin: this.state.tin
         }
         const requestUrl = "api/residents/" + this.props.id

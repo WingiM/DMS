@@ -43,7 +43,7 @@
 .settings-container {
     margin-left: calc(76 / 1051 * 100%);
     width: calc(590 / 1051 * 100%);
-    height: calc(276 / 773 * 100%);
+    height: 70%;
     padding-top: calc(110 / 1051 * 100%);
 }
 
@@ -54,9 +54,10 @@
     font-weight: 500;
     font-size: 25px;
     color: #00938A;
-    height: calc(63 / 276 * 100%);
+    /*height: calc(63 / 276 * 100%);*/
+    height: 9%;
     width: 100%;
-    margin-bottom: calc(43 / 465 * 100%);
+    margin-bottom: calc(15 / 465 * 100%);
 }
 
 .settings-container-block span {
@@ -66,7 +67,7 @@
 
 .settings-container-block input {
     width: calc(233 / 590 * 100%);
-    height: 80%;
+    height: 100%;
     background: #D9FFFA;
     font-family: Ubuntu, serif;
     color: #3A7890;
@@ -87,11 +88,20 @@
     color: #00938A;
 }
 
+.settings-container-block ul  {
+    height: 70%;
+}
+
+.settings-container-block ul li {
+    height: 32%;
+    margin-bottom: 4%;
+}
+
 .settings-save-btn {
     position: relative;
     width: calc(208 / 1051 * 100%);
     height: calc(58.5 / 773 * 100%);
-    top: 30%;
+    /*top: 1%;*/
     left: 70%;
     padding: 5px;
     background: #1ECBAD;

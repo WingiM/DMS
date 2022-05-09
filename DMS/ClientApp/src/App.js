@@ -20,6 +20,7 @@ class App extends React.Component {
             showInRoomResidents: false,
             showResidents: false,
             activeRoom: [],
+            allResidentsList: [],
         }
 
         this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
@@ -30,11 +31,13 @@ class App extends React.Component {
     
     //handlers
 
-    showResidentsBlockButtonClickHandler() {
+    async showResidentsBlockButtonClickHandler() {
+        const data = await this.fetchAllResidentsList()
         this.setState({
             showRooms: false,
             showInRoomResidents: false,
-            showResidents: true
+            showResidents: true,
+            allResidentsList: data
         })
     }
 
@@ -57,6 +60,18 @@ class App extends React.Component {
     
     // fetch functions
     
+    async fetchAllResidentsList() {
+        const requestUrl = "api/residents"
+        const response = await fetch(requestUrl, {
+            method: "GET",
+            headers: {
+                "Authorization" : localStorage.getItem("token")
+            }
+        })
+        const data = await response.json()
+        return data.Value
+    }
+    
     async fetchRoom(room) {
         const requestUrl = "api/rooms/" + room
         const response = await fetch(requestUrl, {
@@ -70,17 +85,29 @@ class App extends React.Component {
         return data.Value
     }
 
-    async checkTokenLifeTime() {
-        const data = await fetch("/api/rooms/floors", {
-            method: "GET",
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        });
+    getTokenExpDate() {
+        let token = localStorage.getItem("token").split(" ")[1];
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        let parsed = JSON.parse(jsonPayload)
+        return parsed["exp"] * 1000;
+    }
 
-        if (data.status !== 200) {
-            return <Navigate to="/login"/>
+    checkTokenLifetime() {
+        try {
+            let expDate = this.getTokenExpDate();
+            console.log()
+            if (new Date().getTime() > expDate) {
+                localStorage.removeItem("token");
+                return <Navigate to="/login"/>
+            }
+        } catch (e) {
+            console.log(e)
         }
+
     }
 
     async fetchStats() {
@@ -104,7 +131,7 @@ class App extends React.Component {
     }
 
     render() {
-        this.checkTokenLifeTime()
+        this.checkTokenLifetime()
         return (
             <Routes>
                 <Route path="/login" element={<Login/>}/>
@@ -117,7 +144,10 @@ class App extends React.Component {
                                     showRooms={this.showRoomsButtonClickHandler}
                                     showResidents={this.showResidentsBlockButtonClickHandler}
                                 />
-                                <Residents show={this.state.showResidents}/>
+                                <Residents 
+                                    show={this.state.showResidents}
+                                    residentsList={this.state.allResidentsList}
+                                />
                                 <RoomsBlock
                                     show={this.state.showRooms}
                                     openRoom = {this.openRoomButtonClickHandler}

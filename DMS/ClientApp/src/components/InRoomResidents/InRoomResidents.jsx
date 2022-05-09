@@ -21,13 +21,14 @@ function template() {
                     this.props.room["Residents"] !== undefined ?
                     this.props.room["Residents"].map(resident => 
                     <Resident key={resident} 
+                              readOnly={true}
                               id={resident["ResidentId"]} 
                               lastname={resident["LastName"]} 
                               firstName={resident["FirstName"]}
                               patronymic={resident["Patronymic"]}
                               gender={resident["Gender"]}
                               birthDate={resident["BirthDate"]}
-                              passportInformation={resident["PassportInformation"]}
+                              passportInformation={resident["PassportInformation"] === null ? '' : resident["PassportInformation"]["SeriesAndNumber"]}
                               tin={resident["Tin"]}
                               rating={resident["Rating"]}
                               debt={resident["Debt"]}

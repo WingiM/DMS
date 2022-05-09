@@ -11,7 +11,6 @@ function template() {
     if (localStorage.getItem("token") === null) {
         return <Navigate to="/login" />
     }
-    console.log(this.state.percentage)
     return (
         <div className="sidebar">
             <a id="settings" href="#settings"><img alt="settings"
