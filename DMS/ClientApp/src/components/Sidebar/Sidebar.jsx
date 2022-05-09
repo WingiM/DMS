@@ -26,7 +26,7 @@ function template() {
                         <span className="marked-span filled">занято</span><br/>
                         <span className="relative-span">{this.state.settled}</span><br/>
                         <span className="marked-span unfilled">свободно</span><br/>
-                        <span className="relative-span">{this.state.total}</span><br/>
+                        <span className="relative-span">{this.state.free}</span><br/>
                     </div>
                     <div className="circlechart"
                          data-percentage={this.state.settled / this.state.total * 100 | 0}>

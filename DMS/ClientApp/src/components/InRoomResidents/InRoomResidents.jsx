@@ -12,7 +12,7 @@ function template() {
             <ModalWindow 
                 show={this.state.showModal} 
                 toggleHandler={this.toggleModal}
-                residents={this.state.residents}
+                residents={this.state.modalResidents}
             />
             <button onClick={this.props.closeButtonClickHandler} className="close-residents-button"><img alt="close" src={closeButtonImg}/></button>
             <div className="rooms-header">ПРОЖИВАЮЩИЕ {this.props.room["RoomId"]}</div>
@@ -34,7 +34,12 @@ function template() {
                               reports={resident["Reports"]}
                     />) : ''
                 }
-                <button onClick={this.toggleModal} className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
+                {
+                    this.props.room["Capacity"] > this.props.room["Residents"].length ?
+                        <button onClick={this.toggleModal} className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
+                        : ''
+                }
+                
             </div>
 
         </div> : ''

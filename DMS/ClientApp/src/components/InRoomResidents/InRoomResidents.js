@@ -7,7 +7,7 @@ class InRoomResidents extends React.Component {
         this.state = {
             showModal: false,
             show: true,
-            residents: [],
+            modalResidents: [],
         }
         
         this.toggleModal = this.toggleModal.bind(this)
@@ -19,7 +19,7 @@ class InRoomResidents extends React.Component {
         const data = await this.fetchResidents()
         this.setState({
             showModal: !this.state.showModal,
-            residents: data
+            modalResidents: data
         })
     }
     
