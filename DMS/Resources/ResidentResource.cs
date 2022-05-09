@@ -42,6 +42,15 @@ public class ResidentResource
         return _context.Residents.OrderBy(r => r.LastName);
     }
 
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate,
+        string? gender)
+    {
+        var res = GetAllResidents(documentsStartDate);
+        if (gender is not null)
+            return res.Where(r => r.Gender == char.Parse(gender));
+        return res;
+    }
+
     public Resident? GetResidentById(int id, DateTime documentsStartDate)
     {
         _context.Transactions
@@ -97,7 +106,8 @@ public class ResidentResource
             var stored = _context.Residents.AsNoTracking()
                 .FirstOrDefault(r => r.ResidentId == id);
             if (stored is null)
-                return new Tuple<bool, string?>(false, "No resident with this id");
+                return new Tuple<bool, string?>(false,
+                    "No resident with this id");
 
             var resident = JsonSerializer.Deserialize<Resident>(data);
             resident!.ResidentId = stored.ResidentId;
@@ -109,6 +119,7 @@ public class ResidentResource
                         p.ResidentId == id)!.PassportInformationId;
                 _context.Update(resident.PassportInformation);
             }
+
             _context.Residents.Update(resident);
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
@@ -136,6 +147,7 @@ public class ResidentResource
             case IndexOutOfRangeException oor:
                 return oor.Message;
         }
+
         return e.Message;
     }
 

@@ -23,9 +23,11 @@ public class ResidentsController : MyBaseController
     public IResult GetAllResidents()
     {
         DateTime resultDate = ParseDate(Request.Headers["date"]);
+        var gender = Request.Headers["gender"];
 
         return Results.Ok(
-            _resource.GetAllResidents(resultDate).Select(ConvertResident)
+            _resource.GetAllResidents(resultDate, gender)
+                .Select(ConvertResident)
         );
     }
 
