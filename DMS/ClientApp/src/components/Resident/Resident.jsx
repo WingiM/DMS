@@ -1,5 +1,8 @@
 import "./Resident.css";
 import dotsImg from './img/resident3Dots.svg'
+import yellowDot from './img/yellowDot.svg'
+import greenDot from './img/greenDot.svg'
+import redDot from './img/redDot.svg'
 import React from "react";
 import $ from 'jquery'
 
@@ -8,7 +11,11 @@ function template() {
       <div className={"resident-collapsible"}>
           <button
               onClick={(e) => this.openCollapsible(e)} className={"resident-header"}>
-              {this.state.LastName.toUpperCase()} {this.state.FirstName.toUpperCase()} {this.state.Patronymic.toUpperCase()} <img className="header-dots" alt="dots" src={dotsImg}/>
+              {this.state.LastName.toUpperCase()} {this.state.FirstName.toUpperCase()} {this.state.Patronymic.toUpperCase()}
+              <img className="header-dots" alt="dots" src={dotsImg}/>
+              {this.state.Rating < 0 ? <img alt={"dot"} className={"state-dot"} src={redDot}/> : ''}
+              {this.state.Course === 1 ? <img alt={"dot"} className={"state-dot"} src={greenDot}/> : ''}
+              {this.state.RoomId === null ? <img alt={"dot"} className={"state-dot"} src={yellowDot}/> : ''}
           </button>
           <div className="resident-content" style={{maxHeight: this.state.ResidentId !== null ? "0" : "188px"}}>
               <form onSubmit={this.handleSubmit}>

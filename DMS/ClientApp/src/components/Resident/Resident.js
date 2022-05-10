@@ -59,6 +59,7 @@ class Resident extends React.Component {
             PassportInformation: {SeriesAndNumber: this.state.SeriesAndNumber},
             Tin: this.state.Tin,
             RoomId: this.state.RoomId,
+            Course: this.props.course
         }
         const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {

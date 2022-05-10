@@ -1,6 +1,7 @@
 import "./Residents.css";
 import React from "react";
 import Resident from "../Resident";
+import rubleImg from './img/negativeRuble.svg'
 
 function template() {
     return (
@@ -15,10 +16,10 @@ function template() {
                             <button onClick={(e) => this.filterByCourse(e)} className="green-btn"/>
                             <button onClick={(e) => this.filterByRating(e)} className="red-btn"/>
 
+                            <button className="w-filter-btn"><img alt={"ruble"} src={rubleImg}/></button>
                             <button onClick={(e) => this.filterByGender(e)} className="w-filter-btn">Ж</button>
                             <button onClick={(e) => this.filterByGender(e)} className="m-filter-btn">М</button>
                             <button onClick={this.props.addResidentBtnClickHandler} className="resident-add-btn"/>
-
                         </div>
                     </div>
                     <div className="residents-list-scroll">
@@ -44,6 +45,7 @@ function template() {
                                                   debt={resident["Debt"]}
                                                   reports={resident["Reports"]}
                                                   roomId={resident["RoomId"]}
+                                                  course={resident["Course"]}
                                         />) : ''
                             }
                         </div>
