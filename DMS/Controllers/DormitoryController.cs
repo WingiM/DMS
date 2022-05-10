@@ -9,7 +9,7 @@ namespace DMS.Controllers;
 [ApiController]
 [Route("/api/stats")]
 [Authorize]
-public class DormitoryController : MyBaseController
+public class DormitoryController : DmsControllerBase
 {
     private readonly ILogger<DormitoryController> _logger;
     private readonly DormitoryResource _resource;

@@ -8,7 +8,7 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
-public class RoomsController : MyBaseController
+public class RoomsController : DmsControllerBase
 {
     private static readonly Func<Room, object> ConvertRoom =
         room => new

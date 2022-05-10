@@ -8,7 +8,7 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/documents")]
-public class DocumentsController : MyBaseController
+public class DocumentsController : DmsControllerBase
 {
     private readonly ILogger<DocumentsController> _logger;
     private readonly DocumentsResource _documentsResource;

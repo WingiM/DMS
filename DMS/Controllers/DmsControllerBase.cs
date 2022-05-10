@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Controllers;
 
-public abstract class MyBaseController : ControllerBase
+public abstract class DmsControllerBase : ControllerBase
 {
     private static readonly DateTime DefaultDocumentStartDate =
         DateTime.Now.Month >= 9

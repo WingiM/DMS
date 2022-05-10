@@ -7,7 +7,7 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
-public class ResidentsController : MyBaseController
+public class ResidentsController : DmsControllerBase
 {
     private readonly ILogger<ResidentsController> _logger;
     private readonly ResidentResource _resource;
