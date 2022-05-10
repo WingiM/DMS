@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using DMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -82,6 +83,37 @@ public class ResidentResource
 
         return _context.Residents
             .FirstOrDefault(r => r.ResidentId == id);
+    }
+
+    public bool AccrualAll(int commercialCost, int nonCommercialCost)
+    {
+        foreach (var resident in _context.Residents)
+        {
+            if (resident.RoomId is not null)
+            {
+                var transaction = new Transaction
+                {
+                    ResidentId = resident.ResidentId,
+                    OperationDate = DateTime.UtcNow,
+                    Sum = resident.IsCommercial
+                        ? commercialCost
+                        : nonCommercialCost
+                };
+
+                _context.Transactions.Add(transaction);
+            }
+        }
+
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public Tuple<bool, string?> AddResident(string data)

@@ -1,3 +1,5 @@
+using System.Text;
+using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,14 +39,38 @@ public class DormitoryController : MyBaseController
             .Where(r => r.Course == 1)
             .OrderBy(r => r.LastName)
             .Select(ConvertResident);
-        
+
         var others = residents
             .Where(r => r.Course != 1)
             .OrderByDescending(r => r.CountRating())
             .ThenBy(r => r.LastName)
             .Select(ConvertResident);
-        
+
         return Results.Ok(firstCourses.Concat(others));
+    }
+
+    [HttpPost]
+    [Route("/api/stats/accruals")]
+    public IResult AccrualAllResidents()
+    {
+        try
+        {
+            var commercialCost = -1 * int.Parse(_resource.GetConstant(
+                "CommercialCost"));
+            var nonCommercialCost = -1 * int.Parse(_resource.GetConstant(
+                "NonCommercialCost"));
+
+            var result =
+                _residentResource.AccrualAll(commercialCost, nonCommercialCost);
+            if (result)
+                return Results.Ok("Transactions complete");
+            return Results.Conflict("Cannot create transactions");
+        }
+        catch (FormatException)
+        {
+            return Results.BadRequest(
+                "Dormitory constants not set or have bad value");
+        }
     }
 
     [HttpGet]
