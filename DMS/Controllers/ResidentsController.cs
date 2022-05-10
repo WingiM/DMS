@@ -1,5 +1,4 @@
-﻿using DMS.Models;
-using DMS.Resources;
+﻿using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +7,8 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
-public class ResidentsController : ControllerBase
+public class ResidentsController : MyBaseController
 {
-    internal static readonly Func<Resident, object> ConvertResident =
-        res => new
-        {
-            res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
-            res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
-            res.RoomId, Evicted = res.RoomId is null,
-            Rating = res.CountRating(), Debt = res.CountDebt(), 
-            Reports = res.CountReports()
-        };
-
     private readonly ILogger<ResidentsController> _logger;
     private readonly ResidentResource _resource;
 
@@ -30,30 +19,15 @@ public class ResidentsController : ControllerBase
         _resource = resource;
     }
 
-    private async Task<string?> ParseRequestBody()
-    {
-        string? data = null;
-        using StreamReader reader = new StreamReader(Request.Body);
-        try
-        {
-            data = await reader.ReadToEndAsync();
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Information, e.ToString());
-        }
-
-        return data;
-    }
-
     [HttpGet]
     public IResult GetAllResidents()
     {
-        DateTime resultDate =
-            DormitoryResource.ParseDate(Request.Headers["date"]);
+        DateTime resultDate = ParseDate(Request.Headers["date"]);
+        var gender = Request.Headers["gender"];
 
         return Results.Ok(
-            _resource.GetAllResidents(resultDate).Select(ConvertResident)
+            _resource.GetAllResidents(resultDate, gender)
+                .Select(ConvertResident)
         );
     }
 
@@ -80,8 +54,7 @@ public class ResidentsController : ControllerBase
     [Route("/api/[controller]/{id:int}")]
     public IResult GetResidentById(int id)
     {
-        DateTime resultDate =
-            DormitoryResource.ParseDate(Request.Headers["date"]);
+        DateTime resultDate = ParseDate(Request.Headers["date"]);
 
         var res = _resource.GetResidentById(id, resultDate);
         if (res is null)

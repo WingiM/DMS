@@ -4,8 +4,6 @@ namespace DMS.Models;
 
 public class ApplicationContext : DbContext
 {
-    private readonly IConfiguration Configuration;
-
     public DbSet<Room> Rooms { get; set; } = null!;
     public DbSet<Resident> Residents { get; set; } = null!;
 
@@ -17,32 +15,36 @@ public class ApplicationContext : DbContext
     public DbSet<EvictionOrder> EvictionOrders { get; set; } = null!;
     public DbSet<SettlementOrder> SettlementOrders { get; set; } = null!;
 
+    public DbSet<PassportInformation> Passports { get; set; } =
+        null!;
+
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
         // Database.EnsureDeleted();
-        // Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseSerialColumns();
-
         modelBuilder.Entity<Resident>().Property(r => r.ResidentId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<SettlementOrder>()
-            .Property(s => s.SettlementOrderId)
+        modelBuilder.Entity<SettlementOrder>().Property(s => s.SettlementOrderId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
             .UseIdentityAlwaysColumn();
+        // modelBuilder.Entity<RatingOperation>().Property(ro => ro.RatingOperationId)
+        //     .UseIdentityAlwaysColumn();
         modelBuilder.Entity<RatingOperation>()
-            .Property(ro => ro.RatingOperationId)
+            .HasKey(ro => new { ro.ResidentId, ro.OrderDate });
+        modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingChangeCategory>()
-            .Property(rc => rc.RatingChangeCategoryId)
-            .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
-            .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<Transaction>()
+            .HasKey(t => new { t.ResidentId, t.OperationDate });
+        // modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
+        //     .UseIdentityAlwaysColumn();
+        modelBuilder.Entity<Room>().Property(r => r.FloorNumber)
+            .HasComputedColumnSql("room_number / 100", stored:true);
 
         modelBuilder.Entity<Resident>().HasData(new Resident()
         {
@@ -100,7 +102,7 @@ public class ApplicationContext : DbContext
             Patronymic = "Артёмович", RoomId = 407, Gender = 'M',
             BirthDate = DateTime.UtcNow
         });
-
+        
         modelBuilder.Entity<Room>()
             .Property(r => r.FloorNumber)
             .HasComputedColumnSql("room_number / 100", stored: true);
@@ -139,7 +141,7 @@ public class ApplicationContext : DbContext
                 Capacity = 3, Gender = 'M', RoomId = 423
             }
         );
-
+        
         modelBuilder.Entity<SettlementOrder>().HasData(new SettlementOrder()
         {
             SettlementOrderId = 1, ResidentId = 1, RoomId = 301,
@@ -185,7 +187,7 @@ public class ApplicationContext : DbContext
             SettlementOrderId = 11, ResidentId = 11, RoomId = 407,
             Description = null, OrderDate = DateTime.UtcNow,
         });
-
+        
         modelBuilder.Entity<EvictionOrder>().HasData(new EvictionOrder()
         {
             EvictionOrderId = 1, ResidentId = 11,
@@ -207,7 +209,7 @@ public class ApplicationContext : DbContext
             EvictionOrderId = 5, ResidentId = 7,
             OrderDate = DateTime.UtcNow, Description = null
         });
-
+        
         modelBuilder.Entity<RatingChangeCategory>().HasData(
             new RatingChangeCategory()
             {
@@ -219,63 +221,96 @@ public class ApplicationContext : DbContext
             {
                 RatingChangeCategoryId = 3, Name = "Выговор"
             });
-
+        
         modelBuilder.Entity<RatingOperation>().HasData(new RatingOperation()
         {
-            RatingOperationId = 1, ResidentId = 1, CategoryId = 1,
-            ChangeValue = -3, OrderDate = DateTime.UtcNow,
+            ResidentId = 1, CategoryId = 1,
+            ChangeValue = -3, OrderDate = new DateTime(2021, 10, 9).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            RatingOperationId = 2, ResidentId = 2, CategoryId = 2,
-            ChangeValue = 2, OrderDate = DateTime.UtcNow,
+            ResidentId = 2, CategoryId = 2,
+            ChangeValue = 2, OrderDate = new DateTime(2021, 10, 10).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            RatingOperationId = 3, ResidentId = 3, CategoryId = 3,
-            ChangeValue = -1, OrderDate = DateTime.UtcNow,
+            ResidentId = 3, CategoryId = 3,
+            ChangeValue = -1, OrderDate = new DateTime(2021, 10, 11).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            RatingOperationId = 4, ResidentId = 4, CategoryId = 1,
-            ChangeValue = -2, OrderDate = DateTime.UtcNow,
+            ResidentId = 4, CategoryId = 1,
+            ChangeValue = -2, OrderDate = new DateTime(2021, 10, 12).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            RatingOperationId = 5, ResidentId = 5, CategoryId = 2,
-            ChangeValue = 2, OrderDate = DateTime.UtcNow,
+            ResidentId = 5, CategoryId = 2,
+            ChangeValue = 2, OrderDate = new DateTime(2021, 10, 13).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            RatingOperationId = 6, ResidentId = 6, CategoryId = 2,
-            ChangeValue = 2, OrderDate = DateTime.UtcNow,
+            ResidentId = 6, CategoryId = 2,
+            ChangeValue = 2, OrderDate = new DateTime(2021, 10, 14).ToUniversalTime(),
             Description = null
         });
-
+        
         modelBuilder.Entity<Transaction>().HasData(new Transaction()
         {
-            TransactionId = 1, ResidentId = 1,
-            OperationDate = DateTime.UtcNow, Sum = 3000
+            ResidentId = 1,
+            OperationDate = new DateTime(2021, 10, 9).ToUniversalTime(), Sum = 3000
         }, new Transaction()
         {
-            TransactionId = 2, ResidentId = 2,
-            OperationDate = DateTime.UtcNow, Sum = 1000
+           ResidentId = 2,
+           OperationDate = new DateTime(2021, 10, 9, 10, 0, 0).ToUniversalTime(), Sum = 1000
         }, new Transaction()
         {
-            TransactionId = 3, ResidentId = 2,
-            OperationDate = DateTime.UtcNow, Sum = 3000
+            ResidentId = 2,
+            OperationDate = new DateTime(2021, 10, 9, 12, 0, 0).ToUniversalTime(), Sum = 3000
         }, new Transaction()
         {
-            TransactionId = 4, ResidentId = 3,
-            OperationDate = DateTime.UtcNow, Sum = 4000
+            ResidentId = 3,
+            OperationDate = new DateTime(2021, 10, 12).ToUniversalTime(), Sum = 4000
         }, new Transaction()
         {
-            TransactionId = 5, ResidentId = 4,
-            OperationDate = DateTime.UtcNow, Sum = 2012.42
+            ResidentId = 4,
+            OperationDate = new DateTime(2021, 10, 10).ToUniversalTime(), Sum = 2012.42
         }, new Transaction()
         {
-            TransactionId = 6, ResidentId = 5,
-            OperationDate = DateTime.UtcNow, Sum = 18234.13
+            ResidentId = 5,
+            OperationDate = new DateTime(2021, 10, 20).ToUniversalTime(), Sum = 18234.13
         });
+        
+        modelBuilder.Entity<PassportInformation>().HasData(
+            new PassportInformation()
+            {
+                PassportInformationId = 1, SeriesAndNumber = "1234567890",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 23124,
+                IssueDate = DateTime.UtcNow, Address = "asdasdasdas",
+                ResidentId = 1
+            }, new PassportInformation()
+            {
+                PassportInformationId = 2, SeriesAndNumber = "1523123123",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 23124,
+                IssueDate = DateTime.UtcNow, Address = "sadgsdfgfdg",
+                ResidentId = 2
+            }, new PassportInformation()
+            {
+                PassportInformationId = 3, SeriesAndNumber = "7916239123",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 23423,
+                IssueDate = DateTime.UtcNow, Address = "sdghgfhgfhfgdh",
+                ResidentId = 3
+            }, new PassportInformation()
+            {
+                PassportInformationId = 4, SeriesAndNumber = "9817349817",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 54334,
+                IssueDate = DateTime.UtcNow, Address = "asdfsdfdsaf",
+                ResidentId = 4
+            }, new PassportInformation()
+            {
+                PassportInformationId = 5, SeriesAndNumber = "1807231987",
+                IssuedBy = "МВД по чему-то", DepartmentCode = 98172,
+                IssueDate = DateTime.UtcNow, Address = "gdfsgfdsgdsf",
+                ResidentId = 5
+            });
     }
 }

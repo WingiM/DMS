@@ -4,10 +4,6 @@ import template from "./ModalWindow.jsx";
 class ModalWindow extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
-      show: false,
-    }
   }
   
   render() {

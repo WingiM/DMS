@@ -8,26 +8,15 @@
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="296ce6c4-bfa7-4ba9-8b51-b5f486d838ab" name="Changes" comment="Update clientApp">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="5df6510b-7ccf-496e-989e-872805d77029" name="Changes" comment="Gender filter in GetAllResidents header">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Sidebar/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Sidebar/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Residents/Residents.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Residents/Residents.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Residents/Residents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Residents/Residents.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +31,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DMS/ClientApp/package-lock.json" root0="SKIP_HIGHLIGHTING" />
@@ -50,16 +40,18 @@
     <setting file="file://$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="9vec1wgr" />
+    <option name="directoryName" value="c03zek1z" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="28a24wI2liIL3U1zsEZRZuHflnd" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -69,9 +61,10 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/wingim/RiderProjects/CSV&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/wingim/RiderProjects/iret-sila&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -154,7 +147,14 @@
       <workItem from="1651690078179" duration="6967000" />
       <workItem from="1651727991106" duration="1124000" />
       <workItem from="1651755495624" duration="6539000" />
-      <workItem from="1651809334967" duration="9394000" />
+      <workItem from="1651809334967" duration="9697000" />
+      <workItem from="1651860453620" duration="530000" />
+      <workItem from="1651899347820" duration="9676000" />
+      <workItem from="1652084818591" duration="1914000" />
+      <workItem from="1652089710469" duration="1061000" />
+      <workItem from="1652110786501" duration="63000" />
+      <workItem from="1652119587962" duration="5201000" />
+      <workItem from="1652162256259" duration="6382000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -191,7 +191,42 @@
       <option name="project" value="LOCAL" />
       <updated>1651813416758</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Enhanced POST request processing due to parsing in Resource (previously in Controller)&#10;Start making DocumentsResource&#10;Add /api/stats route with general dormitory information&#10;Constants POST and GET requests are now in /api/stats/constants route">
+      <created>1651819779535</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1651819779535</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Integrate server with new database model (PassportInformation)">
+      <created>1652003054061</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652003054061</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Rename table passport_information">
+      <created>1652004163694</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1652004163694</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Room controller now also returns IsFull field">
+      <created>1652120280760</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1652120280760</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Gender filter in GetAllResidents header">
+      <created>1652127163816</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1652127163816</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,7 +264,12 @@
     <MESSAGE value="Better date header processing in controllers and resources" />
     <MESSAGE value="Fix bug when RoomId became null after resident update request&#10;Change ResidentsController.cs PUT request route" />
     <MESSAGE value="Integrate Redis cache. &#10;DormitoryController gets and sets cache constants passed in http body&#10;Login now compares input password HMACSha256 cache with stored (commented not to complicate dev process)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Integrate Redis cache. &#10;DormitoryController gets and sets cache constants passed in http body&#10;Login now compares input password HMACSha256 cache with stored (commented not to complicate dev process)" />
+    <MESSAGE value="Enhanced POST request processing due to parsing in Resource (previously in Controller)&#10;Start making DocumentsResource&#10;Add /api/stats route with general dormitory information&#10;Constants POST and GET requests are now in /api/stats/constants route" />
+    <MESSAGE value="Integrate server with new database model (PassportInformation)" />
+    <MESSAGE value="Rename table passport_information" />
+    <MESSAGE value="Room controller now also returns IsFull field" />
+    <MESSAGE value="Gender filter in GetAllResidents header" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gender filter in GetAllResidents header" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -36,11 +36,17 @@ export class Login extends Component {
         } 
     }
 
+    keyUpController(e) {
+        if (e.key === "Enter") {
+            this.loginHandler(e);
+        }
+    }
+
     render() {
         if (localStorage.getItem("token") !== null) {
             return <Navigate to="/" replace />
         }
-        
+
         return template.call(this);
     }
 }

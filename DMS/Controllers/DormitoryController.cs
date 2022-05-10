@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace DMS.Controllers;
 
 [ApiController]
-[Route("api/stats")]
+[Route("/api/stats")]
 [Authorize]
-public class DormitoryController : ControllerBase
+public class DormitoryController : MyBaseController
 {
     private readonly ILogger<DormitoryController> _logger;
     private readonly DormitoryResource _resource;
@@ -36,29 +36,21 @@ public class DormitoryController : ControllerBase
     [Route("/api/stats/constants")]
     public async Task<IResult> SetConstants()
     {
-        Dictionary<string, string?>? result = null;
-        StreamReader? reader = null;
-        try
+        var data = await ParseRequestBody();
+
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
+
+        var res = _resource.SetConstants(data);
+
+        if (!res.Item1)
         {
-            reader = new StreamReader(Request.Body);
-            var message = await reader.ReadToEndAsync();
-            result =
-                System.Text.Json.JsonSerializer
-                    .Deserialize<Dictionary<string, string?>>(message);
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Information, e.ToString());
-        }
-        finally
-        {
-            reader?.Close();
+            Response.StatusCode = 409;
+            return Results.Conflict(res.Item2);
         }
 
-        if (result is null)
-            return Results.BadRequest("Wrong JSON format");
 
-        _resource.SetConstants(result);
-        return Results.Ok("Setting completed");
+        return Results.Ok(
+            $"Setting completed. The following keys were not added: {res.Item2}");
     }
 }

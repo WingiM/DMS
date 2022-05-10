@@ -24,6 +24,7 @@ public class ResidentResource
             .Load();
         _context.RatingOperations.Where(ro => ro.OrderDate > documentsStartDate)
             .Load();
+        _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents.OrderBy(r => r.LastName);
@@ -34,8 +35,20 @@ public class ResidentResource
         _context.Transactions.Load();
         _context.RatingOperations.Load();
         _context.RatingChangeCategories.Load();
+        _context.SettlementOrders.Load();
+        _context.EvictionOrders.Load();
+        _context.Passports.Load();
 
         return _context.Residents.OrderBy(r => r.LastName);
+    }
+
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate,
+        string? gender)
+    {
+        var res = GetAllResidents(documentsStartDate);
+        if (gender is not null)
+            return res.Where(r => r.Gender == char.Parse(gender));
+        return res;
     }
 
     public Resident? GetResidentById(int id, DateTime documentsStartDate)
@@ -47,6 +60,7 @@ public class ResidentResource
         _context.RatingOperations.Where(ro =>
                 ro.ResidentId == id && ro.OrderDate > documentsStartDate)
             .Load();
+        _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents.FirstOrDefault(r => r.ResidentId == id);
@@ -57,10 +71,10 @@ public class ResidentResource
         _context.Transactions
             .Where(t => t.ResidentId == id).Load();
         _context.RatingOperations.Where(ro => ro.ResidentId == id).Load();
+        _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
         return _context.Residents
-            .AsNoTracking()
             .FirstOrDefault(r => r.ResidentId == id);
     }
 
@@ -92,11 +106,20 @@ public class ResidentResource
             var stored = _context.Residents.AsNoTracking()
                 .FirstOrDefault(r => r.ResidentId == id);
             if (stored is null)
-                throw new IndexOutOfRangeException("No resident with such id");
+                return new Tuple<bool, string?>(false,
+                    "No resident with this id");
 
             var resident = JsonSerializer.Deserialize<Resident>(data);
             resident!.ResidentId = stored.ResidentId;
             resident.RoomId = stored.RoomId;
+            if (resident.PassportInformation is not null)
+            {
+                resident.PassportInformation.PassportInformationId =
+                    _context.Passports.AsNoTracking().FirstOrDefault(p =>
+                        p.ResidentId == id)!.PassportInformationId;
+                _context.Update(resident.PassportInformation);
+            }
+
             _context.Residents.Update(resident);
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, null);
@@ -123,11 +146,9 @@ public class ResidentResource
                 return je.Message;
             case IndexOutOfRangeException oor:
                 return oor.Message;
-            default:
-                if (e is IndexOutOfRangeException)
-                    return e.Message;
-                return "Unknown error";
         }
+
+        return e.Message;
     }
 
     public bool DeleteResident(int id)

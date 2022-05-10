@@ -20,10 +20,10 @@ function template() {
                     </div>
                     <div className="row" style={{textAlign: "center", marginTop: "5.07071%", height: "75.773282%"}} onKeyDown={e => this.keyUpController(e)}>
                         <p className="authorization-text">Авторизация</p>
-                            <input style={{zIndex: 4,}} type="password" onChange={ e => this.setState({password: e.target.value, isVisible: false}) }
-                                   className="password-input" placeholder="пароль"/> <br/>
-                            <span className={`incorrect-password ${state}`}>неверный пароль</span> <br/>
-                            <button className="login-btn" type={"submit"} onClick={this.loginHandler} >Войти</button>
+                        <input style={{zIndex: 4,}} type="password" onChange={ e => this.setState({password: e.target.value, isVisible: false}) }
+                               className="password-input" placeholder="пароль"/> <br/>
+                        <span className={`incorrect-password ${state}`}>неверный пароль</span> <br/>
+                        <button className="login-btn" type={"submit"} onClick={this.loginHandler} >Войти</button>
                     </div>
                 </div>
                 <div className="col-1-3" style={{height: "100%", position: "relative"}}>
