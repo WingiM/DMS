@@ -23,6 +23,10 @@
     float: right;
 }
 
+.filters button {
+    cursor: pointer;
+}
+
 .resident-content {
     padding-left: 1.5%;
     max-height: 0;
@@ -94,9 +98,7 @@ input[type="date"] {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    display: none;
 }
 
 input[type="number"] {
@@ -126,4 +128,13 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #19A38BFF;
+}
+
+input[type="submit"].evict-btn {
+    background: #FF8787;
+    color: #FFF
+}
+
+input[type="submit"].evict-btn:hover {
+    background: #E75050;
 }

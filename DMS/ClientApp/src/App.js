@@ -27,10 +27,12 @@ class App extends React.Component {
         this.openRoomButtonClickHandler = this.openRoomButtonClickHandler.bind(this);
         this.closeRoomButtonClickHandler = this.closeRoomButtonClickHandler.bind(this);
         this.showResidentsBlockButtonClickHandler = this.showResidentsBlockButtonClickHandler.bind(this);
+        this.addNewResidentHandler = this.addNewResidentHandler.bind(this);
     }
     
-    //handlers
+    /* Handlers */
 
+    //open all resident of dormitory list
     async showResidentsBlockButtonClickHandler() {
         const data = await this.fetchAllResidentsList()
         this.setState({
@@ -40,13 +42,16 @@ class App extends React.Component {
             allResidentsList: data
         })
     }
-
+    
+    
+    //open all dormitory rooms'n'floors block
     showRoomsButtonClickHandler() {
         this.setState({
             showResidents: false,
             showRooms: true})
     }
 
+    //open and fetch data for specified room
     async openRoomButtonClickHandler(room) {
         this.setState({showInRoomResidents: false})
         const data = await this.fetchRoom(room)
@@ -58,8 +63,30 @@ class App extends React.Component {
         this.setState({showInRoomResidents : false})
     }
     
-    // fetch functions
+    addNewResidentHandler() {
+        
+        this.state.allResidentsList.push({
+                ResidentId: null,
+                LastName: '',
+                FirstName: '',
+                Patronymic: '',
+                Gender: 'М',
+                BirthDate: 'Ж',
+                PassportInformation: {SeriesAndNumber: null},
+                Tin: null,
+                Rating: null,
+                Debt: null,
+                Reports: null,
+            })
+        this.setState({
+            allResidentsList: this.state.allResidentsList
+        })
+        console.log(this.state.allResidentsList)
+    }
     
+    /* Fetch Functions */
+    
+    //get all residents in dormitory
     async fetchAllResidentsList() {
         const requestUrl = "api/residents"
         const response = await fetch(requestUrl, {
@@ -72,6 +99,7 @@ class App extends React.Component {
         return data.Value
     }
     
+    //get room with specified ID
     async fetchRoom(room) {
         const requestUrl = "api/rooms/" + room
         const response = await fetch(requestUrl, {
@@ -147,6 +175,7 @@ class App extends React.Component {
                                 <Residents 
                                     show={this.state.showResidents}
                                     residentsList={this.state.allResidentsList}
+                                    addResidentBtnClickHandler={this.addNewResidentHandler}
                                 />
                                 <RoomsBlock
                                     show={this.state.showRooms}

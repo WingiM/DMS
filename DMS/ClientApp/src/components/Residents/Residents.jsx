@@ -17,7 +17,7 @@ function template() {
 
                             <button className="w-filter-btn">Ж</button>
                             <button className="m-filter-btn">М</button>
-                            <button className="resident-add-btn"/>
+                            <button onClick={this.props.addResidentBtnClickHandler} className="resident-add-btn"/>
 
                         </div>
                     </div>
@@ -28,13 +28,15 @@ function template() {
                                     this.props.residentsList.map(resident =>
                                         <Resident key={resident}
                                                   readOnly={false}
+                                                  showSaveBtn={true}
                                                   id={resident["ResidentId"]}
                                                   lastname={resident["LastName"]}
                                                   firstName={resident["FirstName"]}
                                                   patronymic={resident["Patronymic"]}
                                                   gender={resident["Gender"]}
                                                   birthDate={resident["BirthDate"]}
-                                                  passportInformation={resident["PassportInformation"] === null ? '' : resident["PassportInformation"]["SeriesAndNumber"]}
+                                                  passportInformation={resident["PassportInformation"] === 
+                                                    null ? '' : resident["PassportInformation"]["SeriesAndNumber"]}
                                                   tin={resident["Tin"]}
                                                   rating={resident["Rating"]}
                                                   debt={resident["Debt"]}
@@ -43,8 +45,6 @@ function template() {
                             }
                         </div>
                     </div>
-
-
                 </div>
             </div> : ""
     );

@@ -22,6 +22,7 @@ function template() {
                     this.props.room["Residents"].map(resident => 
                     <Resident key={resident} 
                               readOnly={true}
+                              showSaveBtn={false}
                               id={resident["ResidentId"]} 
                               lastname={resident["LastName"]} 
                               firstName={resident["FirstName"]}

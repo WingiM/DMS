@@ -12,7 +12,7 @@ class Resident extends React.Component {
             firstName: this.props.firstName,
             patronymic: this.props.patronymic,
             gender: this.props.gender,
-            birthDate: this.props.birthDate,
+            birthDate: this.props.birthDate.slice(0, 10),
             passportInformation: this.props.passportInformation,
             tin: this.props.tin,
             rating: this.props.rating,
@@ -53,13 +53,13 @@ class Resident extends React.Component {
             FirstName: this.state.firstName,
             Patronymic: this.state.patronymic,
             Gender: this.state.gender,
-            BirthDate: this.state.birthDate,
-            PassportInformation: {PassportInformationId: this.state.id, SeriesAndNumber: this.state.passportInformation},
+            BirthDate: this.state.birthDate + "T00:00:00Z",
+            PassportInformation: {SeriesAndNumber: this.state.passportInformation},
             Tin: this.state.tin
         }
-        const requestUrl = "api/residents/" + this.props.id
+        const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.id
         const response = await fetch(requestUrl, {
-            method: "PUT",
+            method: this.state.id === null ? "POST" : "PUT",
             headers: {
                 "Authorization": localStorage.getItem("token"),
                 "Content-Type": 'application/json'
