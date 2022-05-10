@@ -11,12 +11,14 @@ public class DormitoryController : MyBaseController
 {
     private readonly ILogger<DormitoryController> _logger;
     private readonly DormitoryResource _resource;
+    private readonly ResidentResource _residentResource;
 
     public DormitoryController(ILogger<DormitoryController> logger,
-        DormitoryResource resource)
+        DormitoryResource resource, ResidentResource residentResource)
     {
         _logger = logger;
         _resource = resource;
+        _residentResource = residentResource;
     }
 
     [HttpGet]
@@ -26,10 +28,37 @@ public class DormitoryController : MyBaseController
     }
 
     [HttpGet]
+    [Route("/api/stats/resettlement")]
+    public IResult GetResettlementLists()
+    {
+        var residents = _residentResource.GetAllResidents().ToList();
+
+        var firstCourses = residents
+            .Where(r => r.Course == 1)
+            .OrderBy(r => r.LastName)
+            .Select(ConvertResident);
+        
+        var others = residents
+            .Where(r => r.Course != 1)
+            .OrderByDescending(r => r.CountRating())
+            .ThenBy(r => r.LastName)
+            .Select(ConvertResident);
+        
+        return Results.Ok(firstCourses.Concat(others));
+    }
+
+    [HttpGet]
     [Route("/api/stats/constants")]
     public IResult GetConstants()
     {
         return Results.Ok(_resource.GetConstants());
+    }
+
+    [HttpGet]
+    [Route("/api/stats/constants/{name}")]
+    public IResult GetConstant(string name)
+    {
+        return Results.Ok(_resource.GetConstant(name));
     }
 
     [HttpPost]

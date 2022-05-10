@@ -27,7 +27,9 @@ public class ResidentResource
         _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
-        return _context.Residents.OrderBy(r => r.LastName);
+        return _context.Residents
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName);
     }
 
     public IEnumerable<Resident> GetAllResidents()
@@ -39,7 +41,9 @@ public class ResidentResource
         _context.EvictionOrders.Load();
         _context.Passports.Load();
 
-        return _context.Residents.OrderBy(r => r.LastName);
+        return _context.Residents
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName);
     }
 
     public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate,
@@ -48,7 +52,9 @@ public class ResidentResource
         var res = GetAllResidents(documentsStartDate);
         if (gender is not null)
             return res.Where(r => r.Gender == char.Parse(gender));
-        return res;
+        return res
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName);
     }
 
     public Resident? GetResidentById(int id, DateTime documentsStartDate)
