@@ -28,7 +28,7 @@ class Resident extends React.Component {
         return template.call(this);
     }
 
-    openCollapsible(e) {
+    openCollapsible(e) {    
         let elem = e.currentTarget
         elem.classList.toggle("active");
         let content = elem.nextElementSibling;

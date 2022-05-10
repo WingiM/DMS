@@ -1,7 +1,6 @@
 import "./Resident.css";
 import dotsImg from './img/resident3Dots.svg'
 import React from "react";
-import $ from 'jquery'
 
 function template() {
   return (
@@ -36,9 +35,14 @@ function template() {
                       <label>Серия и номер паспорта:</label>
                       <input name={"passportInformation"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.passportInformation} type={"text"}/>
                   </div>
+                  
                   <div className="resident-content-row">
                       <label>ИНН:</label>
                       <input name={"tin"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.tin}  type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Курс:</label>
+                      <input name={"course"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.course}  type="number"/>
                   </div>
                   <div className="resident-content-row">
                       <label>Рейтинг:</label>
@@ -52,14 +56,13 @@ function template() {
                       <label>Задолженость:</label>
                       <input name={"debt"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.debt} type="number"/>
                   </div>
-                  {
-                      this.props.showSaveBtn ?
-                          <div className="resident-content-row">
-                              <input type="submit" value="Сохранить"/>
-                          </div>
-                          : ""
-                  }
+                  
                   <div className={"resident-content-row"}>
+                      {
+                          this.props.showSaveBtn ?
+                              <input type="submit" value="Сохранить"/>
+                              : ""
+                      }
                       <input className={"evict-btn"} type={"submit"} value={"Выселить"}/>
                   </div>
               </form>

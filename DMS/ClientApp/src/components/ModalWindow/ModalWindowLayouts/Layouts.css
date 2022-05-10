@@ -1,0 +1,117 @@
+﻿.modal-content .resident-content-row {
+    box-shadow: none;
+    margin-bottom: 2%;
+}
+
+.modal-content label {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.modal-content input[type="submit"] {
+    width: 172px;
+    height: 42px;
+    align-items: center;
+}
+
+.modal-content div {
+    padding: 0 5%;
+}   
+
+/* Settlement Order */
+.settlement-order-body {
+    width: 80%;
+    margin: auto;
+    padding: 1%;
+}
+
+.settlement-orders {
+    width: 52.5%;
+    padding: 1%;
+}
+
+
+.mini {
+    letter-spacing: 0.4em;
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23px;
+    line-height: 26px;
+}
+
+.type {
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+.settlement-orders input[name='passportNumber'] {
+    max-width: 25%;
+    float: right;
+}
+
+.settlement-orders form .resident-content-row:nth-child(2) input {
+    margin-right: 42%;
+    margin-left: 0;
+}
+
+.settlement-orders input {
+    color: #3A7890;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    max-width: 67%;
+    height: 10px;
+    padding: 2% 3%;
+    float: right;
+}
+
+/* Rating Operations, Eviction orders, Transactions */
+.rating-operations, .eviction-orders, .transactions {
+    height: 35%;
+    width: 45%;
+}
+
+.rating-operations form, .eviction-orders form, .transactions form {
+    margin-top: 5%;
+}
+
+.rating-operations input, .eviction-orders input, .transactions input {
+    color: #3A7890;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    max-width: 45%;
+    height: 10px;
+    padding: 2% 3%;
+    float: right;
+    margin-right: 0;
+}
+
+
+/* Transaction Layout */
+.transactions {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.transactions .radio-label {
+    background: #D9FFFA;
+    border-radius: 10px;
+    width: 30%;
+    height: 3%;
+    cursor: pointer;
+    margin-right: 5%;
+}
+
+
+.transactions input[type="radio"]:checked + .radio-label {
+    background: #FFFFFF;
+    border: 1px solid #00938A;
+    border-radius: 10px;
+    width: 30%;
+    height: 3%;
+    cursor: pointer;
+}

@@ -42,7 +42,7 @@ function template() {
                    className="sidebar-btn" onClick={this.props.showResidents} href="#residents">
                     Проживающие
                 </a>
-                <a id="documents"
+                <a id="documents" onClick={this.props.showDocuments}
                    className="sidebar-btn" href="#documents">
                     Документы
                 </a>

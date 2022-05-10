@@ -4,6 +4,7 @@ import addButtonImg from './img/addResidentButton.svg'
 import closeButtonImg from './img/cross.svg'
 import Resident from "../Resident/Resident";
 import ModalWindow from "../ModalWindow";
+import ResidentsListLayout from "../ModalWindow/ModalWindowLayouts/ResidentsListLayout"
 
 function template() {
     return (
@@ -11,6 +12,7 @@ function template() {
         <div className="in-room-residents">
             <ModalWindow 
                 show={this.state.showModal} 
+                layout={<ResidentsListLayout residents={this.state.modalResidents}/>}
                 toggleHandler={this.toggleModal}
                 residents={this.state.modalResidents}
             />
