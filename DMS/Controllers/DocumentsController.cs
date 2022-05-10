@@ -66,7 +66,36 @@ public class DocumentsController : MyBaseController
             return Results.Conflict(res.Item2);
         }
         
-        return Results.Ok("Settled successfully!");
+        return Results.Ok(res.Item2);
+    }
+
+    [HttpDelete]
+    public async Task<IResult> DeleteDocument()
+    {
+        var documentType = Request.Headers["type"];
+        if (documentType.Count == 0)
+            return Results.BadRequest("Document type is not specified");
+        
+        string? data = await ParseRequestBody();
+
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
+
+        Tuple<bool, string?> res;
+        switch (documentType)
+        {
+            case "RatingOperation":
+                res = _documentsResource.DeleteDocument<RatingOperation>(data);
+                break;
+            case "Transaction":
+                res = _documentsResource.DeleteDocument<Transaction>(data);
+                break;
+            default:
+                Response.StatusCode = 409;
+                return Results.Conflict("Unknown document type");
+        }
+
+        return Results.Ok(res.Item2);
     }
 
     [HttpGet]
