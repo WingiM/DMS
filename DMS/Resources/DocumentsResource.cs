@@ -185,6 +185,9 @@ public class DocumentsResource
                 return new Tuple<bool, string?>(false,
                     "No resident with this id");
 
+            if (resident.RoomId is null)
+                return new Tuple<bool, string?>(false, "Resident is evicted");
+
             _context.RatingOperations.Add(ro);
             _context.SaveChanges();
             return new Tuple<bool, string?>(true, "Rating changed");
@@ -209,6 +212,9 @@ public class DocumentsResource
             if (resident is null)
                 return new Tuple<bool, string?>(false,
                     "No resident with this id");
+            
+            if (resident.RoomId is null)
+                return new Tuple<bool, string?>(false, "Resident is evicted");
 
             _context.Transactions.Add(t);
             _context.SaveChanges();

@@ -60,7 +60,7 @@ public class Resident
         return RatingOperations.Count(ro => ro.CategoryId == 1);
     }
 
-    internal double CountDebt()
+    internal double CountPaid()
     {
         return Transactions.Sum(t => t.Sum);
     }

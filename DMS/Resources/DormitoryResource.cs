@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text;
 using DMS.Models;
 using Microsoft.Extensions.Caching.Distributed;
@@ -76,5 +75,10 @@ public class DormitoryResource
         }
 
         return res;
+    }
+
+    public string GetConstant(string key)
+    {
+        return _cache.GetString(key);
     }
 }

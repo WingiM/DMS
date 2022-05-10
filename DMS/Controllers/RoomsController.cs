@@ -16,7 +16,7 @@ public class RoomsController : MyBaseController
             room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
             Residents = room.Residents
                 .OrderBy(r => r.LastName)
-                .Select(r => ConvertResident(r))
+                .Select(ConvertResident)
         };
 
     private readonly ILogger<RoomsController> _logger;
