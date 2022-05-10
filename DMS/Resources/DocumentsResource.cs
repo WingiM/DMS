@@ -44,7 +44,6 @@ public class DocumentsResource
             return new Tuple<bool, string?>(false,
                 "Error parsing request body");
 
-        _logger.Log(LogLevel.Information, "I'm here!");
         switch (document)
         {
             case Transaction t:
@@ -58,6 +57,44 @@ public class DocumentsResource
             default:
                 return new Tuple<bool, string?>(false, "Unknown document type");
         }
+    }
+
+    public Tuple<bool, string?> DeleteDocument<T>(string data) where T : class
+    {
+        var document = DeserializeDocument<T>(data);
+        if (document is null)
+            return new Tuple<bool, string?>(false,
+                "Error parsing request body");
+
+        try
+        {
+            switch (document)
+            {
+                case Transaction t:
+                    _logger.Log(LogLevel.Information, "Im here");
+                    _context.Transactions.Remove(t);
+                    break;
+                case RatingOperation ro:
+                    _context.RatingOperations.Remove(ro);
+                    break;
+                case SettlementOrder:
+                case EvictionOrder:
+                    return new Tuple<bool, string?>(false,
+                        "Cannot delete orders");
+                default:
+                    return new Tuple<bool, string?>(false,
+                        "Unknown document type");
+            }
+
+            _context.SaveChanges();
+            return new Tuple<bool, string?>(true, "Delete complete");
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+
+        return new Tuple<bool, string?>(false, "Error deleting document");
     }
 
     private Tuple<bool, string?> CreateSettlementOrder(SettlementOrder so)
@@ -95,7 +132,7 @@ public class DocumentsResource
             resident.RoomId = so.RoomId;
             _context.SaveChanges();
 
-            return new Tuple<bool, string?>(true, null);
+            return new Tuple<bool, string?>(true, "Settled successfully");
         }
         catch (Exception e)
         {
@@ -105,24 +142,87 @@ public class DocumentsResource
 
         return new Tuple<bool, string?>(false, errorMessage);
     }
-    
-    
-    // TODO: Other 3 documents
+
     private Tuple<bool, string?> CreateEvictionOrder(EvictionOrder eo)
     {
-        return null;
+        string? errorMessage;
+        try
+        {
+            var resident = _context.Residents.FirstOrDefault(r =>
+                r.ResidentId == eo.ResidentId);
+
+            if (resident is null)
+                return new Tuple<bool, string?>(false,
+                    "No resident with this id");
+
+            if (resident.RoomId is null)
+                return new Tuple<bool, string?>(false,
+                    "Resident is already evicted");
+
+            _context.EvictionOrders.Add(eo);
+            resident.RoomId = null;
+            _context.SaveChanges();
+            return new Tuple<bool, string?>(true, "Evicted successfully");
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Information, e.ToString());
+            errorMessage = GetErrorMessage(e);
+        }
+
+        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private Tuple<bool, string?> CreateRatingOperation(RatingOperation ro)
     {
-        return null;
+        string? errorMessage;
+        try
+        {
+            var resident = _context.Residents.FirstOrDefault(r =>
+                r.ResidentId == ro.ResidentId);
+
+            if (resident is null)
+                return new Tuple<bool, string?>(false,
+                    "No resident with this id");
+
+            _context.RatingOperations.Add(ro);
+            _context.SaveChanges();
+            return new Tuple<bool, string?>(true, "Rating changed");
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Information, e.ToString());
+            errorMessage = GetErrorMessage(e);
+        }
+
+        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private Tuple<bool, string?> CreateTransaction(Transaction t)
     {
-        return null;
+        string? errorMessage;
+        try
+        {
+            var resident = _context.Residents.FirstOrDefault(r =>
+                r.ResidentId == t.ResidentId);
+
+            if (resident is null)
+                return new Tuple<bool, string?>(false,
+                    "No resident with this id");
+
+            _context.Transactions.Add(t);
+            _context.SaveChanges();
+            return new Tuple<bool, string?>(true, "Transaction complete");
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Information, e.ToString());
+            errorMessage = GetErrorMessage(e);
+        }
+
+        return new Tuple<bool, string?>(false, errorMessage);
     }
-    
+
     private string GetErrorMessage(Exception e)
     {
         switch (e.InnerException)

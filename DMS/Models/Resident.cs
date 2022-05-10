@@ -32,6 +32,9 @@ public class Resident
 
     [Column("tin", TypeName = "varchar(12)")]
     public string? Tin { get; set; }
+    
+    [Column("course")]
+    public int? Course { get; set; }
 
     [Column("is_commercial", TypeName = "bool")]
     public bool IsCommercial { get; set; }

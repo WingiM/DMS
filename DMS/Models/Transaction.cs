@@ -6,7 +6,7 @@ namespace DMS.Models;
 [Table("transaction")]
 public class Transaction
 {
-    [Column("operation_id", TypeName = "int")] [Required] public int TransactionId { get; set; }
+    // [Column("operation_id", TypeName = "int")] [Required] public int TransactionId { get; set; }
 
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
 
