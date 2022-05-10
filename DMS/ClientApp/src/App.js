@@ -21,13 +21,17 @@ class App extends React.Component {
             showResidents: false,
             activeRoom: [],
             allResidentsList: [],
+            allResidentsFilterList: [],
         }
-
+        
+        //binds
         this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
         this.openRoomButtonClickHandler = this.openRoomButtonClickHandler.bind(this);
         this.closeRoomButtonClickHandler = this.closeRoomButtonClickHandler.bind(this);
         this.showResidentsBlockButtonClickHandler = this.showResidentsBlockButtonClickHandler.bind(this);
         this.addNewResidentHandler = this.addNewResidentHandler.bind(this);
+        this.filterResidentsHandler = this.filterResidentsHandler.bind(this);
+        this.updateAllResidentsList = this.updateAllResidentsList.bind(this);
     }
     
     /* Handlers */
@@ -39,7 +43,8 @@ class App extends React.Component {
             showRooms: false,
             showInRoomResidents: false,
             showResidents: true,
-            allResidentsList: data
+            allResidentsList: data,
+            allResidentsFilterList: data
         })
     }
     
@@ -64,14 +69,13 @@ class App extends React.Component {
     }
     
     addNewResidentHandler() {
-        
         this.state.allResidentsList.push({
                 ResidentId: null,
                 LastName: '',
                 FirstName: '',
                 Patronymic: '',
                 Gender: 'М',
-                BirthDate: 'Ж',
+                BirthDate: '',
                 PassportInformation: {SeriesAndNumber: null},
                 Tin: null,
                 Rating: null,
@@ -79,9 +83,28 @@ class App extends React.Component {
                 Reports: null,
             })
         this.setState({
-            allResidentsList: this.state.allResidentsList
+            allResidentsList: this.state.allResidentsList,
+            allResidentFilterList: this.state.allResidentsList,
         })
-        console.log(this.state.allResidentsList)
+    }
+    
+    // residents list filtration
+    async filterResidentsHandler(list) {
+        this.setState({
+            allResidentsFilterList: list,
+        })
+    }
+    
+    async updateAllResidentsList(elem, update=false) {
+        if (update) {
+            this.state.allResidentsList[
+                this.state.allResidentsList.indexOf(
+                    this.state.allResidentsList.find(
+                        i => i.ResidentId === elem.ResidentId))] = elem
+        }
+        else {
+            this.state.allResidentsList.push(elem)
+        }
     }
     
     /* Fetch Functions */
@@ -175,7 +198,10 @@ class App extends React.Component {
                                 <Residents 
                                     show={this.state.showResidents}
                                     residentsList={this.state.allResidentsList}
+                                    residentsFilterList={this.state.allResidentsFilterList}
                                     addResidentBtnClickHandler={this.addNewResidentHandler}
+                                    filterHandler={this.filterResidentsHandler}
+                                    updateResidentsList={this.updateAllResidentsList}
                                 />
                                 <RoomsBlock
                                     show={this.state.showRooms}
