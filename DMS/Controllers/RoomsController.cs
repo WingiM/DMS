@@ -65,4 +65,24 @@ public class RoomsController : DmsControllerBase
         var res = _resource.GetFloorsCount();
         return Results.Ok(res);
     }
+
+    [HttpPost]
+    [Route("/api/rooms/gender")]
+    public async Task<IResult> SetRoomGender()
+    {
+        var data = await ParseRequestBody();
+
+        if (data is null)
+            return Results.BadRequest("Could not parse request body");
+
+        var res = _resource.SetRoomGender(data);
+
+        if (!res.Item1)
+        {
+            Response.StatusCode = 409;
+            return Results.Conflict($"Cannot change room gender: {res.Item2}");
+        }
+
+        return Results.Ok("Gender changed successfully");
+    }
 }

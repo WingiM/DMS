@@ -23,18 +23,16 @@ public class DocumentsResource
 
     private T? DeserializeDocument<T>(string data) where T : class
     {
-        T? document = null;
         try
         {
-            document = JsonSerializer.Deserialize<T>(data);
+            return JsonSerializer.Deserialize<T>(data);
         }
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information,
                 "Failed to create a document:\n" + e);
+            return null;
         }
-
-        return document;
     }
 
     public Tuple<bool, string?> AddDocument<T>(string data) where T : class
@@ -91,15 +89,12 @@ public class DocumentsResource
         }
         catch (Exception)
         {
-            // ignored
+            return new Tuple<bool, string?>(false, "Error deleting document");
         }
-
-        return new Tuple<bool, string?>(false, "Error deleting document");
     }
 
     private Tuple<bool, string?> CreateSettlementOrder(SettlementOrder so)
     {
-        string? errorMessage;
         try
         {
             var resident = _context.Residents.FirstOrDefault(r =>
@@ -137,15 +132,12 @@ public class DocumentsResource
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information, e.ToString());
-            errorMessage = GetErrorMessage(e);
+            return new Tuple<bool, string?>(false, GetErrorMessage(e));
         }
-
-        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private Tuple<bool, string?> CreateEvictionOrder(EvictionOrder eo)
     {
-        string? errorMessage;
         try
         {
             var resident = _context.Residents.FirstOrDefault(r =>
@@ -167,15 +159,12 @@ public class DocumentsResource
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information, e.ToString());
-            errorMessage = GetErrorMessage(e);
+            return new Tuple<bool, string?>(false, GetErrorMessage(e));
         }
-
-        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private Tuple<bool, string?> CreateRatingOperation(RatingOperation ro)
     {
-        string? errorMessage;
         try
         {
             var resident = _context.Residents.FirstOrDefault(r =>
@@ -195,15 +184,12 @@ public class DocumentsResource
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information, e.ToString());
-            errorMessage = GetErrorMessage(e);
+            return new Tuple<bool, string?>(false, GetErrorMessage(e));
         }
-
-        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private Tuple<bool, string?> CreateTransaction(Transaction t)
     {
-        string? errorMessage;
         try
         {
             var resident = _context.Residents.FirstOrDefault(r =>
@@ -223,10 +209,8 @@ public class DocumentsResource
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information, e.ToString());
-            errorMessage = GetErrorMessage(e);
+            return new Tuple<bool, string?>(false, GetErrorMessage(e));
         }
-
-        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private string GetErrorMessage(Exception e)

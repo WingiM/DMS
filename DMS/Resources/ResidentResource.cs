@@ -116,9 +116,38 @@ public class ResidentResource
         return true;
     }
 
+    public bool EvictAll()
+    {
+        foreach (var resident in _context.Residents)
+        {
+            if (resident.RoomId is not null)
+            {
+                var order = new EvictionOrder
+                {
+                    ResidentId = resident.ResidentId,
+                    OrderDate = DateTime.UtcNow,
+                    Description = "Dormitory reset"
+                };
+
+                _context.EvictionOrders.Add(order);
+                resident.RoomId = null;
+            }
+        }
+        
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public Tuple<bool, string?> AddResident(string data)
     {
-        string? errorMessage;
         try
         {
             var resident = JsonSerializer.Deserialize<Resident>(data);
@@ -130,15 +159,12 @@ public class ResidentResource
         {
             _logger.Log(LogLevel.Information,
                 "Failed to insert resident:\n " + e);
-            errorMessage = GetErrorMessage(e);
+            return new Tuple<bool, string?>(false, GetErrorMessage(e));
         }
-
-        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     public Tuple<bool, string?> UpdateResident(int id, string data)
     {
-        string? errorMessage;
         try
         {
             var stored = _context.Residents.AsNoTracking()
@@ -166,10 +192,8 @@ public class ResidentResource
         {
             _logger.Log(LogLevel.Information,
                 "Failed to update resident\n " + e);
-            errorMessage = GetErrorMessage(e);
+            return new Tuple<bool, string?>(false, GetErrorMessage(e));
         }
-
-        return new Tuple<bool, string?>(false, errorMessage);
     }
 
     private string GetErrorMessage(Exception e)

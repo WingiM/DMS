@@ -96,7 +96,7 @@ public class DormitoryController : DmsControllerBase
         if (data is null)
             return Results.BadRequest("Error parsing request body");
 
-        var res = _resource.SetConstants(data);
+        var res = _resource.SetSafeConstants(data);
 
         if (!res.Item1)
         {
@@ -106,6 +106,42 @@ public class DormitoryController : DmsControllerBase
 
 
         return Results.Ok(
-            $"Setting completed. The following keys were not added: {res.Item2}");
+            "Setting completed." + res.Item2 == ""
+                ? ""
+                : $"The following keys were not added: {res.Item2}");
+    }
+
+    [HttpPost]
+    [Route("/api/stats/reset")]
+    public async Task<IResult> ResetDormitory()
+    {
+        var data = await ParseRequestBody();
+
+        if (data is null)
+            return Results.BadRequest("Error parsing request body");
+
+        var hardResetConstantsSettingResult =
+            _resource.SetHardResetConstants(data);
+        if (!hardResetConstantsSettingResult.Item1)
+        {
+            Response.StatusCode = 409;
+            return Results.Conflict(hardResetConstantsSettingResult.Item2);
+        }
+
+        var globalEvictionResult = _residentResource.EvictAll();
+        if (!globalEvictionResult)
+        {
+            Response.StatusCode = 409;
+            return Results.Conflict("Cannot evict all residents");
+        }
+
+        var roomsResettingResult = _resource.ResetRooms();
+        if (!roomsResettingResult.Item1)
+        {
+            Response.StatusCode = 409;
+            return Results.Conflict(roomsResettingResult.Item2);
+        }
+
+        return Results.Ok("Reset complete");
     }
 }

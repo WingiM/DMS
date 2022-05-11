@@ -31,17 +31,14 @@ public abstract class DmsControllerBase : ControllerBase
 
     protected async Task<string?> ParseRequestBody()
     {
-        string? data = null;
         using StreamReader reader = new StreamReader(Request.Body);
         try
         {
-            data = await reader.ReadToEndAsync();
+            return await reader.ReadToEndAsync();
         }
         catch
         {
-            // ignored
+            return null;
         }
-
-        return data;
     }
 }
