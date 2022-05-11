@@ -6,7 +6,7 @@ function template() {
     return (
         this.props.show ?
             <div className="residents">
-                <div className="residents-block-name">СПИСКИ</div>
+                <div className="residents-block-header">СПИСКИ</div>
                 <div className="residents-container">
                     <div className="residents-nav">
                         <input type="text" placeholder="Введите имя"/>

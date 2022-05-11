@@ -57,15 +57,17 @@ function template() {
                       <input name={"debt"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.debt} type="number"/>
                   </div>
                   
-                  <div className={"resident-content-row"}>
-                      {
-                          this.props.showSaveBtn ?
-                              <input type="submit" value="Сохранить"/>
-                              : ""
-                      }
-                      <input className={"evict-btn"} type={"submit"} value={"Выселить"}/>
-                  </div>
+                 
               </form>
+              <div className={"button-content-row"}>
+                  <input className={"evict-btn"} type={"submit"} value={"Выселить"}/>
+                  <input className={"transaction-btn"} type={"submit"} value={"Транзакция"}/>
+                  {
+                      this.props.showSaveBtn ?
+                          <input type="submit" value="Сохранить"/>
+                          : ""
+                  }
+              </div>
           </div>
       </div>
   );
