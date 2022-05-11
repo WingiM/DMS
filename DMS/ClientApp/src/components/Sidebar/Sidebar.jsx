@@ -13,7 +13,7 @@ function template() {
     }
     return (
         <div className="sidebar">
-            <a id="settings" href="#settings"><img alt="settings"
+            <a id="settings" href="#settings" onClick={(e) => this.props.showSettings(e)}><img alt="settings"
                                                    src={settingIco}/></a>
             <span id="sidebar-header">DMS</span>
 

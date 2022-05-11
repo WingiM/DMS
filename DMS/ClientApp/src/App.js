@@ -9,6 +9,10 @@ import Residents from "./components/Residents";
 import {Modal} from "reactstrap";
 import ModalWindow from "./components/ModalWindow";
 import Documents from "./components/Documents";
+import Settings from "./components/Settings";
+
+import settingIco from './components/Sidebar/img/settingsIco.svg'
+import activeSettingsIco from './components/Sidebar/img/activeSettingsIco.svg'
 
 class App extends React.Component {
     static displayName = App.name;
@@ -21,6 +25,7 @@ class App extends React.Component {
             showInRoomResidents: false,
             showResidents: false,
             showDocuments: false,
+            showSettings: false,
             activeRoom: [],
             allResidentsList: [],
         }
@@ -30,6 +35,7 @@ class App extends React.Component {
         this.closeRoomButtonClickHandler = this.closeRoomButtonClickHandler.bind(this);
         this.showDocumentsButtonClickHandler = this.showDocumentsButtonClickHandler.bind(this);
         this.showResidentsBlockButtonClickHandler = this.showResidentsBlockButtonClickHandler.bind(this);
+        this.showSettingsButtonClickHandler = this.showSettingsButtonClickHandler.bind(this)
         this.addNewResidentHandler = this.addNewResidentHandler.bind(this);
     }
 
@@ -43,8 +49,26 @@ class App extends React.Component {
             showInRoomResidents: false,
             showResidents: true,
             showDocuments: false,
+            showSettings: false,
             allResidentsList: data
         })
+    }
+
+    showSettingsButtonClickHandler(e) {
+        e.preventDefault();
+        this.setState({
+            showResidents: false,
+            showRooms: false,
+            showDocuments: false,
+            showSettings: !this.state.showSettings,
+        })
+        if (e.target.tagName === "IMG") {
+            e.target.src = this.state.showSettings ? settingIco : activeSettingsIco;
+            e.target.parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
+        } else {
+            e.target.children[0].src = this.state.showSettings ? settingIco : activeSettingsIco;
+            e.target.children[0].parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
+        }
     }
 
     async showDocumentsButtonClickHandler() {
@@ -53,6 +77,7 @@ class App extends React.Component {
             showResidents: false,
             showRooms: false,
             showDocuments: true,
+            showSettings: false,
             allResidentsList: data
         })
     }
@@ -62,7 +87,8 @@ class App extends React.Component {
         this.setState({
             showResidents: false,
             showRooms: true,
-            showDocuments: false
+            showDocuments: false,
+            showSettings: false,
         })
     }
 
@@ -200,6 +226,7 @@ class App extends React.Component {
                                     showRooms={this.showRoomsButtonClickHandler}
                                     showResidents={this.showResidentsBlockButtonClickHandler}
                                     showDocuments={this.showDocumentsButtonClickHandler}
+                                    showSettings={this.showSettingsButtonClickHandler}
                                 />
                                 <Residents
                                     show={this.state.showResidents}
@@ -218,6 +245,9 @@ class App extends React.Component {
                                 <Documents
                                     show={this.state.showDocuments}
                                     residentsList={this.state.allResidentsList}
+                                />
+                                <Settings
+                                    show={this.state.showSettings}
                                 />
                             </React.StrictMode>
                         }/>
