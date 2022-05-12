@@ -76,10 +76,6 @@ body {
     width: 100%;
 }
 
-#settings:focus {
-    /*background: white;*/
-}
-
 .stats-block {
     box-sizing: border-box;
     margin-top: 4.81%;

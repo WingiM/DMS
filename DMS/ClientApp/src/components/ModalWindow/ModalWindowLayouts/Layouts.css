@@ -115,3 +115,105 @@
     height: 3%;
     cursor: pointer;
 }
+
+/* Settings save layout */
+
+.settings-save {
+    width: 35%;
+    height: 35%;
+}
+
+.settings-save-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.settings-save .info {
+    display: inline-block;
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+    color: #3A7890;
+    
+    margin-top: 5%;
+}
+
+.settings-save .additional-info {
+    margin-top: 1.5%;
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    letter-spacing: 0.015em;
+    
+    color: rgba(58, 120, 144, 0.59);
+
+}
+
+.settings-save-content .password-repeat {
+    color: #3A7890;
+    opacity: 0.6;
+    border: 0;
+    width: 50%;
+    height: 35px;
+    border-radius: 12px;
+    margin-top: 10%;
+    margin-left: 0;
+
+    font-size: 16px;
+    font-family: 'Ubuntu', serif;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 18px;
+
+    padding: 0 65px;
+
+    background-size: 5.625%;
+    background: #D9FFFA url(../../Login/img/lock-icon.svg) no-repeat calc((24 / 365) * 100%);
+}
+
+.settings-save-content .buttons-container {
+    padding: 0;
+    width: 100%;
+    margin-top: 10%;
+    margin-left: 8%;
+}
+
+.settings-save-content .settings-btn {
+    outline: 0;
+    border: 0;
+    
+    background: #1ECBAD;
+    box-shadow: 0px 0px 15px rgba(0, 107, 94, 0.3);
+    border-radius: 12px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 25px;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 1% 9%;
+    
+    max-width: 40%;
+}
+
+.settings-save-content .buttons-container .cancel {
+    margin-right: 18.5%;
+    padding: 1% 13%;
+}
+
+.settings-save-content .buttons-container .done {
+    background: #C4C4C4;
+}
+
+.settings-save-content .buttons-container .active {
+    background: #2D8CB5;
+}

@@ -18,8 +18,8 @@ class Documents extends React.Component {
             layout: layout,
             layoutName: layoutName
         })
-        console.log(layout)
     }
+    
     render() {
         return template.call(this);
     }
