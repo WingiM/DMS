@@ -39,18 +39,18 @@ function template() {
                         <input type="number" name={"RoomCapacity"} onChange={this.handleChange} value={this.state.RoomCapacity} placeholder="..."/>
                     </div>
                     <button className="settings-save-btn" onClick={() => this.toggleModal(
-                        <SettingsSaveLayout applyStats={this.applyStats}/>, "settings-save")}>Сохранить</button>
+                        <SettingsSaveLayout toggleHandler={this.toggleModal} applyHardReset={this.applyHardReset}/>, "settings-save")}>Сохранить</button>
                     <div className="settings-container-block header">
                         <span>Стоимость проживания</span>
                     </div>
                     <div className="settings-container-block" style={{marginBottom: "0", height: "19%"}}>
                         <ul>
-                            <li> <span>для бюджета</span> <input type="number" name={"NonCommercialCost"} value={this.state.NonCommercialCost} placeholder="..."/></li>
-                            <li> <span>для коммерции</span> <input type="number" name={"CommercialCost"} value={this.state.CommercialCost} placeholder="..."/></li>
+                            <li> <span>для бюджета</span> <input type="number" onChange={this.handleChange} name={"NonCommercialCost"} value={this.state.NonCommercialCost} placeholder="..."/></li>
+                            <li> <span>для коммерции</span> <input type="number" onChange={this.handleChange} name={"CommercialCost"} value={this.state.CommercialCost} placeholder="..."/></li>
                         </ul>
                     
                     </div>
-                    <button className="settings-constant-change-btn">Изменить</button>
+                    <button onClick={this.applySafeReset} className="settings-constant-change-btn">Изменить</button>
                 </div>
             </div>
         </div> : ""

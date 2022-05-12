@@ -198,6 +198,7 @@
 }
 
 .settings-save-content .settings-btn {
+    transition: background-color 0.5s;
     outline: 0;
     border: 0;
     cursor: pointer;
@@ -220,10 +221,21 @@
     padding: 1% 13%;
 }
 
+.settings-save-content .buttons-container .cancel:hover {
+    background-color: #1aab92;
+}
+
 .settings-save-content .buttons-container .done {
     background: #C4C4C4;
+    cursor: auto;
 }
 
 .settings-save-content .buttons-container .active {
     background: #2D8CB5;
 }
+
+.settings-save-content .buttons-container .active:hover {
+    background: #2487af;
+}
+
+

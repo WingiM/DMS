@@ -18,7 +18,8 @@ class Setting extends React.Component {
         }
         
         this.handleChange = this.handleChange.bind(this)
-        this.applyStats = this.applyStats.bind(this)
+        this.applyHardReset = this.applyHardReset.bind(this)
+        this.applySafeReset = this.applySafeReset.bind(this)
     }
     
     async componentDidMount() {
@@ -60,8 +61,8 @@ class Setting extends React.Component {
             })
     }
     
-    async applyStats() {
-        const requestUrl = "api/stats/constants"
+    async applyHardReset() {
+        const requestUrl = "api/stats/reset"
         await fetch(requestUrl, {
             method: "POST",
             headers: {
@@ -72,6 +73,23 @@ class Setting extends React.Component {
                 Floors: this.state.Floors,
                 RoomsCount: this.state.RoomsCount,
                 RoomCapacity: this.state.RoomCapacity,
+            })
+        })
+            .then((response) => response.json())
+            .then((val) => {
+                console.log(val)
+            })
+    }
+
+    async applySafeReset() {
+        const requestUrl = "api/stats/constants"
+        await fetch(requestUrl, {
+            method: "POST",
+            headers: {
+                "Authorization": localStorage.getItem("token"),
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({
                 CommercialCost: this.state.CommercialCost,
                 NonCommercialCost: this.state.NonCommercialCost,
             })
