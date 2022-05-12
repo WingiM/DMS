@@ -7,7 +7,7 @@ function template() {
     return (
         this.props.show ?
             <div className="residents">
-                <div className="residents-block-name">СПИСКИ</div>
+                <div className="residents-block-header">СПИСКИ</div>
                 <div className="residents-container">
                     <div className="residents-nav">
                         <input type="text" onInput={(e) => this.filterByName(e)} placeholder="Введите имя"/>
@@ -38,8 +38,7 @@ function template() {
                                                   patronymic={resident["Patronymic"]}
                                                   gender={resident["Gender"]}
                                                   birthDate={resident["BirthDate"]}
-                                                  passportInformation={resident["PassportInformation"] === 
-                                                    null ? '' : resident["PassportInformation"]["SeriesAndNumber"]}
+                                                  passportInformation={resident["PassportInformation"] === null ? '' : resident["PassportInformation"]}
                                                   tin={resident["Tin"]}
                                                   rating={resident["Rating"]}
                                                   debt={resident["Debt"]}

@@ -25,12 +25,8 @@
 
 .state-dot {
     float: right;
-    margin-right: 10px;
     margin-top: 4px;
-}
-
-.filters button {
-    cursor: pointer;
+    margin-right: 18px;
 }
 
 .resident-content {
@@ -41,6 +37,23 @@
     color: #3A7890;
     font-size: 17px;
 
+}
+
+.resident-content-row {
+    box-sizing: border-box;
+    margin-top: 2%;
+    vertical-align: center;
+    line-height: 25px;
+}
+
+.resident-content-row label {
+    margin-right: 1.5%;
+}
+
+/* All inputs*/
+
+.filters button {
+    cursor: pointer;
 }
 
 .resident-content input {
@@ -57,17 +70,6 @@
     outline: none;
     vertical-align: center;
     float: right;
-}
-
-.resident-content-row {
-    box-sizing: border-box;
-    margin-top: 2%;
-    vertical-align: center;
-    line-height: 25px;
-}
-
-.resident-content-row label {
-    margin-right: 1.5%;
 }
 
 .resident-content input:active {
@@ -122,6 +124,8 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+/* Submit buttons */
+
 input[type="submit"] {
     background-color: #1ECBAD;
     color: #FFF;
@@ -132,15 +136,30 @@ input[type="submit"] {
     transition: background-color 0.5s;
 }
 
+.button-content-row {
+    width: 100%;
+    margin-top: 5%;
+    float: right;
+}
+
+.button-content-row input {
+    margin-left: 3%;
+    padding: 1.5% 4%;
+}
+
+.button-content-row .transaction-btn {
+    background: #299DCE;
+}
+
 input[type="submit"]:hover {
     background-color: #19A38BFF;
 }
 
-input[type="submit"].evict-btn {
+.button-content-row .evict-btn {
     background: #FF8787;
     color: #FFF
 }
 
-input[type="submit"].evict-btn:hover {
+.button-content-row .evict-btn:hover {
     background: #E75050;
 }

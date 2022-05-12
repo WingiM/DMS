@@ -13,13 +13,20 @@ class Resident extends React.Component {
             Patronymic: this.props.patronymic,
             Gender: this.props.gender,
             BirthDate: this.props.birthDate.slice(0, 10),
-            SeriesAndNumber: this.props.passportInformation,
+
+            PassportInformation: this.props.passportInformation,
+            SeriesAndNumber: this.props.passportInformation["SeriesAndNumber"],
+            IssuedBy: this.props.passportInformation["IssuedBy"],
+            IssuedDate: this.props.passportInformation["IssuedDate"],
+            DepartmentCode: this.props.passportInformation["DepartmentCode"],
+            
             Tin: this.props.tin,
             Rating: this.props.rating,
             Debt: this.props.debt,
             Reports: this.props.reports,
-            PassportInformation: {SeriesAndNumber: this.props.passportInformation},
             RoomId: this.props.roomId,
+            Course: this.props.course,
+            Address: this.props.address
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -37,7 +44,7 @@ class Resident extends React.Component {
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
-            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.maxHeight = content.scrollHeight + 150 + "px";
         }
     }
     
@@ -56,10 +63,16 @@ class Resident extends React.Component {
             Patronymic: this.state.Patronymic,
             Gender: this.state.Gender,
             BirthDate: this.state.BirthDate + "T00:00:00Z",
-            PassportInformation: {SeriesAndNumber: this.state.SeriesAndNumber},
+            PassportInformation: {
+                SeriesAndNumber: this.state.SeriesAndNumber,
+                IssueBy: this.state.IssuedBy,
+                IssuedDate: this.state.IssuedDate,
+                DepartmentCode: this.state.DepartmentCode,
+            },
             Tin: this.state.Tin,
             RoomId: this.state.RoomId,
-            Course: this.props.course
+            Course: this.state.Course,
+            Address: this.state.Address
         }
         const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {

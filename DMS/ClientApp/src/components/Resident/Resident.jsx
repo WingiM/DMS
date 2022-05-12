@@ -17,8 +17,8 @@ function template() {
               {this.state.Course === 1 ? <img alt={"dot"} className={"state-dot"} src={greenDot}/> : ''}
               {this.state.RoomId === null ? <img alt={"dot"} className={"state-dot"} src={yellowDot}/> : ''}
           </button>
-          <div className="resident-content" style={{maxHeight: this.state.ResidentId !== null ? "0" : "188px"}}>
-              <form onSubmit={this.handleSubmit}>
+          <div className="resident-content" style={{maxHeight: this.state.ResidentId !== null ? null : "188px"}}>
+              <form>
                   <div className="resident-content-row">
                       <label>Фамилия:</label> <input autoFocus={this.state.ResidentId === null} name={"LastName"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.LastName} type="text"/> <br/>
                   </div>
@@ -44,8 +44,29 @@ function template() {
                       <input name={"SeriesAndNumber"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.SeriesAndNumber} type={"text"}/>
                   </div>
                   <div className="resident-content-row">
+                      <label>Кем выдан:</label>
+                      <input name={"IssueBy"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssuedBy}  type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Дата выдачи:</label>
+                      <input name={"IssueDate"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssuedDate}  type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Код подразделения:</label>
+                      <input name={"DepartmentCode"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.DepartmentCode} type="number"/>
+                  </div>
+
+                  <div className="resident-content-row">
                       <label>ИНН:</label>
-                      <input name={"Tin"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.Tin}  type="text"/>
+                      <input name={"Tin"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.Tin} style={{width: "35%", marginRight: "15%"}} type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Адрес прописки:</label>
+                      <input name={"Address"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.Address}  style={{width: "35%", marginRight: "15%"}} type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Курс:</label>
+                      <input name={"Course"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.Course}  type="number"/>
                   </div>
                   <div className="resident-content-row">
                       <label>Рейтинг:</label>
@@ -59,17 +80,16 @@ function template() {
                       <label>Задолженость:</label>
                       <input name={"Debt"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.Debt} type="number"/>
                   </div>
+              </form>
+              <div className={"button-content-row"}>
+                  <input className={"evict-btn"} type={"submit"} value={"Выселить"}/>
+                  <input className={"transaction-btn"} type={"submit"} value={"Транзакция"}/>
                   {
                       this.props.showSaveBtn ?
-                          <div className="resident-content-row">
-                              <input type="submit" value="Сохранить"/>
-                          </div>
+                          <input type="submit" onClick={(e) => this.handleSubmit(e)} value="Сохранить"/>
                           : ""
                   }
-                  <div className={"resident-content-row"}>
-                      <input className={"evict-btn"} type={"submit"} value={"Выселить"}/>
-                  </div>
-              </form>
+              </div>
           </div>
       </div>
   );

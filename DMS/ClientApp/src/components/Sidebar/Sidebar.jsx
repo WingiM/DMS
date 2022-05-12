@@ -13,8 +13,9 @@ function template() {
     }
     return (
         <div className="sidebar">
-            <a id="settings" href="#settings"><img alt="settings"
-                                                   src={settingIco}/></a>
+            <a id="settings" href="#settings" onClick={(e) => 
+                this.props.showSettings(e)}><img alt="settings" src={settingIco}/></a>
+                                                                                               
             <span id="sidebar-header">DMS</span>
 
             <div className="stats-block">
@@ -42,7 +43,7 @@ function template() {
                    className="sidebar-btn" onClick={this.props.showResidents} href="#residents">
                     Проживающие
                 </a>
-                <a id="documents"
+                <a id="documents" onClick={this.props.showDocuments}
                    className="sidebar-btn" href="#documents">
                     Документы
                 </a>
