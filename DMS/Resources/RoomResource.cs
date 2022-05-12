@@ -57,12 +57,11 @@ public class RoomResource : ResourceBase
         try
         {
             var deserialized =
-                JsonSerializer.Deserialize<Dictionary<string, string>>(data);
+                JsonSerializer.Deserialize<Dictionary<string, Object>>(data);
 
-            if (!int.TryParse(deserialized!["RoomId"], out var res))
-                throw new InvalidRequestDataException("Wrong room id value");
-
-            if (!char.TryParse(deserialized["Gender"], out var gender))
+            var res = (int)deserialized!["RoomId"];
+            if (!char.TryParse(deserialized["Gender"].ToString(),
+                    out var gender) || !new[] { 'M', 'F' }.Contains(gender))
                 throw new InvalidRequestDataException("Wrong gender value");
 
             var room = _context.Rooms.First(r => r.RoomId == res);
@@ -73,6 +72,10 @@ public class RoomResource : ResourceBase
         {
             throw new InvalidRequestDataException(
                 "Could not deserialize request body", e);
+        }
+        catch (InvalidCastException e)
+        {
+            throw new InvalidRequestDataException("Wrong room id value", e);
         }
         catch (InvalidOperationException e)
         {
