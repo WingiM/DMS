@@ -119,7 +119,7 @@ public class DormitoryController : DmsControllerBase
             var data = await ParseRequestBody();
 
             _resource.SetHardResetConstants(data);
-            _residentResource.EvictAll();
+            _residentResource.ResetAll();
             _resource.ResetRooms();
 
             return Results.Ok("Reset complete");

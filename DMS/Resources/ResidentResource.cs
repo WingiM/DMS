@@ -111,7 +111,7 @@ public class ResidentResource : ResourceBase
         }
     }
 
-    public void EvictAll()
+    public void ResetAll()
     {
         try
         {
@@ -129,6 +129,7 @@ public class ResidentResource : ResourceBase
 
                 _context.EvictionOrders.Add(order);
                 resident.RoomId = null;
+                resident.Course++;
             }
 
             _context.SaveChanges();
