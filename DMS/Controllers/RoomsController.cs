@@ -1,4 +1,5 @@
-﻿using DMS.Models;
+﻿using DMS.Exceptions;
+using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace DMS.Controllers;
 [ApiController]
 [Authorize]
 [Route("/api/[controller]")]
-public class RoomsController : MyBaseController
+public class RoomsController : DmsControllerBase
 {
     private static readonly Func<Room, object> ConvertRoom =
         room => new
@@ -18,14 +19,11 @@ public class RoomsController : MyBaseController
                 .OrderBy(r => r.LastName)
                 .Select(ConvertResident)
         };
-
-    private readonly ILogger<RoomsController> _logger;
+    
     private readonly RoomResource _resource;
 
-    public RoomsController(RoomResource resource,
-        ILogger<RoomsController> logger)
+    public RoomsController(RoomResource resource)
     {
-        _logger = logger;
         _resource = resource;
     }
 
@@ -33,15 +31,16 @@ public class RoomsController : MyBaseController
     [Route("/api/rooms/{id:int}")]
     public IResult GetWithId(int id)
     {
-        DateTime resultDate = ParseDate(Request.Headers["date"]);
-
-        var room = _resource.GetRoomWithResidents(id, resultDate);
-        if (room is null)
+        try
         {
-            return Results.BadRequest("Room id incorrect");
+            DateTime resultDate = ParseDate(Request.Headers["date"]);
+            var room = _resource.GetRoomWithResidents(id, resultDate);
+            return Results.Ok(ConvertRoom(room));
         }
-
-        return Results.Ok(ConvertRoom(room));
+        catch (InvalidOperationException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
     }
 
     [HttpGet]
@@ -49,11 +48,6 @@ public class RoomsController : MyBaseController
     public IResult GetWithFloorNumber(int floor)
     {
         var res = _resource.GetAllRoomsOnFloor(floor).ToArray();
-        if (!res.Any())
-        {
-            return Results.BadRequest("Floor number incorrect");
-        }
-
         return Results.Ok(res.Select(r => new
             { r.RoomId, IsFull = r.Capacity == r.Residents.Count }));
     }
@@ -64,5 +58,26 @@ public class RoomsController : MyBaseController
     {
         var res = _resource.GetFloorsCount();
         return Results.Ok(res);
+    }
+
+    [HttpPost]
+    [Route("/api/rooms/gender")]
+    public async Task<IResult> SetRoomGender()
+    {
+        try
+        {
+            var data = await ParseRequestBody();
+            _resource.SetRoomGender(data);
+            return Results.Ok("Room gender changed successfully");
+        }
+        catch (InvalidRequestDataException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
+        
     }
 }
