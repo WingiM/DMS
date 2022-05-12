@@ -35,10 +35,26 @@ function template() {
                       <label>Серия и номер паспорта:</label>
                       <input name={"passportInformation"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.passportInformation} type={"text"}/>
                   </div>
+                  <div className="resident-content-row">
+                      <label>Кем выдан:</label>
+                      <input name={"IssueBy"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.issuedBy}  type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Дата выдачи:</label>
+                      <input name={"IssueDate"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.issuedDate}  type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Код подразделения:</label>
+                      <input name={"DepartmentCode"} onChange={this.handleChange} readOnly={false} value={this.state.departmentCode} type="number"/>
+                  </div>
                   
                   <div className="resident-content-row">
                       <label>ИНН:</label>
-                      <input name={"tin"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.tin}  type="text"/>
+                      <input name={"tin"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.tin} style={{width: "35%", marginRight: "15%"}} type="text"/>
+                  </div>
+                  <div className="resident-content-row">
+                      <label>Адрес прописки:</label>
+                      <input name={"Address"} onChange={this.handleChange} readOnly={false} value={this.state.address}  style={{width: "35%", marginRight: "15%"}}type="text"/>
                   </div>
                   <div className="resident-content-row">
                       <label>Курс:</label>

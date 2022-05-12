@@ -1,11 +1,12 @@
 .residents {
     box-sizing: border-box;
     float: right;
-    width: 68.75%;
+    width: 75%;
     margin-top: 2.96875%;
     height: 90.741%;
-    margin-right: 3.4375%;
+    margin-right: 1%;
 }
+
 
 .residents-block-header {
     height: 6.5741%;
@@ -23,7 +24,7 @@
 }
 
 .sidebar {
-    margin-right: 4%;
+    margin-right: 2%;
 }
 
 /* Filters and nav*/
@@ -125,7 +126,7 @@
 }
 
 .residents-list .resident-content-row {
-    width: calc(430 / 1215 * 100%);
+    width: 33%;
     flex-shrink: 1;
     page-break-inside: avoid;
     break-inside: avoid;

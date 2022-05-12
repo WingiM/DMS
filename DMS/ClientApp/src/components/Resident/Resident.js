@@ -17,7 +17,11 @@ class Resident extends React.Component {
             tin: this.props.tin,
             rating: this.props.rating,
             debt: this.props.debt,
-            reports: this.props.reports
+            reports: this.props.reports,
+            issueBy: this.props.issuedBy,
+            issuedDate: this.props.issuedDate, 
+            departmentCode: this.props.departmentCode,
+            address: this.props.address
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
