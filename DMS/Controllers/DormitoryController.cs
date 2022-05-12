@@ -1,8 +1,8 @@
-using System.Text;
-using DMS.Models;
+using DMS.Exceptions;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Controllers;
 
@@ -11,14 +11,12 @@ namespace DMS.Controllers;
 [Authorize]
 public class DormitoryController : DmsControllerBase
 {
-    private readonly ILogger<DormitoryController> _logger;
     private readonly DormitoryResource _resource;
     private readonly ResidentResource _residentResource;
 
-    public DormitoryController(ILogger<DormitoryController> logger,
-        DormitoryResource resource, ResidentResource residentResource)
+    public DormitoryController(DormitoryResource resource,
+        ResidentResource residentResource)
     {
-        _logger = logger;
         _resource = resource;
         _residentResource = residentResource;
     }
@@ -60,16 +58,17 @@ public class DormitoryController : DmsControllerBase
             var nonCommercialCost = -1 * int.Parse(_resource.GetConstant(
                 "NonCommercialCost"));
 
-            var result =
-                _residentResource.AccrualAll(commercialCost, nonCommercialCost);
-            if (result)
-                return Results.Ok("Transactions complete");
-            return Results.Conflict("Cannot create transactions");
+            _residentResource.AccrualAll(commercialCost, nonCommercialCost);
+            return Results.Ok("Transactions complete");
         }
         catch (FormatException)
         {
             return Results.BadRequest(
                 "Dormitory constants not set or have bad value");
+        }
+        catch (DbUpdateException e)
+        {
+            return Results.Conflict(e.Message);
         }
     }
 
@@ -91,57 +90,47 @@ public class DormitoryController : DmsControllerBase
     [Route("/api/stats/constants")]
     public async Task<IResult> SetConstants()
     {
-        var data = await ParseRequestBody();
-
-        if (data is null)
-            return Results.BadRequest("Error parsing request body");
-
-        var res = _resource.SetSafeConstants(data);
-
-        if (!res.Item1)
+        try
         {
-            Response.StatusCode = 409;
-            return Results.Conflict(res.Item2);
+            var data = await ParseRequestBodyWithException();
+            var res = _resource.SetSafeConstants(data);
+            
+            return Results.Ok(
+                "Setting completed." + res == ""
+                    ? ""
+                    : $"The following keys were not added: {res}");
         }
-
-
-        return Results.Ok(
-            "Setting completed." + res.Item2 == ""
-                ? ""
-                : $"The following keys were not added: {res.Item2}");
+        catch (InvalidRequestDataException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 
     [HttpPost]
     [Route("/api/stats/reset")]
     public async Task<IResult> ResetDormitory()
     {
-        var data = await ParseRequestBody();
+        try
+        {
+            var data = await ParseRequestBodyWithException();
 
-        if (data is null)
-            return Results.BadRequest("Error parsing request body");
-
-        var hardResetConstantsSettingResult =
             _resource.SetHardResetConstants(data);
-        if (!hardResetConstantsSettingResult.Item1)
-        {
-            Response.StatusCode = 409;
-            return Results.Conflict(hardResetConstantsSettingResult.Item2);
-        }
+            _residentResource.EvictAll();
+            _resource.ResetRooms();
 
-        var globalEvictionResult = _residentResource.EvictAll();
-        if (!globalEvictionResult)
-        {
-            Response.StatusCode = 409;
-            return Results.Conflict("Cannot evict all residents");
+            return Results.Ok("Reset complete");
         }
-
-        var roomsResettingResult = _resource.ResetRooms();
-        if (!roomsResettingResult.Item1)
+        catch (InvalidRequestDataException e)
         {
-            Response.StatusCode = 409;
-            return Results.Conflict(roomsResettingResult.Item2);
+            return Results.BadRequest(e.Message);
         }
-
-        return Results.Ok("Reset complete");
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DMS.Models;
+﻿using DMS.Exceptions;
+using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,11 @@ public class RoomsController : DmsControllerBase
                 .OrderBy(r => r.LastName)
                 .Select(ConvertResident)
         };
-
-    private readonly ILogger<RoomsController> _logger;
+    
     private readonly RoomResource _resource;
 
-    public RoomsController(RoomResource resource,
-        ILogger<RoomsController> logger)
+    public RoomsController(RoomResource resource)
     {
-        _logger = logger;
         _resource = resource;
     }
 
@@ -33,15 +31,16 @@ public class RoomsController : DmsControllerBase
     [Route("/api/rooms/{id:int}")]
     public IResult GetWithId(int id)
     {
-        DateTime resultDate = ParseDate(Request.Headers["date"]);
-
-        var room = _resource.GetRoomWithResidents(id, resultDate);
-        if (room is null)
+        try
         {
-            return Results.BadRequest("Room id incorrect");
+            DateTime resultDate = ParseDate(Request.Headers["date"]);
+            var room = _resource.GetRoomWithResidents(id, resultDate);
+            return Results.Ok(ConvertRoom(room));
         }
-
-        return Results.Ok(ConvertRoom(room));
+        catch (InvalidOperationException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
     }
 
     [HttpGet]
@@ -49,11 +48,6 @@ public class RoomsController : DmsControllerBase
     public IResult GetWithFloorNumber(int floor)
     {
         var res = _resource.GetAllRoomsOnFloor(floor).ToArray();
-        if (!res.Any())
-        {
-            return Results.BadRequest("Floor number incorrect");
-        }
-
         return Results.Ok(res.Select(r => new
             { r.RoomId, IsFull = r.Capacity == r.Residents.Count }));
     }
@@ -70,19 +64,20 @@ public class RoomsController : DmsControllerBase
     [Route("/api/rooms/gender")]
     public async Task<IResult> SetRoomGender()
     {
-        var data = await ParseRequestBody();
-
-        if (data is null)
-            return Results.BadRequest("Could not parse request body");
-
-        var res = _resource.SetRoomGender(data);
-
-        if (!res.Item1)
+        try
         {
-            Response.StatusCode = 409;
-            return Results.Conflict($"Cannot change room gender: {res.Item2}");
+            var data = await ParseRequestBodyWithException();
+            _resource.SetRoomGender(data);
+            return Results.Ok("Room gender changed successfully");
         }
-
-        return Results.Ok("Gender changed successfully");
+        catch (InvalidRequestDataException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
+        
     }
 }

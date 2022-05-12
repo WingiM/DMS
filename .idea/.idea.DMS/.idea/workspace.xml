@@ -8,22 +8,19 @@
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" afterDir="false" />
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Update SettlementOrder model&#10;POST request to edit room gender&#10;Dormitory reset done">
+      <change afterPath="$PROJECT_DIR$/DMS/Exceptions/InvalidRequestDataException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DMS/Resources/ResourceBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/DmsControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DmsControllerBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/SettlementOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/SettlementOrder.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +42,6 @@
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///home/wingim/RiderProjects/DMS/DMS/Migrations/ApplicationContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/wingim/RiderProjects/DMS/DMS/Migrations/ApplicationContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -134,7 +129,6 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5df6510b-7ccf-496e-989e-872805d77029" name="Changes" comment="" />
       <created>1651440189802</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -164,6 +158,7 @@
       <workItem from="1652119587962" duration="5201000" />
       <workItem from="1652162256259" duration="9476000" />
       <workItem from="1652173976287" duration="3957000" />
+      <workItem from="1652334860589" duration="1552000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -242,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652170963289</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Update SettlementOrder model&#10;POST request to edit room gender&#10;Dormitory reset done">
+      <created>1652299549156</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1652299549156</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,7 +288,8 @@
     <MESSAGE value="Room controller now also returns IsFull field" />
     <MESSAGE value="Gender filter in GetAllResidents header" />
     <MESSAGE value="Change database Transaction and RatingOperation tables primary key to composite (ResId + Date)&#10;Add new &quot;Course&quot; column to Resident&#10;All documents can be added now&#10;Add deleting of transactions and rating operations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change database Transaction and RatingOperation tables primary key to composite (ResId + Date)&#10;Add new &quot;Course&quot; column to Resident&#10;All documents can be added now&#10;Add deleting of transactions and rating operations" />
+    <MESSAGE value="Update SettlementOrder model&#10;POST request to edit room gender&#10;Dormitory reset done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update SettlementOrder model&#10;POST request to edit room gender&#10;Dormitory reset done" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

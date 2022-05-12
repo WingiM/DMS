@@ -1,4 +1,5 @@
-﻿using DMS.Resources;
+﻿using DMS.Exceptions;
+using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,13 +10,10 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class ResidentsController : DmsControllerBase
 {
-    private readonly ILogger<ResidentsController> _logger;
     private readonly ResidentResource _resource;
 
-    public ResidentsController(ILogger<ResidentsController> logger,
-        ResidentResource resource)
+    public ResidentsController(ResidentResource resource)
     {
-        _logger = logger;
         _resource = resource;
     }
 
@@ -34,63 +32,75 @@ public class ResidentsController : DmsControllerBase
     [HttpPost]
     public async Task<IResult> AddResident()
     {
-        var data = await ParseRequestBody();
-
-        if (data is null)
-            return Results.BadRequest("Error parsing request body");
-        
-        var addResult = _resource.AddResident(data);
-
-        if (!addResult.Item1)
+        try
         {
-            Response.StatusCode = 409;
-            return Results.Conflict(addResult.Item2);
+            var data = await ParseRequestBodyWithException();
+            _resource.AddResident(data);
+            return Results.Ok("Added successfully");
         }
-            
-        return Results.Ok("Added successfully");
+        catch (InvalidOperationException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 
     [HttpGet]
     [Route("/api/[controller]/{id:int}")]
     public IResult GetResidentById(int id)
     {
-        DateTime resultDate = ParseDate(Request.Headers["date"]);
-
-        var res = _resource.GetResidentById(id, resultDate);
-        if (res is null)
-            return Results.BadRequest("Wrong id");
-
-        return Results.Ok(ConvertResident(res));
+        try
+        {
+            DateTime resultDate = ParseDate(Request.Headers["date"]);
+            var res = _resource.GetResidentById(id, resultDate);
+            return Results.Ok(ConvertResident(res));
+        }
+        catch (InvalidOperationException)
+        {
+            return Results.Conflict("No resident with this ID");
+        }
+        
     }
 
     [HttpPut]
     [Route("/api/[controller]/{id:int}")]
     public async Task<IResult> UpdateResidentInfo(int id)
     {
-        var data = await ParseRequestBody();
-
-        if (data is null)
-            return Results.BadRequest("Error parsing request body");
-
-        var updateResult = _resource.UpdateResident(id, data);
-
-        if (!updateResult.Item1)
+        try
         {
-            Response.StatusCode = 409;
-            return Results.Conflict(updateResult.Item2);
+            var data = await ParseRequestBodyWithException();
+            _resource.UpdateResident(id, data);
+            return Results.Ok("Updated successfully");
         }
-        
-        return Results.Ok("Updated successfully");
+        catch (InvalidRequestDataException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 
     [HttpDelete]
     [Route("/api/[controller]/{id:int}")]
     public IResult DeleteResident(int id)
     {
-        var res = _resource.DeleteResident(id);
-        if (!res)
-            return Results.BadRequest("Wrong resident id");
-
-        return Results.Ok("Deleted successfully");
+        try
+        {
+            _resource.DeleteResident(id);
+            return Results.Ok("Deleted successfully");
+        }
+        catch (InvalidOperationException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 }

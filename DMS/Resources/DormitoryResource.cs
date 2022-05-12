@@ -2,11 +2,12 @@ using System.Text;
 using DMS.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
+using DMS.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Resources;
 
-public class DormitoryResource
+public class DormitoryResource : ResourceBase
 {
     private static readonly string[] SafeConstants =
     {
@@ -47,38 +48,38 @@ public class DormitoryResource
         };
     }
 
-    public Tuple<bool, string> SetSafeConstants(string data)
+    public string SetSafeConstants(string data)
     {
-        var unusedKeys = new List<string?>();
-        Dictionary<string, string?>? constants = null;
         try
         {
-            constants =
+            var unusedKeys = new List<string?>();
+            var constants =
                 JsonSerializer.Deserialize<Dictionary<string, string?>>(data);
+
+            foreach (var key in SafeConstants)
+            {
+                if (!constants!.ContainsKey(key) ||
+                    !int.TryParse(constants[key], out var res) ||
+                    res < 0)
+                {
+                    unusedKeys.Add(key);
+                    continue;
+                }
+
+                _cache.Set(key, Encoding.UTF8.GetBytes(constants[key]!));
+            }
+
+            return string.Join(", ", unusedKeys);
+        }
+        catch (NullReferenceException e)
+        {
+            throw new InvalidRequestDataException(
+                "Could not deserialize request body", e);
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevel.Information, e.ToString());
+            throw new Exception(GetExceptionMessage(e), e);
         }
-
-        if (constants is null)
-            return new Tuple<bool, string>(false,
-                "Could not parse request body");
-
-        foreach (var key in SafeConstants)
-        {
-            if (!constants.ContainsKey(key) ||
-                !int.TryParse(constants[key], out var res) ||
-                res < 0)
-            {
-                unusedKeys.Add(key);
-                continue;
-            }
-
-            _cache.Set(key, Encoding.UTF8.GetBytes(constants[key]!));
-        }
-
-        return new Tuple<bool, string>(true, string.Join(", ", unusedKeys));
     }
 
     public Dictionary<string, string> GetConstants()
@@ -92,80 +93,76 @@ public class DormitoryResource
         return res;
     }
 
-    public Tuple<bool, string?> SetHardResetConstants(string data)
+    public void SetHardResetConstants(string data)
     {
-        Dictionary<string, string?>? constants = null;
         try
         {
-            constants =
+            var constants =
                 JsonSerializer.Deserialize<Dictionary<string, string?>>(data);
+
+            foreach (var key in HardResetConstants)
+            {
+                if (!constants!.ContainsKey(key))
+                    throw new InvalidRequestDataException(
+                        $"No value for {key}");
+
+                if (!int.TryParse(constants[key], out var res) ||
+                    !HardResetConstantsConstraints[key](res))
+                {
+                    throw new InvalidRequestDataException(
+                        $"Incorrect value for {res}");
+                }
+            }
+
+            foreach (var pair in constants!)
+            {
+                _cache.Set(pair.Key, Encoding.UTF8.GetBytes(pair.Value!));
+            }
+        }
+        catch (NullReferenceException e)
+        {
+            throw new InvalidRequestDataException(
+                "Could not deserialize request body", e);
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevel.Information, e.ToString());
+            throw new Exception(GetExceptionMessage(e), e);
         }
-
-        if (constants is null)
-            return new Tuple<bool, string?>(false,
-                "Could not parse request body");
-
-        foreach (var key in HardResetConstants)
-        {
-            if (!constants.ContainsKey(key))
-                return new Tuple<bool, string?>(false, $"No value for {key}");
-
-            if (!int.TryParse(constants[key], out var res) ||
-                !HardResetConstantsConstraints[key](res))
-            {
-                return new Tuple<bool, string?>(false,
-                    $"Incorrect value for {res}");
-            }
-        }
-
-        foreach (var pair in constants)
-        {
-            _cache.Set(pair.Key, Encoding.UTF8.GetBytes(pair.Value!));
-        }
-
-        return new Tuple<bool, string?>(true, null);
     }
 
-    public Tuple<bool, string?> ResetRooms()
+    public void ResetRooms()
     {
-        var constants = new Dictionary<string, int>
-        {
-            { "Floors", int.Parse(GetConstant("Floors")) },
-            { "RoomsCount", int.Parse(GetConstant("RoomsCount")) },
-            { "RoomCapacity", int.Parse(GetConstant("RoomCapacity")) }
-        };
-
-        _context.Rooms.RemoveRange(_context.Rooms);
-
-        for (int i = 2; i < constants["Floors"] + 2; ++i)
-        {
-            for (int j = 1; j < constants["RoomsCount"] + 1; j++)
-            {
-                var room = new Room
-                {
-                    Capacity = constants["RoomCapacity"],
-                    Gender = i == 2 ? 'F' : 'M',
-                    RoomId = int.Parse($"{i}{j:00}")
-
-                };
-                _context.Rooms.Add(room);
-            }
-        }
-        
         try
         {
+            var constants = new Dictionary<string, int>
+            {
+                { "Floors", int.Parse(GetConstant("Floors")) },
+                { "RoomsCount", int.Parse(GetConstant("RoomsCount")) },
+                { "RoomCapacity", int.Parse(GetConstant("RoomCapacity")) }
+            };
+
+            _context.Rooms.RemoveRange(_context.Rooms);
+
+            for (int i = 2; i < constants["Floors"] + 2; ++i)
+            {
+                for (int j = 1; j < constants["RoomsCount"] + 1; j++)
+                {
+                    var room = new Room
+                    {
+                        Capacity = constants["RoomCapacity"],
+                        Gender = i == 2 ? 'F' : 'M',
+                        RoomId = int.Parse($"{i}{j:00}")
+                    };
+                    _context.Rooms.Add(room);
+                }
+            }
+
             _context.SaveChanges();
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException e)
         {
-            return new Tuple<bool, string?>(false, "Could not add new rooms");
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
-
-        return new Tuple<bool, string?>(true, null);
     }
 
     public string GetConstant(string key)

@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using DMS.Exceptions;
 using DMS.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ public abstract class DmsControllerBase : ControllerBase
             res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
             res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
             res.RoomId, res.IsCommercial, res.Course,
-            Evicted = res.RoomId is null, Rating = res.CountRating(), 
+            Evicted = res.RoomId is null, Rating = res.CountRating(),
             Debt = -res.CountDebt(), Reports = res.CountReports()
         };
 
@@ -29,16 +30,29 @@ public abstract class DmsControllerBase : ControllerBase
             .ToUniversalTime().Date;
     }
 
-    protected async Task<string?> ParseRequestBody()
+    // protected async Task<string?> ParseRequestBody()
+    // {
+    //     using StreamReader reader = new StreamReader(Request.Body);
+    //     try
+    //     {
+    //         return await reader.ReadToEndAsync();
+    //     }
+    //     catch
+    //     {
+    //         return null;
+    //     }
+    // }
+
+    protected async Task<string> ParseRequestBodyWithException()
     {
         using StreamReader reader = new StreamReader(Request.Body);
         try
         {
             return await reader.ReadToEndAsync();
         }
-        catch
+        catch (ArgumentOutOfRangeException e)
         {
-            return null;
+            throw new InvalidRequestDataException("Could not read request body", e);
         }
     }
 }

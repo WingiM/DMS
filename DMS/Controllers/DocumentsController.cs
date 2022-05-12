@@ -1,3 +1,4 @@
+using DMS.Exceptions;
 using DMS.Models;
 using DMS.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -10,14 +11,12 @@ namespace DMS.Controllers;
 [Route("/api/documents")]
 public class DocumentsController : DmsControllerBase
 {
-    private readonly ILogger<DocumentsController> _logger;
     private readonly DocumentsResource _documentsResource;
     private readonly ResidentResource _residentResource;
 
-    public DocumentsController(ILogger<DocumentsController> logger,
-        DocumentsResource documentsResource, ResidentResource residentResource)
+    public DocumentsController(DocumentsResource documentsResource,
+        ResidentResource residentResource)
     {
-        _logger = logger;
         _documentsResource = documentsResource;
         _residentResource = residentResource;
     }
@@ -31,71 +30,79 @@ public class DocumentsController : DmsControllerBase
     [HttpPost]
     public async Task<IResult> CreateDocument()
     {
-        var documentType = Request.Headers["type"];
-        if (documentType.Count == 0)
-            return Results.BadRequest("Document type is not specified");
-
-        string? data = await ParseRequestBody();
-
-        if (data is null)
-            return Results.BadRequest("Error parsing request body");
-
-        Tuple<bool, string?> res;
-        switch (documentType)
+        try
         {
-            case "EvictionOrder":
-                res = _documentsResource.AddDocument<EvictionOrder>(data);
-                break;
-            case "SettlementOrder":
-                res = _documentsResource.AddDocument<SettlementOrder>(data);
-                break;
-            case "RatingOperation":
-                res = _documentsResource.AddDocument<RatingOperation>(data);
-                break;
-            case "Transaction":
-                res = _documentsResource.AddDocument<Transaction>(data);
-                break;
-            default:
-                Response.StatusCode = 409;
-                return Results.Conflict("Unknown document type");
-        }
+            var documentType = Request.Headers["type"];
+            // if (documentType.Count == 0)
+            //     return Results.BadRequest("Document type is not specified");
 
-        if (!res.Item1)
-        {
-            Response.StatusCode = 409;
-            return Results.Conflict(res.Item2);
+            var data = await ParseRequestBodyWithException();
+
+            switch (documentType)
+            {
+                case "EvictionOrder":
+                    _documentsResource.AddDocument<EvictionOrder>(data);
+                    break;
+                case "SettlementOrder":
+                    _documentsResource.AddDocument<SettlementOrder>(data);
+                    break;
+                case "RatingOperation":
+                    _documentsResource.AddDocument<RatingOperation>(data);
+                    break;
+                case "Transaction":
+                    _documentsResource.AddDocument<Transaction>(data);
+                    break;
+                default:
+                    Response.StatusCode = 409;
+                    return Results.Conflict("Unknown document type");
+            }
+
+            return Results.Ok($"Successfully created {documentType}");
         }
-        
-        return Results.Ok(res.Item2);
+        catch (InvalidRequestDataException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 
     [HttpDelete]
     public async Task<IResult> DeleteDocument()
     {
-        var documentType = Request.Headers["type"];
-        if (documentType.Count == 0)
-            return Results.BadRequest("Document type is not specified");
-        
-        string? data = await ParseRequestBody();
-
-        if (data is null)
-            return Results.BadRequest("Error parsing request body");
-
-        Tuple<bool, string?> res;
-        switch (documentType)
+        try
         {
-            case "RatingOperation":
-                res = _documentsResource.DeleteDocument<RatingOperation>(data);
-                break;
-            case "Transaction":
-                res = _documentsResource.DeleteDocument<Transaction>(data);
-                break;
-            default:
-                Response.StatusCode = 409;
-                return Results.Conflict("Unknown document type");
-        }
+            var documentType = Request.Headers["type"];
+            // if (documentType.Count == 0)
+            //     return Results.BadRequest("Document type is not specified");
 
-        return Results.Ok(res.Item2);
+            string data = await ParseRequestBodyWithException();
+
+            switch (documentType)
+            {
+                case "RatingOperation":
+                    _documentsResource.DeleteDocument<RatingOperation>(data);
+                    break;
+                case "Transaction":
+                    _documentsResource.DeleteDocument<Transaction>(data);
+                    break;
+                default:
+                    Response.StatusCode = 409;
+                    return Results.Conflict("Unknown document type");
+            }
+
+            return Results.Ok($"Successfully deleted {documentType}");
+        }
+        catch (InvalidRequestDataException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Results.Conflict(e.Message);
+        }
     }
 
     [HttpGet]

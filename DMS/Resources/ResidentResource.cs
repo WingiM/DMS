@@ -1,12 +1,10 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using DMS.Models;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace DMS.Resources;
 
-public class ResidentResource
+public class ResidentResource : ResourceBase
 {
     private readonly ApplicationContext _context;
     private readonly ILogger<ResidentResource> _logger;
@@ -58,7 +56,7 @@ public class ResidentResource
             .ThenBy(r => r.LastName);
     }
 
-    public Resident? GetResidentById(int id, DateTime documentsStartDate)
+    public Resident GetResidentById(int id, DateTime documentsStartDate)
     {
         _context.Transactions
             .Where(t =>
@@ -70,10 +68,10 @@ public class ResidentResource
         _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
-        return _context.Residents.FirstOrDefault(r => r.ResidentId == id);
+        return _context.Residents.First(r => r.ResidentId == id);
     }
 
-    public Resident? GetResidentById(int id)
+    public Resident GetResidentById(int id)
     {
         _context.Transactions
             .Where(t => t.ResidentId == id).Load();
@@ -81,16 +79,18 @@ public class ResidentResource
         _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
-        return _context.Residents
-            .FirstOrDefault(r => r.ResidentId == id);
+        return _context.Residents.First(r => r.ResidentId == id);
     }
 
-    public bool AccrualAll(int commercialCost, int nonCommercialCost)
+    public void AccrualAll(int commercialCost, int nonCommercialCost)
     {
-        foreach (var resident in _context.Residents)
+        try
         {
-            if (resident.RoomId is not null)
+            foreach (var resident in _context.Residents)
             {
+                if (resident.RoomId is null)
+                    continue;
+
                 var transaction = new Transaction
                 {
                     ResidentId = resident.ResidentId,
@@ -102,26 +102,24 @@ public class ResidentResource
 
                 _context.Transactions.Add(transaction);
             }
-        }
 
-        try
-        {
             _context.SaveChanges();
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException e)
         {
-            return false;
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
-
-        return true;
     }
 
-    public bool EvictAll()
+    public void EvictAll()
     {
-        foreach (var resident in _context.Residents)
+        try
         {
-            if (resident.RoomId is not null)
+            foreach (var resident in _context.Residents)
             {
+                if (resident.RoomId is null)
+                    continue;
+
                 var order = new EvictionOrder
                 {
                     ResidentId = resident.ResidentId,
@@ -132,46 +130,36 @@ public class ResidentResource
                 _context.EvictionOrders.Add(order);
                 resident.RoomId = null;
             }
-        }
-        
-        try
-        {
+
             _context.SaveChanges();
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException e)
         {
-            return false;
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
-
-        return true;
     }
 
-    public Tuple<bool, string?> AddResident(string data)
+    public void AddResident(string data)
     {
         try
         {
             var resident = JsonSerializer.Deserialize<Resident>(data);
             _context.Residents.Add(resident!);
             _context.SaveChanges();
-            return new Tuple<bool, string?>(true, null);
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevel.Information,
-                "Failed to insert resident:\n " + e);
-            return new Tuple<bool, string?>(false, GetErrorMessage(e));
+            _logger.Log(LogLevel.Information, "Failed to insert resident");
+            throw new Exception(GetExceptionMessage(e), e);
         }
     }
 
-    public Tuple<bool, string?> UpdateResident(int id, string data)
+    public void UpdateResident(int id, string data)
     {
         try
         {
             var stored = _context.Residents.AsNoTracking()
-                .FirstOrDefault(r => r.ResidentId == id);
-            if (stored is null)
-                return new Tuple<bool, string?>(false,
-                    "No resident with this id");
+                .First(r => r.ResidentId == id);
 
             var resident = JsonSerializer.Deserialize<Resident>(data);
             resident!.ResidentId = stored.ResidentId;
@@ -186,42 +174,34 @@ public class ResidentResource
 
             _context.Residents.Update(resident);
             _context.SaveChanges();
-            return new Tuple<bool, string?>(true, null);
+        }
+        catch (InvalidOperationException e)
+        {
+            throw new InvalidOperationException("No resident with this Id", e);
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevel.Information,
-                "Failed to update resident\n " + e);
-            return new Tuple<bool, string?>(false, GetErrorMessage(e));
+            _logger.Log(LogLevel.Information, "Failed to update resident");
+            throw new Exception(GetExceptionMessage(e), e);
         }
     }
 
-    private string GetErrorMessage(Exception e)
+    public void DeleteResident(int id)
     {
-        switch (e.InnerException)
+        try
         {
-            case PostgresException pe:
-                return pe.MessageText;
-            case InvalidCastException ice:
-                return ice.Message;
-            case JsonException je:
-                return je.Message;
-            case IndexOutOfRangeException oor:
-                return oor.Message;
+            var resident =
+                _context.Residents.First(r => r.ResidentId == id);
+            _context.Residents.Remove(resident);
+            _context.SaveChanges();
         }
-
-        return e.Message;
-    }
-
-    public bool DeleteResident(int id)
-    {
-        var resident =
-            _context.Residents.FirstOrDefault(r => r.ResidentId == id);
-
-        if (resident is null)
-            return false;
-        _context.Residents.Remove(resident);
-        _context.SaveChanges();
-        return true;
+        catch (InvalidOperationException e)
+        {
+            throw new InvalidOperationException("No resident with this Id", e);
+        }
+        catch (DbUpdateException e)
+        {
+            throw new DbUpdateException(GetExceptionMessage(e), e);
+        }
     }
 }

@@ -1,10 +1,11 @@
 using System.Text.Json;
+using DMS.Exceptions;
 using DMS.Models;
-using Npgsql;
+using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Resources;
 
-public class DocumentsResource
+public class DocumentsResource : ResourceBase
 {
     private readonly ApplicationContext _context;
     private readonly ILogger<DocumentsResource> _logger;
@@ -30,46 +31,41 @@ public class DocumentsResource
         catch (Exception e)
         {
             _logger.Log(LogLevel.Information,
-                "Failed to create a document:\n" + e);
-            return null;
+                "Failed to deserialize a document");
+            throw new InvalidRequestDataException(GetExceptionMessage(e), e);
         }
     }
 
-    public Tuple<bool, string?> AddDocument<T>(string data) where T : class
+    public void AddDocument<T>(string data) where T : class
     {
         var document = DeserializeDocument<T>(data);
-        if (document is null)
-            return new Tuple<bool, string?>(false,
-                "Error parsing request body");
 
         switch (document)
         {
             case Transaction t:
-                return CreateTransaction(t);
+                CreateTransaction(t);
+                break;
             case RatingOperation ro:
-                return CreateRatingOperation(ro);
+                CreateRatingOperation(ro);
+                break;
             case SettlementOrder so:
-                return CreateSettlementOrder(so);
+                CreateSettlementOrder(so);
+                break;
             case EvictionOrder eo:
-                return CreateEvictionOrder(eo);
-            default:
-                return new Tuple<bool, string?>(false, "Unknown document type");
+                CreateEvictionOrder(eo);
+                break;
         }
     }
 
-    public Tuple<bool, string?> DeleteDocument<T>(string data) where T : class
+    public void DeleteDocument<T>(string data) where T : class
     {
-        var document = DeserializeDocument<T>(data);
-        if (document is null)
-            return new Tuple<bool, string?>(false,
-                "Error parsing request body");
-
         try
         {
+            var document = DeserializeDocument<T>(data);
+
             switch (document)
             {
                 case Transaction t:
-                    _logger.Log(LogLevel.Information, "Im here");
                     _context.Transactions.Remove(t);
                     break;
                 case RatingOperation ro:
@@ -77,156 +73,125 @@ public class DocumentsResource
                     break;
                 case SettlementOrder:
                 case EvictionOrder:
-                    return new Tuple<bool, string?>(false,
-                        "Cannot delete orders");
+                    throw new InvalidRequestDataException(
+                        "Orders cannot be deleted");
                 default:
-                    return new Tuple<bool, string?>(false,
-                        "Unknown document type");
+                    throw new InvalidRequestDataException(
+                        "Document type is unknown or unspecified");
             }
 
             _context.SaveChanges();
-            return new Tuple<bool, string?>(true, "Delete complete");
         }
-        catch (Exception)
+        catch (DbUpdateException e)
         {
-            return new Tuple<bool, string?>(false, "Error deleting document");
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
     }
 
-    private Tuple<bool, string?> CreateSettlementOrder(SettlementOrder so)
+    private void CreateSettlementOrder(SettlementOrder so)
     {
         try
         {
-            var resident = _context.Residents.FirstOrDefault(r =>
-                r.ResidentId == so.ResidentId);
-            var room =
-                _context.Rooms.FirstOrDefault(r => r.RoomId == so.RoomId);
-
-            if (resident is null)
-                return new Tuple<bool, string?>(false,
-                    "No resident with this id");
-
-            if (room is null)
-                return new Tuple<bool, string?>(false, "No room with this id");
+            var resident =
+                _context.Residents.First(r => r.ResidentId == so.ResidentId);
+            var room = _context.Rooms.First(r => r.RoomId == so.RoomId);
 
             if (resident.RoomId != null)
-                return new Tuple<bool, string?>(false,
-                    "Resident already has a room.");
+                throw new Exception("Resident already has a room.");
 
             if (resident.Gender != room.Gender)
-                return new Tuple<bool, string?>(false,
+                throw new Exception(
                     "Cannot settle resident into room with different gender");
 
             if (_context.Residents.Count(r => r.RoomId == room.RoomId) ==
                 room.Capacity)
-                return new Tuple<bool, string?>(false, "Room is overcrowded");
+                throw new Exception("Room is overcrowded");
 
             _context.SettlementOrders.Add(so);
             _context.SaveChanges();
 
             resident.RoomId = so.RoomId;
             _context.SaveChanges();
-
-            return new Tuple<bool, string?>(true, "Settled successfully");
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
             _logger.Log(LogLevel.Information, e.ToString());
-            return new Tuple<bool, string?>(false, GetErrorMessage(e));
+            throw new InvalidOperationException("Invalid room or resident id",
+                e);
+        }
+        catch (DbUpdateException e)
+        {
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
     }
 
-    private Tuple<bool, string?> CreateEvictionOrder(EvictionOrder eo)
+    private void CreateEvictionOrder(EvictionOrder eo)
     {
         try
         {
-            var resident = _context.Residents.FirstOrDefault(r =>
-                r.ResidentId == eo.ResidentId);
-
-            if (resident is null)
-                return new Tuple<bool, string?>(false,
-                    "No resident with this id");
+            var resident =
+                _context.Residents.First(r => r.ResidentId == eo.ResidentId);
 
             if (resident.RoomId is null)
-                return new Tuple<bool, string?>(false,
-                    "Resident is already evicted");
+                throw new Exception("Resident is already evicted");
 
             _context.EvictionOrders.Add(eo);
             resident.RoomId = null;
             _context.SaveChanges();
-            return new Tuple<bool, string?>(true, "Evicted successfully");
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            _logger.Log(LogLevel.Information, e.ToString());
-            return new Tuple<bool, string?>(false, GetErrorMessage(e));
+            throw new InvalidOperationException("Invalid resident id", e);
+        }
+        catch (DbUpdateException e)
+        {
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
     }
 
-    private Tuple<bool, string?> CreateRatingOperation(RatingOperation ro)
+    private void CreateRatingOperation(RatingOperation ro)
     {
         try
         {
-            var resident = _context.Residents.FirstOrDefault(r =>
-                r.ResidentId == ro.ResidentId);
-
-            if (resident is null)
-                return new Tuple<bool, string?>(false,
-                    "No resident with this id");
+            var resident =
+                _context.Residents.First(r => r.ResidentId == ro.ResidentId);
 
             if (resident.RoomId is null)
-                return new Tuple<bool, string?>(false, "Resident is evicted");
+                throw new Exception("Resident is evicted");
 
             _context.RatingOperations.Add(ro);
             _context.SaveChanges();
-            return new Tuple<bool, string?>(true, "Rating changed");
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            _logger.Log(LogLevel.Information, e.ToString());
-            return new Tuple<bool, string?>(false, GetErrorMessage(e));
+            throw new InvalidOperationException("Invalid resident id", e);
+        }
+        catch (DbUpdateException e)
+        {
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
     }
 
-    private Tuple<bool, string?> CreateTransaction(Transaction t)
+    private void CreateTransaction(Transaction t)
     {
         try
         {
-            var resident = _context.Residents.FirstOrDefault(r =>
-                r.ResidentId == t.ResidentId);
+            var resident =
+                _context.Residents.First(r => r.ResidentId == t.ResidentId);
 
-            if (resident is null)
-                return new Tuple<bool, string?>(false,
-                    "No resident with this id");
-            
             if (resident.RoomId is null)
-                return new Tuple<bool, string?>(false, "Resident is evicted");
+                throw new Exception("Resident is evicted");
 
             _context.Transactions.Add(t);
             _context.SaveChanges();
-            return new Tuple<bool, string?>(true, "Transaction complete");
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            _logger.Log(LogLevel.Information, e.ToString());
-            return new Tuple<bool, string?>(false, GetErrorMessage(e));
+            throw new InvalidOperationException("Invalid resident id", e);
         }
-    }
-
-    private string GetErrorMessage(Exception e)
-    {
-        switch (e.InnerException)
+        catch (DbUpdateException e)
         {
-            case PostgresException pe:
-                return pe.MessageText;
-            case InvalidCastException ice:
-                return ice.Message;
-            case JsonException je:
-                return je.Message;
-            case IndexOutOfRangeException oor:
-                return oor.Message;
-            default:
-                return "Unknown error";
+            throw new DbUpdateException(GetExceptionMessage(e), e);
         }
     }
 }
