@@ -33,10 +33,7 @@ public class DocumentsController : DmsControllerBase
         try
         {
             var documentType = Request.Headers["type"];
-            // if (documentType.Count == 0)
-            //     return Results.BadRequest("Document type is not specified");
-
-            var data = await ParseRequestBodyWithException();
+            var data = await ParseRequestBody();
 
             switch (documentType)
             {
@@ -75,10 +72,8 @@ public class DocumentsController : DmsControllerBase
         try
         {
             var documentType = Request.Headers["type"];
-            // if (documentType.Count == 0)
-            //     return Results.BadRequest("Document type is not specified");
 
-            string data = await ParseRequestBodyWithException();
+            string data = await ParseRequestBody();
 
             switch (documentType)
             {

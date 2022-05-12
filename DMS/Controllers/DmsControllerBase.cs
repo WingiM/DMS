@@ -30,20 +30,7 @@ public abstract class DmsControllerBase : ControllerBase
             .ToUniversalTime().Date;
     }
 
-    // protected async Task<string?> ParseRequestBody()
-    // {
-    //     using StreamReader reader = new StreamReader(Request.Body);
-    //     try
-    //     {
-    //         return await reader.ReadToEndAsync();
-    //     }
-    //     catch
-    //     {
-    //         return null;
-    //     }
-    // }
-
-    protected async Task<string> ParseRequestBodyWithException()
+    protected async Task<string> ParseRequestBody()
     {
         using StreamReader reader = new StreamReader(Request.Body);
         try

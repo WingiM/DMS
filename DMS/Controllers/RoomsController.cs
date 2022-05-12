@@ -66,7 +66,7 @@ public class RoomsController : DmsControllerBase
     {
         try
         {
-            var data = await ParseRequestBodyWithException();
+            var data = await ParseRequestBody();
             _resource.SetRoomGender(data);
             return Results.Ok("Room gender changed successfully");
         }

@@ -92,7 +92,7 @@ public class DormitoryController : DmsControllerBase
     {
         try
         {
-            var data = await ParseRequestBodyWithException();
+            var data = await ParseRequestBody();
             var res = _resource.SetSafeConstants(data);
             
             return Results.Ok(
@@ -116,7 +116,7 @@ public class DormitoryController : DmsControllerBase
     {
         try
         {
-            var data = await ParseRequestBodyWithException();
+            var data = await ParseRequestBody();
 
             _resource.SetHardResetConstants(data);
             _residentResource.EvictAll();

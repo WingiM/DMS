@@ -34,7 +34,7 @@ public class ResidentsController : DmsControllerBase
     {
         try
         {
-            var data = await ParseRequestBodyWithException();
+            var data = await ParseRequestBody();
             _resource.AddResident(data);
             return Results.Ok("Added successfully");
         }
@@ -71,7 +71,7 @@ public class ResidentsController : DmsControllerBase
     {
         try
         {
-            var data = await ParseRequestBodyWithException();
+            var data = await ParseRequestBody();
             _resource.UpdateResident(id, data);
             return Results.Ok("Updated successfully");
         }

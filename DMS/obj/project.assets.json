@@ -2698,24 +2698,26 @@
     ]
   },
   "packageFolders": {
-    "/home/wingim/.nuget/packages/": {}
+    "C:\\Users\\vamsi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/wingim/RiderProjects/DMS/DMS/DMS.csproj",
+      "projectUniqueName": "C:\\Users\\vamsi\\RiderProjects\\DMS\\DMS\\DMS.csproj",
       "projectName": "DMS",
-      "projectPath": "/home/wingim/RiderProjects/DMS/DMS/DMS.csproj",
-      "packagesPath": "/home/wingim/.nuget/packages/",
-      "outputPath": "/home/wingim/RiderProjects/DMS/DMS/obj/",
+      "projectPath": "C:\\Users\\vamsi\\RiderProjects\\DMS\\DMS\\DMS.csproj",
+      "packagesPath": "C:\\Users\\vamsi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vamsi\\RiderProjects\\DMS\\DMS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/wingim/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\vamsi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2807,7 +2809,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/wingim/dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

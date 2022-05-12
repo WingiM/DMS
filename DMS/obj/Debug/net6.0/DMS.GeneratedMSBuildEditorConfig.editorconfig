@@ -8,17 +8,17 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DMS
 build_property.RootNamespace = DMS
-build_property.ProjectDir = /home/wingim/RiderProjects/DMS/DMS/
+build_property.ProjectDir = C:\Users\vamsi\RiderProjects\DMS\DMS\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /home/wingim/RiderProjects/DMS/DMS
+build_property.MSBuildProjectDirectory = C:\Users\vamsi\RiderProjects\DMS\DMS
 build_property._RazorSourceGeneratorDebug = 
 
-[/home/wingim/RiderProjects/DMS/DMS/Pages/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
+[C:/Users/vamsi/RiderProjects/DMS/DMS/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/wingim/RiderProjects/DMS/DMS/Pages/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[C:/Users/vamsi/RiderProjects/DMS/DMS/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
