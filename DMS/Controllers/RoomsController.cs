@@ -48,7 +48,9 @@ public class RoomsController : DmsControllerBase
     public IResult GetWithFloorNumber(int floor)
     {
         var res = _resource.GetAllRoomsOnFloor(floor).ToArray();
-        return Results.Ok(res.Select(r => new
+        return Results.Ok(res
+            .OrderBy(r => r.RoomId)
+            .Select(r => new
             { r.RoomId, IsFull = r.Capacity == r.Residents.Count }));
     }
 
@@ -57,7 +59,7 @@ public class RoomsController : DmsControllerBase
     public IResult GetFloors()
     {
         var res = _resource.GetFloorsCount();
-        return Results.Ok(res);
+        return Results.Ok(res.OrderBy(r => r));
     }
 
     [HttpPost]
