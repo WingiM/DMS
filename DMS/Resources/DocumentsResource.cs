@@ -115,7 +115,6 @@ public class DocumentsResource : ResourceBase
         }
         catch (InvalidOperationException e)
         {
-            _logger.Log(LogLevel.Information, e.ToString());
             throw new InvalidOperationException("Invalid room or resident id",
                 e);
         }
