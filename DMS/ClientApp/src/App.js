@@ -6,8 +6,6 @@ import InRoomResidents from "./components/InRoomResidents";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "./components/Login";
 import Residents from "./components/Residents";
-import {Modal} from "reactstrap";
-import ModalWindow from "./components/ModalWindow";
 import Settings from "./components/Settings";
 import Documents from "./components/Documents";
 import settingsIco from './components/Sidebar/img/settingsIco.svg'
@@ -25,6 +23,7 @@ class App extends React.Component {
             showResidents: false,
             showDocuments: false,
             showSettings: false,
+            floors: [],
             activeRoom: [],
             allResidentsList: [],
             allResidentsFilterList: [],
@@ -44,9 +43,22 @@ class App extends React.Component {
     
     /* Handlers */
 
+    // open settings
+    async showSettingsButtonClickHandler() {
+        this.setState({
+            showResidents: false,
+            showRooms: false,
+            showInRoomResidents: false,
+            showDocuments: false,
+            showSettings: !this.state.showSettings,
+        })
+        await this.enableSettingsBtn()
+    }
+    
     //open all resident of dormitory list
     async showResidentsBlockButtonClickHandler() {
         const data = await this.fetchAllResidentsList()
+        
         this.setState({
             showRooms: false,
             showInRoomResidents: false,
@@ -56,25 +68,21 @@ class App extends React.Component {
             allResidentsList: data,
             allResidentsFilterList: data
         })
+        await this.disableSettingsBtn()
+    }
+    
+    // switch img and bg of settings btn
+    async disableSettingsBtn() {
+        const elem = document.querySelector(".sidebar-settings-btn").children[0]
+        elem.src = settingsIco;
+        elem.parentElement.style.background = "#299DCE";
     }
 
-    // open settings
-    showSettingsButtonClickHandler(e) {
-        e.preventDefault();
-        this.setState({
-            showResidents: false,
-            showRooms: false,
-            showInRoomResidents: false,
-            showDocuments: false,
-            showSettings: !this.state.showSettings,
-        })
-        if (e.target.tagName === "IMG") {
-            e.target.src = this.state.showSettings ? settingsIco : activeSettingsIco;
-            e.target.parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
-        } else {
-            e.target.children[0].src = this.state.showSettings ? settingsIco : activeSettingsIco;
-            e.target.children[0].parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
-        }
+    // switch img and bg of settings btn
+    async enableSettingsBtn() {
+        const elem = document.querySelector(".sidebar-settings-btn").children[0]
+        elem.src = this.state.showSettings ? settingsIco : activeSettingsIco;
+        elem.parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
     }
     
     // open documents
@@ -86,18 +94,25 @@ class App extends React.Component {
             showInRoomResidents: false,
             showDocuments: true,
             showSettings: false,
-            allResidentsList: data
+            allResidentsList: data,
+            allResidentsFilterList: data
         })
+        await this.disableSettingsBtn()
     }
     
     
     //open all dormitory rooms'n'floors block
-    showRoomsButtonClickHandler() {
-        this.setState({
+    async showRoomsButtonClickHandler() {
+        await this.fetchFloors()
+        
+        this.setState(
+            {
             showResidents: false,
             showDocuments: false,
             showSettings: false,
-            showRooms: true})
+            showRooms: true
+        })
+        await this.disableSettingsBtn()
     }
 
     //open and fetch data for specified room
@@ -152,6 +167,7 @@ class App extends React.Component {
     }
     
     /* Fetch Functions */
+    
     // get all documents
     async fetchAllDocuments() {
         const response = await fetch("/api/documents", {
@@ -189,6 +205,24 @@ class App extends React.Component {
         
         const data = await response.json()
         return data.Value
+    }
+    
+    //get all floors
+    async fetchFloors() {
+        const requestUrl = "api/rooms/floors";
+        await fetch(requestUrl, {
+            method: "GET",
+            headers: {
+                "Authorization" : localStorage.getItem("token")
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => data.Value)
+            .then((val) => {
+                this.setState({
+                    floors: val
+                })
+            })
     }
 
     getTokenExpDate() {
@@ -243,6 +277,7 @@ class App extends React.Component {
                                 <RoomsBlock
                                     show={this.state.showRooms}
                                     openRoom = {this.openRoomButtonClickHandler}
+                                    floors={this.state.floors}
                                 />
                                 <InRoomResidents
                                     show={this.state.showInRoomResidents}
@@ -252,6 +287,8 @@ class App extends React.Component {
                                 <Documents
                                     show={this.state.showDocuments}
                                     residentsList={this.state.allResidentsList}
+                                    residentsFilterList={this.state.allResidentsFilterList}
+                                    filterHandler={this.filterResidentsHandler}
                                 />
                                 <Settings
                                     show={this.state.showSettings}

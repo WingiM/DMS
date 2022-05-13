@@ -14,7 +14,7 @@ function template() {
               {this.state.LastName.toUpperCase()} {this.state.FirstName.toUpperCase()} {this.state.Patronymic.toUpperCase()}
               <img className="header-dots" alt="dots" src={dotsImg}/>
               {this.state.Rating < 0 ? <img alt={"dot"} className={"state-dot"} src={redDot}/> : ''}
-              {this.state.Course === 1 ? <img alt={"dot"} className={"state-dot"} src={greenDot}/> : ''}
+              {this.state.Course == 1 ? <img alt={"dot"} className={"state-dot"} src={greenDot}/> : ''}
               {this.state.RoomId === null ? <img alt={"dot"} className={"state-dot"} src={yellowDot}/> : ''}
           </button>
           <div className="resident-content" style={{maxHeight: this.state.ResidentId !== null ? null : "188px"}}>
@@ -45,11 +45,11 @@ function template() {
                   </div>
                   <div className="resident-content-row">
                       <label>Кем выдан:</label>
-                      <input name={"IssueBy"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssuedBy}  type="text"/>
+                      <input name={"IssuedBy"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssuedBy}  type="text"/>
                   </div>
                   <div className="resident-content-row">
                       <label>Дата выдачи:</label>
-                      <input name={"IssueDate"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssuedDate}  type="text"/>
+                      <input name={"IssueDate"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssueDate}  type="text"/>
                   </div>
                   <div className="resident-content-row">
                       <label>Код подразделения:</label>

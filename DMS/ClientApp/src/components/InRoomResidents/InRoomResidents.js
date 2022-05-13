@@ -7,19 +7,31 @@ class InRoomResidents extends React.Component {
         this.state = {
             showModal: false,
             show: true,
-            modalResidents: [],
+            modalResidentsList: [],
+            modalResidentsFilterList: [],
         }
         
         this.toggleModal = this.toggleModal.bind(this)
+        this.filterHandler = this.filterHandler.bind(this)
     }
     
     //handlers
     
     async toggleModal() {
-        const data = await this.fetchResidents()
+        const gender = this.props.room["Gender"] === "F" ? "Ж" : "М"
+        
+        let data = await this.fetchResidents()
+        data = data.filter((i) => i["Gender"] === gender)
         this.setState({
             showModal: !this.state.showModal,
-            modalResidents: data
+            modalResidentsList: data,
+            modalResidentsFilterList: data
+        })
+    }
+    
+    filterHandler(val) {
+        this.setState({
+            modalResidentsFilterList: val
         })
     }
     

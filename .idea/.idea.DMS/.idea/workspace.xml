@@ -8,12 +8,23 @@
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Started making settings API">
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Done settings API&#10;Done password check for setting applying">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/SettingsSaveLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/SettingsSaveLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Documents/Documents.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Documents/Documents.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Documents/Documents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Documents/Documents.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/ResidentsListLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/ResidentsListLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/RoomsBlock/RoomsBlock.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Settings/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Settings/Settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Settings/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Settings/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Sidebar/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Sidebar/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Sidebar/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Sidebar/Sidebar.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +173,7 @@
       <workItem from="1652334860589" duration="1908000" />
       <workItem from="1652336791974" duration="188000" />
       <workItem from="1652365136788" duration="7797000" />
-      <workItem from="1652381538385" duration="6046000" />
+      <workItem from="1652381538385" duration="15931000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -269,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652384092671</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Done settings API&#10;Done password check for setting applying">
+      <created>1652398407545</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1652398407545</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +335,8 @@
     <MESSAGE value="Replace all Tuple&lt;bool, string&gt; with Exceptions" />
     <MESSAGE value="Delete WeatherForecastController.cs" />
     <MESSAGE value="Started making settings API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started making settings API" />
+    <MESSAGE value="Done settings API&#10;Done password check for setting applying" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done settings API&#10;Done password check for setting applying" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -77,7 +77,11 @@ class Setting extends React.Component {
         })
             .then((response) => response.json())
             .then((val) => {
-                console.log(val)
+                if (val["StatusCode"] === 200) {
+                    this.setState({
+                        showModal: false,
+                    })
+                }
             })
     }
 

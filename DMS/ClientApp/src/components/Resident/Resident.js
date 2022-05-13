@@ -17,8 +17,9 @@ class Resident extends React.Component {
             PassportInformation: this.props.passportInformation,
             SeriesAndNumber: this.props.passportInformation["SeriesAndNumber"],
             IssuedBy: this.props.passportInformation["IssuedBy"],
-            IssuedDate: this.props.passportInformation["IssuedDate"],
+            IssueDate: this.props.passportInformation["IssueDate"],
             DepartmentCode: this.props.passportInformation["DepartmentCode"],
+            Address: this.props.passportInformation["Address"],
             
             Tin: this.props.tin,
             Rating: this.props.rating,
@@ -26,7 +27,7 @@ class Resident extends React.Component {
             Reports: this.props.reports,
             RoomId: this.props.roomId,
             Course: this.props.course,
-            Address: this.props.address
+            
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -67,13 +68,14 @@ class Resident extends React.Component {
                 SeriesAndNumber: this.state.SeriesAndNumber,
                 IssueBy: this.state.IssuedBy,
                 IssuedDate: this.state.IssuedDate,
-                DepartmentCode: this.state.DepartmentCode,
+                DepartmentCode: parseInt(this.state.DepartmentCode),
+                Address: this.state.Address,
             },
             Tin: this.state.Tin,
             RoomId: this.state.RoomId,
-            Course: this.state.Course,
-            Address: this.state.Address
+            Course: parseInt(this.state.Course),
         }
+        console.log(data)
         const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {
             method: this.state.ResidentId === null ? "POST" : "PUT",
