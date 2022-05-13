@@ -38,8 +38,7 @@ function template() {
                                                   patronymic={resident["Patronymic"]}
                                                   gender={resident["Gender"]}
                                                   birthDate={resident["BirthDate"]}
-                                                  passportInformation={resident["PassportInformation"] === 
-                                                    null ? '' : resident["PassportInformation"]["SeriesAndNumber"]}
+                                                  passportInformation={resident["PassportInformation"] === null ? '' : resident["PassportInformation"]}
                                                   tin={resident["Tin"]}
                                                   rating={resident["Rating"]}
                                                   debt={resident["Debt"]}

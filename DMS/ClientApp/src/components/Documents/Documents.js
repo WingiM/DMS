@@ -12,6 +12,11 @@ class Documents extends React.Component {
         }
     }
 
+    filterByName(e) {
+        this.props.filterHandler(this.props.residentsList.filter(i=>
+            (~(i["FirstName"] + i["LastName"] + i["Patronymic"]).toLowerCase().indexOf(e.target.value.toLowerCase()))))
+    }
+
     toggleModal(layout, layoutName) {
         this.setState({
             showModal: !this.state.showModal,

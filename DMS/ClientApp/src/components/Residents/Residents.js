@@ -18,7 +18,7 @@ class Residents extends React.Component {
   
   filterByCourse(e) {
     this.props.filterHandler(this.props.residentsList.filter(i=>
-        (i["Course"] === 1)))
+        (i["Course"] == 1)))
   }
   
   filterByRating(e) {

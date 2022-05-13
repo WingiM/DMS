@@ -18,16 +18,17 @@ export class Login extends Component {
         await fetch("/api/login", {
             method: "POST",
             headers: {"password": this.state.password},
-        }).then(async resp => {
-            let responseJson = await resp.json();
-            if (resp.status === 200) {
-                localStorage.setItem("password", this.state.password);
-                localStorage.setItem("token", "Bearer " + responseJson["Value"]["AccessToken"]);
-                window.location = "/"
-            } else {
-                this.setState({isVisible: true})
-            }
         })
+            .then(async resp => {
+                let responseJson = await resp.json();
+                if (resp.status === 200) {
+                    localStorage.setItem("password", this.state.password);
+                    localStorage.setItem("token", "Bearer " + responseJson["Value"]["AccessToken"]);
+                    window.location = "/"
+                } else {
+                    this.setState({isVisible: true})
+                }
+            })
     }
     
     keyUpController(e) {
@@ -44,10 +45,11 @@ export class Login extends Component {
 
     render() {
         if (localStorage.getItem("token") !== null) {
-            return <Navigate to="/" replace />
+            return <Navigate to="/" replace/>
         }
 
         return template.call(this);
     }
 }
+
 export default Login;

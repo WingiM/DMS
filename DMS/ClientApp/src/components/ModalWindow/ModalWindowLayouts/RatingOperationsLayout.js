@@ -11,6 +11,11 @@ class RatingOperationsLayout extends React.Component {
             ratingAddReason: "",
             ratingAddDate: "",
         }
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value})
     }
 
     render() {
@@ -20,17 +25,15 @@ class RatingOperationsLayout extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="resident-content-row">
                         <label>ФИО:</label> <input autoFocus={this.state.id === null} name={"fullName"}
-                                                   onChange={this.handleChange} readOnly={false}
+                                                   onChange={this.handleChange} readOnly={true}
                                                    value={this.state.fullName} type="text"/> <br/>
                     </div>
                     <div className="resident-content-row">
                         <label>Причина зачисления:</label> <input name={"ratingAddReason"} onChange={this.handleChange}
-                                                           readOnly={false} value={this.state.ratingAddReason}
                                                            type="text"/> <br/>
                     </div>
                     <div className="resident-content-row">
-                        <label>Дата:</label> <input name={"ratingAddDate"} onChange={this.handleChange} readOnly={true}
-                                                     value={this.state.ratingAddDate} type="date"/> <br/>
+                        <label>Дата:</label> <input name={"ratingAddDate"} onChange={this.handleChange} readOnly={false} type="date"/> <br/>
                     </div>
                     <div className={"resident-content-row"}>
                         <input className={"save-btn"} type={"submit"} value={"Добавить"}/>

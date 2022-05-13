@@ -13,13 +13,21 @@ class Resident extends React.Component {
             Patronymic: this.props.patronymic,
             Gender: this.props.gender,
             BirthDate: this.props.birthDate.slice(0, 10),
-            SeriesAndNumber: this.props.passportInformation,
+
+            PassportInformation: this.props.passportInformation,
+            SeriesAndNumber: this.props.passportInformation["SeriesAndNumber"],
+            IssuedBy: this.props.passportInformation["IssuedBy"],
+            IssueDate: this.props.passportInformation["IssueDate"],
+            DepartmentCode: this.props.passportInformation["DepartmentCode"],
+            Address: this.props.passportInformation["Address"],
+            
             Tin: this.props.tin,
             Rating: this.props.rating,
             Debt: this.props.debt,
             Reports: this.props.reports,
-            PassportInformation: {SeriesAndNumber: this.props.passportInformation},
             RoomId: this.props.roomId,
+            Course: this.props.course,
+            
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -37,7 +45,7 @@ class Resident extends React.Component {
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
-            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.maxHeight = content.scrollHeight + 150 + "px";
         }
     }
     
@@ -56,11 +64,18 @@ class Resident extends React.Component {
             Patronymic: this.state.Patronymic,
             Gender: this.state.Gender,
             BirthDate: this.state.BirthDate + "T00:00:00Z",
-            PassportInformation: {SeriesAndNumber: this.state.SeriesAndNumber},
+            PassportInformation: {
+                SeriesAndNumber: this.state.SeriesAndNumber,
+                IssueBy: this.state.IssuedBy,
+                IssuedDate: this.state.IssuedDate,
+                DepartmentCode: parseInt(this.state.DepartmentCode),
+                Address: this.state.Address,
+            },
             Tin: this.state.Tin,
             RoomId: this.state.RoomId,
-            Course: this.props.course
+            Course: parseInt(this.state.Course),
         }
+        console.log(data)
         const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {
             method: this.state.ResidentId === null ? "POST" : "PUT",

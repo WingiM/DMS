@@ -1,10 +1,11 @@
 ﻿using System.Globalization;
+using DMS.Exceptions;
 using DMS.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Controllers;
 
-public abstract class MyBaseController : ControllerBase
+public abstract class DmsControllerBase : ControllerBase
 {
     private static readonly DateTime DefaultDocumentStartDate =
         DateTime.Now.Month >= 9
@@ -17,7 +18,7 @@ public abstract class MyBaseController : ControllerBase
             res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
             res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
             res.RoomId, res.IsCommercial, res.Course,
-            Evicted = res.RoomId is null, Rating = res.CountRating(), 
+            Evicted = res.RoomId is null, Rating = res.CountRating(),
             Debt = -res.CountDebt(), Reports = res.CountReports()
         };
 
@@ -29,19 +30,16 @@ public abstract class MyBaseController : ControllerBase
             .ToUniversalTime().Date;
     }
 
-    protected async Task<string?> ParseRequestBody()
+    protected async Task<string> ParseRequestBody()
     {
-        string? data = null;
         using StreamReader reader = new StreamReader(Request.Body);
         try
         {
-            data = await reader.ReadToEndAsync();
+            return await reader.ReadToEndAsync();
         }
-        catch
+        catch (ArgumentOutOfRangeException e)
         {
-            // ignored
+            throw new InvalidRequestDataException("Could not read request body", e);
         }
-
-        return data;
     }
 }

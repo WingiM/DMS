@@ -22,12 +22,12 @@ function template() {
                 <div className="documents-block-name">ДОКУМЕНТЫ</div>
 
                 <div className="documents-container">
-                    <div className="documents-nav"><input type="text" placeholder="Введите имя"/></div>
+                    <div className="documents-nav"><input onInput={(e) => this.filterByName(e)} type="text" placeholder="Введите имя"/></div>
                     
                     <div className="documents-scroll-zone">
                         {
-                            this.props.residentsList !== undefined ?
-                                this.props.residentsList.map(resident =>
+                            this.props.residentsFilterList !== undefined ?
+                                this.props.residentsFilterList.map(resident =>
                                     <div className="resident-collapsible">
                                         <button
                                             onClick={(e) => this.openCollapsible(e)}

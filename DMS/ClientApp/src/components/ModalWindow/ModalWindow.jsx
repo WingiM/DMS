@@ -1,6 +1,7 @@
 import "./ModalWindow.css";
 import React from "react";
 import closeButtonImg from "../InRoomResidents/img/cross.svg";
+import "./ModalWindowLayouts/Layouts.css"
 
 function template() {
     return (

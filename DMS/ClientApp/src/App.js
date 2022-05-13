@@ -6,8 +6,10 @@ import InRoomResidents from "./components/InRoomResidents";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "./components/Login";
 import Residents from "./components/Residents";
-import {Modal} from "reactstrap";
-import ModalWindow from "./components/ModalWindow";
+import Settings from "./components/Settings";
+import Documents from "./components/Documents";
+import settingsIco from './components/Sidebar/img/settingsIco.svg'
+import activeSettingsIco from './components/Sidebar/img/activeSettingsIco.svg'
 
 class App extends React.Component {
     static displayName = App.name;
@@ -19,6 +21,9 @@ class App extends React.Component {
             showRooms: false,
             showInRoomResidents: false,
             showResidents: false,
+            showDocuments: false,
+            showSettings: false,
+            floors: [],
             activeRoom: [],
             allResidentsList: [],
             allResidentsFilterList: [],
@@ -32,28 +37,82 @@ class App extends React.Component {
         this.addNewResidentHandler = this.addNewResidentHandler.bind(this);
         this.filterResidentsHandler = this.filterResidentsHandler.bind(this);
         this.updateAllResidentsList = this.updateAllResidentsList.bind(this);
+        this.showSettingsButtonClickHandler = this.showSettingsButtonClickHandler.bind(this)
+        this.showDocumentsButtonClickHandler = this.showDocumentsButtonClickHandler.bind(this);
     }
     
     /* Handlers */
 
+    // open settings
+    async showSettingsButtonClickHandler() {
+        this.setState({
+            showResidents: false,
+            showRooms: false,
+            showInRoomResidents: false,
+            showDocuments: false,
+            showSettings: !this.state.showSettings,
+        })
+        await this.enableSettingsBtn()
+    }
+    
     //open all resident of dormitory list
     async showResidentsBlockButtonClickHandler() {
         const data = await this.fetchAllResidentsList()
+        
         this.setState({
             showRooms: false,
             showInRoomResidents: false,
+            showDocuments: false,
+            showSettings: false,
             showResidents: true,
             allResidentsList: data,
             allResidentsFilterList: data
         })
+        await this.disableSettingsBtn()
+    }
+    
+    // switch img and bg of settings btn
+    async disableSettingsBtn() {
+        const elem = document.querySelector(".sidebar-settings-btn").children[0]
+        elem.src = settingsIco;
+        elem.parentElement.style.background = "#299DCE";
+    }
+
+    // switch img and bg of settings btn
+    async enableSettingsBtn() {
+        const elem = document.querySelector(".sidebar-settings-btn").children[0]
+        elem.src = this.state.showSettings ? settingsIco : activeSettingsIco;
+        elem.parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
+    }
+    
+    // open documents
+    async showDocumentsButtonClickHandler() {
+        const data = await this.fetchAllDocuments()
+        this.setState({
+            showResidents: false,
+            showRooms: false,
+            showInRoomResidents: false,
+            showDocuments: true,
+            showSettings: false,
+            allResidentsList: data,
+            allResidentsFilterList: data
+        })
+        await this.disableSettingsBtn()
     }
     
     
     //open all dormitory rooms'n'floors block
-    showRoomsButtonClickHandler() {
-        this.setState({
+    async showRoomsButtonClickHandler() {
+        await this.fetchFloors()
+        
+        this.setState(
+            {
             showResidents: false,
-            showRooms: true})
+            showDocuments: false,
+            showSettings: false,
+            showRooms: true
+        })
+        await this.disableSettingsBtn()
     }
 
     //open and fetch data for specified room
@@ -109,6 +168,17 @@ class App extends React.Component {
     
     /* Fetch Functions */
     
+    // get all documents
+    async fetchAllDocuments() {
+        const response = await fetch("/api/documents", {
+            method: "GET",
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        });
+        const data = await response.json()
+        return data.Value
+    }
     //get all residents in dormitory
     async fetchAllResidentsList() {
         const requestUrl = "api/residents"
@@ -134,6 +204,24 @@ class App extends React.Component {
         
         const data = await response.json()
         return data.Value
+    }
+    
+    //get all floors
+    async fetchFloors() {
+        const requestUrl = "api/rooms/floors";
+        await fetch(requestUrl, {
+            method: "GET",
+            headers: {
+                "Authorization" : localStorage.getItem("token")
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => data.Value)
+            .then((val) => {
+                this.setState({
+                    floors: val
+                })
+            })
     }
 
     getTokenExpDate() {
@@ -161,26 +249,6 @@ class App extends React.Component {
 
     }
 
-    async fetchStats() {
-        const requestUrl = "api/stats"
-        const response = await fetch(requestUrl, {
-            method: "GET",
-            headers: {
-                "Authorization" : localStorage.getItem("token")
-            }
-        })
-
-        const data = await response.json()
-        const value = await data.Value
-        this.setState({
-            settled: value["Settled"],
-            total: value["Total"],
-            free: value["Total"] - value["Settled"],
-            percentage: value["Settled"] / value["Total"] * 100 | 0
-        })
-        console.log(this.state.percentage)
-    }
-
     render() {
         this.checkTokenLifetime()
         return (
@@ -194,6 +262,8 @@ class App extends React.Component {
                                 <Sidebar
                                     showRooms={this.showRoomsButtonClickHandler}
                                     showResidents={this.showResidentsBlockButtonClickHandler}
+                                    showSettings={this.showSettingsButtonClickHandler}
+                                    showDocuments={this.showDocumentsButtonClickHandler}
                                 />
                                 <Residents 
                                     show={this.state.showResidents}
@@ -206,11 +276,21 @@ class App extends React.Component {
                                 <RoomsBlock
                                     show={this.state.showRooms}
                                     openRoom = {this.openRoomButtonClickHandler}
+                                    floors={this.state.floors}
                                 />
                                 <InRoomResidents
                                     show={this.state.showInRoomResidents}
                                     closeButtonClickHandler = {this.closeRoomButtonClickHandler}
                                     room={this.state.activeRoom}
+                                />
+                                <Documents
+                                    show={this.state.showDocuments}
+                                    residentsList={this.state.allResidentsList}
+                                    residentsFilterList={this.state.allResidentsFilterList}
+                                    filterHandler={this.filterResidentsHandler}
+                                />
+                                <Settings
+                                    show={this.state.showSettings}
                                 />
                             </React.StrictMode>
                         }/>

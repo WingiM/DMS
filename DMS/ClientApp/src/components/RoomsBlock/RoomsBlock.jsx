@@ -10,7 +10,7 @@ function template() {
     <div className="rooms">
         <div className="tabs-block">
             <ul className="nav nav-tabs">
-                {this.state.floors.map(floor =>
+                {this.props.floors.map(floor =>
                     <li key={floor} 
                         id={floor} 
                         onClick={(e) => this.tabClick(e)}

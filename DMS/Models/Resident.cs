@@ -79,12 +79,6 @@ public class Resident
         BirthDate = birthDate;
     }
 
-    public void FillDocuments(string? passportInfo, string? TIN)
-    {
-        //PassportInformation = passportInfo;
-        this.Tin = TIN;
-    }
-
     public override string ToString()
     {
         return $"{ResidentId} {LastName} {FirstName}";

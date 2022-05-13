@@ -18,8 +18,13 @@ class SettlementOrderLayout extends React.Component {
             parentPassportIssuedBy: "",
             parentAddress: "",
         }
+
+        this.handleChange = this.handleChange.bind(this)
     }
 
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value})
+    }
 
     render() {
         console.log(this.props.resident)
@@ -33,12 +38,12 @@ class SettlementOrderLayout extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="resident-content-row">
                             <label>ФИО:</label> <input autoFocus={this.state.id === null} name={"fullName"}
-                                                       onChange={this.handleChange} readOnly={false}
+                                                       onChange={this.handleChange} readOnly={true}
                                                        value={this.state.fullName} type="text"/> <br/>
                         </div>
                         <div className="resident-content-row">
                             <label>Серия номер:</label> <input name={"passportNumber"} onChange={this.handleChange}
-                                                               readOnly={false} value={this.state.passportNumber}
+                                                               readOnly={true} value={this.state.passportNumber}
                                                                type="text"/> <br/>
                         </div>
                         <div className="resident-content-row">
@@ -58,16 +63,16 @@ class SettlementOrderLayout extends React.Component {
                                                        value={this.state.parentFullName} type="text"/> <br/>
                         </div>
                         <div className="resident-content-row">
-                            <label>Серия номер:</label> <input name={"passportNumber"} onChange={this.handleChange}
+                            <label>Серия номер:</label> <input name={"parentPassportNumber"} onChange={this.handleChange}
                                                                readOnly={false} value={this.state.parentPassportNumber}
                                                                type="text"/> <br/>
                         </div>
                         <div className="resident-content-row">
-                            <label>Выдан:</label> <input name={"parentPassportIssuedBy"} onChange={this.handleChange} readOnly={true}
+                            <label>Выдан:</label> <input name={"parentPassportIssuedBy"} onChange={this.handleChange} readOnly={false}
                                                          value={this.state.parentPassportIssuedBy} type="text"/> <br/>
                         </div>
                         <div className="resident-content-row">
-                            <label>Адрес:</label> <input name={"parentAddress"} onChange={this.handleChange} readOnly={true}
+                            <label>Адрес:</label> <input name={"parentAddress"} onChange={this.handleChange} readOnly={false}
                                                          value={this.state.parentAddress} type="text"/> <br/>
                         </div>
                         <div className={"resident-content-row"}>

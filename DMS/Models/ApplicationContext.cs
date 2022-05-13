@@ -19,11 +19,7 @@ public class ApplicationContext : DbContext
         null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
-        : base(options)
-    {
-        // Database.EnsureDeleted();
-        //Database.EnsureCreated();
-    }
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,16 +29,12 @@ public class ApplicationContext : DbContext
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
             .UseIdentityAlwaysColumn();
-        // modelBuilder.Entity<RatingOperation>().Property(ro => ro.RatingOperationId)
-        //     .UseIdentityAlwaysColumn();
         modelBuilder.Entity<RatingOperation>()
             .HasKey(ro => new { ro.ResidentId, ro.OrderDate });
         modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Transaction>()
             .HasKey(t => new { t.ResidentId, t.OperationDate });
-        // modelBuilder.Entity<Transaction>().Property(t => t.TransactionId)
-        //     .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Room>().Property(r => r.FloorNumber)
             .HasComputedColumnSql("room_number / 100", stored:true);
 

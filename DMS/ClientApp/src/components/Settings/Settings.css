@@ -107,6 +107,7 @@
 }
 
 .settings-save-btn, .settings-constant-change-btn {
+    cursor: pointer;
     position: relative;
     width: 40%;
     height: 6%;
@@ -126,10 +127,19 @@
     align-items: center;
     text-align: center;
     color: #FFFFFF;
+    transition: background-color 0.5s;
+}
+
+.settings-constant-change-btn:hover {
+    background-color: #1aab92;
 }
 
 .settings-save-btn {
     background: #299DCE;
+}
+
+.settings-save-btn:hover {
+    background: #2487af;
 }
 
 @media screen and (max-width: 1700px) {
