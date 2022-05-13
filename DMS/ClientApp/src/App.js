@@ -177,7 +177,6 @@ class App extends React.Component {
             }
         });
         const data = await response.json()
-        console.log(data.Value)
         return data.Value
     }
     //get all residents in dormitory

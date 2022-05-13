@@ -49,7 +49,7 @@ function template() {
                   </div>
                   <div className="resident-content-row">
                       <label>Дата выдачи:</label>
-                      <input name={"IssueDate"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssueDate}  type="text"/>
+                      <input name={"IssueDate"} onChange={this.handleChange} readOnly={this.props.readOnly} value={this.state.IssueDate} type="date"/>
                   </div>
                   <div className="resident-content-row">
                       <label>Код подразделения:</label>
