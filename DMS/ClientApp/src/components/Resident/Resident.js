@@ -75,7 +75,6 @@ class Resident extends React.Component {
             RoomId: this.state.RoomId,
             Course: parseInt(this.state.Course),
         }
-        console.log(data)
         const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {
             method: this.state.ResidentId === null ? "POST" : "PUT",

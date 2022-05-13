@@ -18,6 +18,7 @@ function template() {
                     residentsList={this.state.modalResidentsList}
                     residentsFilterList={this.state.modalResidentsFilterList}
                     filterHandler={this.filterHandler}
+                    roomId={this.props.room["RoomId"]}
                 />}
                 toggleHandler={this.toggleModal}
             />
