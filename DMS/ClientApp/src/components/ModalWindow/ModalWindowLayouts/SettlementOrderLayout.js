@@ -8,7 +8,7 @@ class SettlementOrderLayout extends React.Component {
         super(props);
 
         this.state = {
-            id: this.props.resident.id,
+            id: this.props.resident["ResidentId"],
             fullName: this.props.resident["LastName"] + " " + this.props.resident["FirstName"] + " " + this.props.resident["Patronymic"],
             passportNumber: this.props.resident["PassportInformation"]["SeriesAndNumber"],
             issuedBy: "",
@@ -25,9 +25,28 @@ class SettlementOrderLayout extends React.Component {
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value})
     }
+    
+    async submitSettlement(e) {
+        e.preventDefault()
+        await fetch("api/documents/", {
+            method: "POST",
+            headers: {
+                "Authorization": localStorage.getItem("token"),
+                "type": "SettlementOrder",
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({
+                "RoomId": parseInt(this.props.roomId),
+                "ResidentId": parseInt(this.state.id),
+                "Date": Date.now()
+            })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)})
+    }
 
     render() {
-        console.log(this.props.resident)
         return (
             <div className={"settlement-order-body"}>
                 <div className="rooms-header in-modal" style={{marginBottom: "5%"}}>ПРИКАЗ О ЗАСЕЛЕНИИ</div>
@@ -35,7 +54,7 @@ class SettlementOrderLayout extends React.Component {
                 
                 <div className="settlement-content">
                     <div className="rooms-header mini type">студент</div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form>
                         <div className="resident-content-row">
                             <label>ФИО:</label> <input autoFocus={this.state.id === null} name={"fullName"}
                                                        onChange={this.handleChange} readOnly={true}
@@ -56,7 +75,7 @@ class SettlementOrderLayout extends React.Component {
                         </div>
                     </form>
                     <div className="rooms-header mini type">родитель, законный представитель</div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form>
                         <div className="resident-content-row">
                             <label>ФИО:</label> <input autoFocus={this.state.id === null} name={"parentFullName"}
                                                        onChange={this.handleChange} readOnly={false}
@@ -76,7 +95,7 @@ class SettlementOrderLayout extends React.Component {
                                                          value={this.state.parentAddress} type="text"/> <br/>
                         </div>
                         <div className={"resident-content-row"}>
-                            <input className={"save-btn"} type={"submit"} value={"Сохранить"}/>
+                            <input onClick={(e) => this.submitSettlement(e)} className={"save-btn"} type={"submit"} value={"Сохранить"}/>
                         </div>
                     </form>
                     
