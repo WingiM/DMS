@@ -1,3 +1,4 @@
+﻿using System.Text;
 using System.Text.Json;
 using DMS.Models;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,9 @@ public class ResidentResource
         _context.Passports.Load();
         _context.RatingChangeCategories.Load();
 
-        return _context.Residents.OrderBy(r => r.LastName);
+        return _context.Residents
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName);
     }
 
     public IEnumerable<Resident> GetAllResidents()
@@ -39,7 +42,9 @@ public class ResidentResource
         _context.EvictionOrders.Load();
         _context.Passports.Load();
 
-        return _context.Residents.OrderBy(r => r.LastName);
+        return _context.Residents
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName);
     }
 
     public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate,
@@ -48,7 +53,9 @@ public class ResidentResource
         var res = GetAllResidents(documentsStartDate);
         if (gender is not null)
             return res.Where(r => r.Gender == char.Parse(gender));
-        return res;
+        return res
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName);
     }
 
     public Resident? GetResidentById(int id, DateTime documentsStartDate)
@@ -76,6 +83,37 @@ public class ResidentResource
 
         return _context.Residents
             .FirstOrDefault(r => r.ResidentId == id);
+    }
+
+    public bool AccrualAll(int commercialCost, int nonCommercialCost)
+    {
+        foreach (var resident in _context.Residents)
+        {
+            if (resident.RoomId is not null)
+            {
+                var transaction = new Transaction
+                {
+                    ResidentId = resident.ResidentId,
+                    OperationDate = DateTime.UtcNow,
+                    Sum = resident.IsCommercial
+                        ? commercialCost
+                        : nonCommercialCost
+                };
+
+                _context.Transactions.Add(transaction);
+            }
+        }
+
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public Tuple<bool, string?> AddResident(string data)

@@ -1,6 +1,7 @@
 import "./Residents.css";
 import React from "react";
 import Resident from "../Resident";
+import rubleImg from './img/negativeRuble.svg'
 
 function template() {
     return (
@@ -9,24 +10,26 @@ function template() {
                 <div className="residents-block-header">СПИСКИ</div>
                 <div className="residents-container">
                     <div className="residents-nav">
-                        <input type="text" placeholder="Введите имя"/>
+                        <input type="text" onInput={(e) => this.filterByName(e)} placeholder="Введите имя"/>
                         <div className="filters">
-                            <button className="yellow-btn"/>
-                            <button className="green-btn"/>
-                            <button className="red-btn"/>
+                            <button onClick={(e) => this.filterBySettlement(e)} className="yellow-btn"/>
+                            <button onClick={(e) => this.filterByCourse(e)} className="green-btn"/>
+                            <button onClick={(e) => this.filterByRating(e)} className="red-btn"/>
 
-                            <button className="w-filter-btn">Ж</button>
-                            <button className="m-filter-btn">М</button>
+                            <button className="w-filter-btn"><img alt={"ruble"} src={rubleImg}/></button>
+                            <button onClick={(e) => this.filterByGender(e)} className="w-filter-btn">Ж</button>
+                            <button onClick={(e) => this.filterByGender(e)} className="m-filter-btn">М</button>
                             <button onClick={this.props.addResidentBtnClickHandler} className="resident-add-btn"/>
-
                         </div>
                     </div>
                     <div className="residents-list-scroll">
                         <div className="residents-list">
                             {
-                                this.props.residentsList !== undefined ?
-                                    this.props.residentsList.map(resident =>
-                                        <Resident key={resident}
+                                this.props.residentsFilterList !== undefined ?
+                                    this.props.residentsFilterList.map(resident =>
+                                        <Resident
+                                                  updateResidentsList={this.props.updateResidentsList}    
+                                                  key={resident["ResidentId"]}
                                                   readOnly={false}
                                                   showSaveBtn={true}
                                                   id={resident["ResidentId"]}
@@ -41,6 +44,8 @@ function template() {
                                                   rating={resident["Rating"]}
                                                   debt={resident["Debt"]}
                                                   reports={resident["Reports"]}
+                                                  roomId={resident["RoomId"]}
+                                                  course={resident["Course"]}
                                         />) : ''
                             }
                         </div>

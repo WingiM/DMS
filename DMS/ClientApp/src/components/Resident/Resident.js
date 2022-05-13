@@ -7,21 +7,19 @@ class Resident extends React.Component {
 
         this.state = {
             submitFail: false,
-            id: this.props.id,
-            lastname: this.props.lastname,
-            firstName: this.props.firstName,
-            patronymic: this.props.patronymic,
-            gender: this.props.gender,
-            birthDate: this.props.birthDate.slice(0, 10),
-            passportInformation: this.props.passportInformation,
-            tin: this.props.tin,
-            rating: this.props.rating,
-            debt: this.props.debt,
-            reports: this.props.reports,
-            issueBy: this.props.issuedBy,
-            issuedDate: this.props.issuedDate, 
-            departmentCode: this.props.departmentCode,
-            address: this.props.address
+            ResidentId: this.props.id,
+            LastName: this.props.lastname,
+            FirstName: this.props.firstName,
+            Patronymic: this.props.patronymic,
+            Gender: this.props.gender,
+            BirthDate: this.props.birthDate.slice(0, 10),
+            SeriesAndNumber: this.props.passportInformation,
+            Tin: this.props.tin,
+            Rating: this.props.rating,
+            Debt: this.props.debt,
+            Reports: this.props.reports,
+            PassportInformation: {SeriesAndNumber: this.props.passportInformation},
+            RoomId: this.props.roomId,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -32,14 +30,14 @@ class Resident extends React.Component {
         return template.call(this);
     }
 
-    openCollapsible(e) {    
+    openCollapsible(e) {
         let elem = e.currentTarget
         elem.classList.toggle("active");
         let content = elem.nextElementSibling;
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
-            content.style.maxHeight = content.scrollHeight + 150 + "px";
+            content.style.maxHeight = content.scrollHeight + "px";
         }
     }
     
@@ -53,23 +51,29 @@ class Resident extends React.Component {
         event.preventDefault()
         
         const data = {
-            LastName: this.state.lastname,
-            FirstName: this.state.firstName,
-            Patronymic: this.state.patronymic,
-            Gender: this.state.gender,
-            BirthDate: this.state.birthDate + "T00:00:00Z",
-            PassportInformation: {SeriesAndNumber: this.state.passportInformation},
-            Tin: this.state.tin
+            LastName: this.state.LastName,
+            FirstName: this.state.FirstName,
+            Patronymic: this.state.Patronymic,
+            Gender: this.state.Gender,
+            BirthDate: this.state.BirthDate + "T00:00:00Z",
+            PassportInformation: {SeriesAndNumber: this.state.SeriesAndNumber},
+            Tin: this.state.Tin,
+            RoomId: this.state.RoomId,
+            Course: this.props.course
         }
-        const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.id
+        const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {
-            method: this.state.id === null ? "POST" : "PUT",
+            method: this.state.ResidentId === null ? "POST" : "PUT",
             headers: {
                 "Authorization": localStorage.getItem("token"),
                 "Content-Type": 'application/json'
             },
             body: JSON.stringify(data)
         })
+        
+        //update residents list of current stream
+        this.props.updateResidentsList(this.state, this.state.ResidentId !== null)
+        
         const json = await response.json();
         console.log(json)
     }

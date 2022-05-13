@@ -43,8 +43,9 @@
 }
 
 .filters {
-    width: 400px;
+    width: 420px;
     float: right;
+    margin-right: 3%;
     display: flex;
     justify-content: center;
 }
