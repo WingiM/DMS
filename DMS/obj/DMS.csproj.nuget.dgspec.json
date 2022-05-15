@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\MyFolders\\Programming\\C#\\dms\\DMS\\DMS.csproj": {}
+    "C:\\MyFolders\\Programming\\C#\\DMS\\DMS\\DMS.csproj": {}
   },
   "projects": {
-    "C:\\MyFolders\\Programming\\C#\\dms\\DMS\\DMS.csproj": {
+    "C:\\MyFolders\\Programming\\C#\\DMS\\DMS\\DMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\MyFolders\\Programming\\C#\\dms\\DMS\\DMS.csproj",
+        "projectUniqueName": "C:\\MyFolders\\Programming\\C#\\DMS\\DMS\\DMS.csproj",
         "projectName": "DMS",
-        "projectPath": "C:\\MyFolders\\Programming\\C#\\dms\\DMS\\DMS.csproj",
+        "projectPath": "C:\\MyFolders\\Programming\\C#\\DMS\\DMS\\DMS.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\MyFolders\\Programming\\C#\\dms\\DMS\\obj\\",
+        "outputPath": "C:\\MyFolders\\Programming\\C#\\DMS\\DMS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"

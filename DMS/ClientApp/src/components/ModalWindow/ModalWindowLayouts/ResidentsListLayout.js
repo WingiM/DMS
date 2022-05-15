@@ -28,7 +28,7 @@ class ResidentsListLayout extends React.Component {
         })
 
         document.querySelector(".modal-content").className = this.state.showSettlementModal ? 
-            "modal-content settlement-orders" : "modal-content"
+            "modal-content settlement-order" : "modal-content"
     }
 
     render() {
@@ -39,6 +39,7 @@ class ResidentsListLayout extends React.Component {
                     resident={this.state.chosenResident}
                     roomId={this.props.roomId}
                 />
+
                 :
                 <div>
                     <div className="rooms-header in-modal">СПИСКИ</div>

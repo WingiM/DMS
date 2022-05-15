@@ -2,6 +2,7 @@ import "./Residents.css";
 import React from "react";
 import Resident from "../Resident";
 import rubleImg from './img/negativeRuble.svg'
+import "reactstrap"
 
 function template() {
     return (

@@ -26,7 +26,14 @@
 
 .modal-content div {
     padding: 0 5%;
-}   
+}  
+
+/* Residents list*/
+
+.residents-list-layout .in-room-residents-scroll-zone {
+    padding: 1.5%;
+    margin-top: 2.5%;
+}
 
 /* Settlement Order */
 .settlement-order-body {
@@ -35,7 +42,7 @@
     padding: 1%;
 }
 
-.settlement-orders {
+.settlement-order {
     width: 52.5%;
     padding: 1%;
 }
@@ -55,22 +62,22 @@
     margin-bottom: 3%;
 }
 
-.settlement-orders input[name='passportNumber'] {
+.settlement-order input[name='passportNumber'] {
     max-width: 25%;
     float: right;
 }
 
-.settlement-orders input[name='parentPassportNumber'] {
+.settlement-order input[name='parentPassportNumber'] {
     max-width: 25%;
     float: right;
 }
 
-.settlement-orders form .resident-content-row:nth-child(2) input {
+.settlement-order form .resident-content-row:nth-child(2) input {
     margin-right: 42%;
     margin-left: 0;
 }
 
-.settlement-orders input {
+.settlement-order input {
     color: #3A7890;
     font-style: normal;
     font-weight: 400;
@@ -82,16 +89,16 @@
 }
 
 /* Rating Operations, Eviction orders, Transactions */
-.rating-operations, .eviction-orders, .transactions {
+.rating-operation, .eviction-order, .transaction-layout {
     height: 35%;
     width: 45%;
 }
 
-.rating-operations form, .eviction-orders form, .transactions form {
+.rating-operation form, .eviction-order form, .transaction-layout form {
     margin-top: 5%;
 }
 
-.rating-operations input, .eviction-orders input, .transactions input {
+.rating-operation input, .eviction-order input, .transaction-layout input {
     color: #3A7890;
     font-style: normal;
     font-weight: 400;
@@ -105,11 +112,11 @@
 
 
 /* Transaction Layout */
-.transactions {
+.transaction-layout {
     margin-left: 5%;
     margin-right: 5%;
 }
-.transactions .radio-label {
+.transaction-layout .radio-label {
     background: #D9FFFA;
     border-radius: 10px;
     width: 30%;
@@ -119,7 +126,7 @@
 }
 
 
-.transactions input[type="radio"]:checked + .radio-label {
+.transaction-layout input[type="radio"]:checked + .radio-label {
     background: #FFFFFF;
     border: 1px solid #00938A;
     border-radius: 10px;

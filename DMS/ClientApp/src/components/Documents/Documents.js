@@ -8,7 +8,6 @@ class Documents extends React.Component {
         this.state = {
             showModal: false,
             layout: null,
-            layoutName: ""
         }
     }
 
@@ -17,11 +16,10 @@ class Documents extends React.Component {
             (~(i["FirstName"] + i["LastName"] + i["Patronymic"]).toLowerCase().indexOf(e.target.value.toLowerCase()))))
     }
 
-    toggleModal(layout, layoutName) {
+    toggleModal(layout) {
         this.setState({
             showModal: !this.state.showModal,
             layout: layout,
-            layoutName: layoutName
         })
     }
     

@@ -42,25 +42,25 @@ function template() {
                                                 resident["RatingOperations"].map(doc =>
                                                     <div className="resident-content-row" data-type={"RatingOperations"}
                                                          onClick={() => this.toggleModal(
-                                                             <RatingOperationsLayout resident={resident}/>, "rating-operations")}>
+                                                             <RatingOperationsLayout resident={resident}/>)}>
                                                         Начисление рейтинга </div>) : ""
                                             }
                                             {resident["SettlementOrders"] !== undefined ?
                                                 resident["SettlementOrders"].map(doc =>
                                                     <div className="resident-content-row"
                                                          onClick={() => this.toggleModal(<SettlementOrderLayout
-                                                             resident={resident}/>, "settlement-orders")}
+                                                             resident={resident}/>)}
                                                          data-type={"SettlementOrders"}>Приказ о заселении </div>) : ""}
                                             {resident["EvictionOrders"] !== undefined ?
                                                 resident["EvictionOrders"].map(doc =>
                                                     <div className="resident-content-row"
                                                          onClick={() => this.toggleModal(<EvictionOrderLayout
-                                                             resident={resident}/>, "eviction-orders")}
+                                                             resident={resident}/>)}
                                                          data-type={"EvictionOrders"}>Приказ о выселении </div>) : ""}
                                             {resident["Transactions"] !== undefined ?
                                                 resident["Transactions"].map(doc =>
                                                     <div className="resident-content-row"
-                                                         onClick={() => this.toggleModal(<TransactionsLayout resident={resident}/>, "transactions")}
+                                                         onClick={() => this.toggleModal(<TransactionsLayout resident={resident}/>)}
                                                          data-type={"Transactions"}>Транзакции </div>) : ""}
                                         </div>
                                     </div>) : ""

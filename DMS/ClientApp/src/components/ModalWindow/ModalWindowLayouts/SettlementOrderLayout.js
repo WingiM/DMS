@@ -10,7 +10,7 @@ class SettlementOrderLayout extends React.Component {
         this.state = {
             id: this.props.resident["ResidentId"],
             fullName: this.props.resident["LastName"] + " " + this.props.resident["FirstName"] + " " + this.props.resident["Patronymic"],
-            passportNumber: this.props.resident["PassportInformation"]["SeriesAndNumber"],
+            // passportNumber: this.props.resident["PassportInformation"]["SeriesAndNumber"],
             issuedBy: "",
             address: "",
             parentFullName: "",
@@ -26,7 +26,7 @@ class SettlementOrderLayout extends React.Component {
         this.setState({[event.target.name]: event.target.value})
     }
     
-    async submitSettlement(e) {
+    async   submitSettlement(e) {
         e.preventDefault()
         await fetch("api/documents/", {
             method: "POST",

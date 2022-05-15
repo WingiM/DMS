@@ -30,6 +30,7 @@ class App extends React.Component {
         }
         
         //binds
+        this.logoutHandler = this.logoutHandler.bind(this);
         this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
         this.openRoomButtonClickHandler = this.openRoomButtonClickHandler.bind(this);
         this.closeRoomButtonClickHandler = this.closeRoomButtonClickHandler.bind(this);
@@ -42,7 +43,11 @@ class App extends React.Component {
     }
     
     /* Handlers */
-
+    
+    // logout handler
+    logoutHandler() {
+        localStorage.removeItem("token");
+    }
     // open settings
     async showSettingsButtonClickHandler() {
         this.setState({
@@ -238,7 +243,6 @@ class App extends React.Component {
     checkTokenLifetime() {
         try {
             let expDate = this.getTokenExpDate();
-            console.log()
             if (new Date().getTime() > expDate) {
                 localStorage.removeItem("token");
                 return <Navigate to="/login"/>
@@ -264,6 +268,7 @@ class App extends React.Component {
                                     showResidents={this.showResidentsBlockButtonClickHandler}
                                     showSettings={this.showSettingsButtonClickHandler}
                                     showDocuments={this.showDocumentsButtonClickHandler}
+                                    logout={this.logoutHandler}
                                 />
                                 <Residents 
                                     show={this.state.showResidents}

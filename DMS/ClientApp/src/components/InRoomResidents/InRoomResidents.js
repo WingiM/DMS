@@ -6,6 +6,8 @@ class InRoomResidents extends React.Component {
         super(props);
         this.state = {
             showModal: false,
+            showSettlementModal: false,
+            chosenResident: null,
             show: true,
             modalResidentsList: [],
             modalResidentsFilterList: [],
@@ -17,7 +19,7 @@ class InRoomResidents extends React.Component {
     
     //handlers
     
-    async toggleModal() {
+    async toggleModal(resident) {
         const gender = this.props.room["Gender"] === "F" ? "Ж" : "М"
         
         let data = await this.fetchResidents()
@@ -25,7 +27,8 @@ class InRoomResidents extends React.Component {
         this.setState({
             showModal: !this.state.showModal,
             modalResidentsList: data,
-            modalResidentsFilterList: data
+            modalResidentsFilterList: data,
+            chosenResident: resident
         })
     }
     

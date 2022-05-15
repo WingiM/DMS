@@ -4,6 +4,7 @@ import React from "react";
 import './scripts'
 
 import settingIco from './img/settingsIco.svg'
+import exitIco from './img/exitIco.svg'
 import wavesIco from './img/waves.svg'
 import {Navigate} from "react-router-dom";
 
@@ -48,6 +49,8 @@ function template() {
                     Документы
                 </a>
             </div>
+            <a id="exit" className={"sidebar-exit-btn"} onClick={this.props.logout} 
+               href="/login"><img alt="exit" src={exitIco}/></a>
 
             <img id="waves" src={wavesIco} alt="waves"/>
         </div>
