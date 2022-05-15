@@ -31,16 +31,10 @@ export class Login extends Component {
             })
     }
     
-    keyUpController(e) {
+    keyDownController(e) {
         if (e.key === "Enter") {
             this.loginHandler(e);
         } 
-    }
-
-    keyUpController(e) {
-        if (e.key === "Enter") {
-            this.loginHandler(e);
-        }
     }
 
     render() {

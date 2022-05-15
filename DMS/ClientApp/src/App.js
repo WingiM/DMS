@@ -12,6 +12,7 @@ import settingsIco from './components/Sidebar/img/settingsIco.svg'
 import activeSettingsIco from './components/Sidebar/img/activeSettingsIco.svg'
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import ResettlementList from "./components/ResettlementList";
+import Registration from "./components/Registration";
 
 class App extends React.Component {
     static displayName = App.name;
@@ -369,6 +370,7 @@ class App extends React.Component {
                         </Routes>
                     </ErrorBoundary>
                 }/>
+                <Route element={<Registration/>} path={"/reg"}/>
             </Routes>
         )
     }
