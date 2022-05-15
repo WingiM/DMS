@@ -19,6 +19,7 @@ function template() {
                     residentsFilterList={this.state.modalResidentsFilterList}
                     filterHandler={this.filterHandler}
                     roomId={this.props.room["RoomId"]}
+                    updateRoom={this.props.updateRoom}
                 />}
                 toggleHandler={this.toggleModal}
             />
@@ -65,7 +66,7 @@ function template() {
                     />) : ''
                 }
                 {
-                    this.props.room["Capacity"] > this.props.room["Residents"].length ?
+                    this.props.room["Residents"] !== undefined && this.props.room["Capacity"] > this.props.room["Residents"].length ?
                         <button onClick={this.toggleModal} className="add-resident-button"><img alt="plus" src={addButtonImg}/></button>
                         : ''
                 }

@@ -28,6 +28,8 @@ class App extends React.Component {
             allResidentsList: [],
             allResidentsFilterList: [],
         }
+
+        console.log(new Date(Date.now()).toISOString())
         
         //binds
         this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
@@ -37,6 +39,7 @@ class App extends React.Component {
         this.addNewResidentHandler = this.addNewResidentHandler.bind(this);
         this.filterResidentsHandler = this.filterResidentsHandler.bind(this);
         this.updateAllResidentsList = this.updateAllResidentsList.bind(this);
+        this.updateRoom = this.updateRoom.bind(this)
         this.showSettingsButtonClickHandler = this.showSettingsButtonClickHandler.bind(this)
         this.showDocumentsButtonClickHandler = this.showDocumentsButtonClickHandler.bind(this);
     }
@@ -121,6 +124,11 @@ class App extends React.Component {
         const data = await this.fetchRoom(room)
         this.setState({activeRoom: data})
         this.setState({showInRoomResidents: true})
+    }
+    
+    // update opened room
+    async updateRoom(resident, remove=false) {
+        this.state.activeRoom["Residents"].push(resident)
     }
 
     closeRoomButtonClickHandler() {
@@ -282,6 +290,7 @@ class App extends React.Component {
                                     show={this.state.showInRoomResidents}
                                     closeButtonClickHandler = {this.closeRoomButtonClickHandler}
                                     room={this.state.activeRoom}
+                                    updateRoom={this.updateRoom}
                                 />
                                 <Documents
                                     show={this.state.showDocuments}

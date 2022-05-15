@@ -38,6 +38,7 @@ class ResidentsListLayout extends React.Component {
                     toggleModal={this.toggleSettlementModal}
                     resident={this.state.chosenResident}
                     roomId={this.props.roomId}
+                    updateRoom={this.props.updateRoom}
                 />
                 :
                 <div>

@@ -38,12 +38,17 @@ class SettlementOrderLayout extends React.Component {
             body: JSON.stringify({
                 "RoomId": parseInt(this.props.roomId),
                 "ResidentId": parseInt(this.state.id),
-                "Date": Date.now()
+                "OrderDate": new Date(Date.now()).toISOString().slice(0, 10) + "T00:00:00Z",
+                "ParentsFullName": this.state.parentFullName,
+                "ParentsPassportSeriesNumber": this.state.parentPassportNumber,
+                "ParentsPassportIssuedBy": this.state.parentPassportIssuedBy,
+                "ParentsPassportAddress": this.state.parentAddress
             })
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)})
+        this.props.updateRoom(this.props.resident)
     }
 
     render() {

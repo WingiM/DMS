@@ -8,12 +8,17 @@
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Settings button now changes appearance correctly&#10;Made resident filtration by name and correct gender">
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Made Settlement API&#10;Fixed modal window view">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_Merge_at_06-May-22_1_09_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_Merge_at_06-May-22_1_09_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Residents/Residents.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Residents/Residents.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/InRoomResidents/InRoomResidents.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/EvictionOrderLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/EvictionOrderLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/ResidentsListLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/ResidentsListLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/SettlementOrderLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/ModalWindow/ModalWindowLayouts/SettlementOrderLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +167,8 @@
       <workItem from="1652334860589" duration="1908000" />
       <workItem from="1652336791974" duration="188000" />
       <workItem from="1652365136788" duration="7797000" />
-      <workItem from="1652381538385" duration="18066000" />
+      <workItem from="1652381538385" duration="30931000" />
+      <workItem from="1652623559371" duration="1270000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -283,7 +289,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652454858867</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Minor appearance changes of residents list">
+      <created>1652456704940</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1652456704940</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Made Settlement API&#10;Fixed modal window view">
+      <created>1652462946931</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1652462946931</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +353,9 @@
     <MESSAGE value="Started making settings API" />
     <MESSAGE value="Done settings API&#10;Done password check for setting applying" />
     <MESSAGE value="Settings button now changes appearance correctly&#10;Made resident filtration by name and correct gender" />
-    <option name="LAST_COMMIT_MESSAGE" value="Settings button now changes appearance correctly&#10;Made resident filtration by name and correct gender" />
+    <MESSAGE value="Minor appearance changes of residents list" />
+    <MESSAGE value="Made Settlement API&#10;Fixed modal window view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made Settlement API&#10;Fixed modal window view" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
