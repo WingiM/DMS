@@ -145,7 +145,12 @@ public class ResidentResource : ResourceBase
         try
         {
             var resident = JsonSerializer.Deserialize<Resident>(data);
-            _context.Residents.Add(resident!);
+
+            if (resident!.RoomId is not null)
+                throw new Exception(
+                    "Cannot specify room id in resident creation");
+            
+            _context.Residents.Add(resident);
             _context.SaveChanges();
         }
         catch (Exception e)

@@ -99,10 +99,6 @@ public class DocumentsResource : ResourceBase
             if (resident.RoomId != null)
                 throw new Exception("Resident already has a room.");
 
-            if (resident.Gender != room.Gender)
-                throw new Exception(
-                    "Cannot settle resident into room with different gender");
-
             if (_context.Residents.Count(r => r.RoomId == room.RoomId) ==
                 room.Capacity)
                 throw new Exception("Room is overcrowded");

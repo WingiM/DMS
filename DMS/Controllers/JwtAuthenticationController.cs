@@ -1,40 +1,48 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DMS.Controllers
+namespace DMS.Controllers;
+
+[Route("/api/login")]
+public class JwtAuthenticationController : ControllerBase
 {
-    [Route("/api/login")]
-    public class JwtAuthenticationController : ControllerBase
+    private readonly IDistributedCache _cache;
+    private readonly ILogger<JwtAuthenticationController> _logger;
+    private readonly HMACSHA256 _encryptor;
+    private readonly IConfiguration _configuration;
+
+    public JwtAuthenticationController(
+        ILogger<JwtAuthenticationController> logger,
+        IDistributedCache cache, IConfiguration configuration)
     {
-        private readonly IDistributedCache _cache;
-        private readonly ILogger<JwtAuthenticationController> _logger;
+        _logger = logger;
+        _cache = cache;
+        _configuration = configuration;
+        _encryptor = new HMACSHA256(
+            Encoding.UTF8.GetBytes(configuration["Encryption:AnalogKey"]));
+    }
 
-        public JwtAuthenticationController(
-            ILogger<JwtAuthenticationController> logger, IDistributedCache cache)
-        {
-            _logger = logger;
-            _cache = cache;
-        }
-
-        [HttpPost]
-        public IResult Post([FromServices] IConfiguration configuration)
+    [HttpPost]
+    public IResult GetJwtToken()
+    {
+        try
         {
             Request.Headers.TryGetValue("password", out var pass);
-            // HMACSHA256 encryptor = new HMACSHA256();
-            // encryptor.Key =
-            //     Encoding.UTF8.GetBytes(configuration["Encryption:AnalogKey"]);
-            // var hash = encryptor.ComputeHash(Encoding.UTF8.GetBytes(pass));
-            // if (!hash.SequenceEqual(_cache.Get("encryptedPassword")))
-            // {
-            //     Response.StatusCode = 400;
-            //     return Results.Json(
-            //         new { message = "Incorrect password given" },
-            //         statusCode: 400);
-            // }
-            if (pass.Count == 0)
+
+            var hash = _encryptor.ComputeHash(Encoding.UTF8.GetBytes(pass));
+            if (!IsPasswordStored())
+            {
+                Response.StatusCode = 409;
+                return Results.Json(
+                    new { message = "Password not set" },
+                    statusCode: 409);
+            }
+
+            if (!hash.SequenceEqual(_cache.Get("EncryptedPassword")))
             {
                 Response.StatusCode = 400;
                 return Results.Json(
@@ -42,14 +50,13 @@ namespace DMS.Controllers
                     statusCode: 400);
             }
 
-            _logger.Log(LogLevel.Information, pass.First());
             var jwt = new JwtSecurityToken(
-                issuer: configuration["Jwt:Issuer"],
-                audience: configuration["Jwt:Audience"],
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
                 expires: DateTime.UtcNow.Add(TimeSpan.FromHours(2)),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                        configuration["Jwt:Key"])),
+                        _configuration["Jwt:Key"])),
                     SecurityAlgorithms.HmacSha256)
             );
 
@@ -61,5 +68,44 @@ namespace DMS.Controllers
 
             return Results.Ok(response);
         }
+        catch (ArgumentNullException)
+        {
+            return Results.BadRequest("No password given");
+        }
+    }
+
+    [HttpPost]
+    [Route("/api/login/set_password")]
+    public IResult SetPassword()
+    {
+        try
+        {
+            if (IsPasswordStored())
+                return Results.Conflict("Password is already set");
+            
+            Request.Headers.TryGetValue("password", out var pass);
+            Request.Headers.TryGetValue("repeat_password", out var repeatPass);
+
+            if (pass != repeatPass)
+            {
+                Response.StatusCode = 400;
+                return Results.Json(
+                    new { message = "Passwords do not match" },
+                    statusCode: 400);
+            }
+
+            var hash = _encryptor.ComputeHash(Encoding.UTF8.GetBytes(pass));
+            _cache.Set("EncryptedPassword", hash);
+            return Results.Ok("Password set");
+        }
+        catch (ArgumentNullException)
+        {
+            return Results.BadRequest("No password given");
+        }
+    }
+
+    private bool IsPasswordStored()
+    {
+        return _cache.Get("EncryptedPassword") is not null;
     }
 }
