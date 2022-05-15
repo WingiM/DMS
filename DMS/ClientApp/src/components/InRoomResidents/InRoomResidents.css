@@ -54,3 +54,8 @@
     background: #FFF;
     cursor: pointer;
 }
+
+.radio-label {
+    font-size: 17px;
+    line-height: 25px;
+}

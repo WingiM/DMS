@@ -23,6 +23,12 @@
     float: right;
 }
 
+.state-dot {
+    float: right;
+    margin-top: 4px;
+    margin-right: 18px;
+}
+
 .resident-content {
     padding-left: 1.5%;
     max-height: 0;
@@ -31,6 +37,23 @@
     color: #3A7890;
     font-size: 17px;
 
+}
+
+.resident-content-row {
+    box-sizing: border-box;
+    margin-top: 2%;
+    vertical-align: center;
+    line-height: 25px;
+}
+
+.resident-content-row label {
+    margin-right: 1.5%;
+}
+
+/* All inputs*/
+
+.filters button {
+    cursor: pointer;
 }
 
 .resident-content input {
@@ -49,17 +72,6 @@
     float: right;
 }
 
-.resident-content-row {
-    box-sizing: border-box;
-    margin-top: 2%;
-    vertical-align: center;
-    line-height: 25px;
-}
-
-.resident-content-row label {
-    margin-right: 1.5%;
-}
-
 .resident-content input:active {
     outline: none;
     border: 0;
@@ -76,6 +88,7 @@
     border-radius: 9px;
     text-align: center;
     cursor: pointer;
+    color: #3A7890;
 }
 
 input[type="radio"] {
@@ -94,9 +107,7 @@ input[type="date"] {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    display: none;
 }
 
 input[type="number"] {
@@ -114,6 +125,8 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+/* Submit buttons */
+
 input[type="submit"] {
     background-color: #1ECBAD;
     color: #FFF;
@@ -124,6 +137,30 @@ input[type="submit"] {
     transition: background-color 0.5s;
 }
 
+.button-content-row {
+    width: 100%;
+    margin-top: 5%;
+    float: right;
+}
+
+.button-content-row input {
+    margin-left: 3%;
+    padding: 1.5% 4%;
+}
+
+.button-content-row .transaction-btn {
+    background: #299DCE;
+}
+
 input[type="submit"]:hover {
     background-color: #19A38BFF;
+}
+
+.button-content-row .evict-btn {
+    background: #FF8787;
+    color: #FFF
+}
+
+.button-content-row .evict-btn:hover {
+    background: #E75050;
 }

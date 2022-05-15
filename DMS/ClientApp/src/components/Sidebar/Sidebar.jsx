@@ -13,8 +13,9 @@ function template() {
     }
     return (
         <div className="sidebar">
-            <a id="settings" href="#settings"><img alt="settings"
-                                                   src={settingIco}/></a>
+            <a id="settings" className={"sidebar-settings-btn"} href="#settings" onClick={(e) => 
+                this.props.showSettings(e)}><img alt="settings" src={settingIco}/></a>
+                                                                                               
             <span id="sidebar-header">DMS</span>
 
             <div className="stats-block">
@@ -23,12 +24,12 @@ function template() {
                 <div className="stats-intel-block">
                     <div className="stats-intel">
                         <span className="marked-span filled">занято</span><br/>
-                        <span className="relative-span">304</span><br/>
+                        <span className="relative-span">{this.state.settled}</span><br/>
                         <span className="marked-span unfilled">свободно</span><br/>
-                        <span className="relative-span">93</span><br/>
+                        <span className="relative-span">{this.state.free}</span><br/>
                     </div>
                     <div className="circlechart"
-                         data-percentage="78">
+                         data-percentage={this.state.settled / this.state.total * 100 | 0}>
                     </div>
                 </div>
             </div>
@@ -39,10 +40,10 @@ function template() {
                     Комнаты
                 </a>
                 <a id="residents"
-                   className="sidebar-btn" href="#residents">
+                   className="sidebar-btn" onClick={this.props.showResidents} href="#residents">
                     Проживающие
                 </a>
-                <a id="documents"
+                <a id="documents" onClick={this.props.showDocuments}
                    className="sidebar-btn" href="#documents">
                     Документы
                 </a>

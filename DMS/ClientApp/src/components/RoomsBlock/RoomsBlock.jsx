@@ -10,7 +10,7 @@ function template() {
     <div className="rooms">
         <div className="tabs-block">
             <ul className="nav nav-tabs">
-                {this.state.floors.map(floor =>
+                {this.props.floors.map(floor =>
                     <li key={floor} 
                         id={floor} 
                         onClick={(e) => this.tabClick(e)}
@@ -26,7 +26,7 @@ function template() {
             <div className="rooms-btn-block-scroll-zone">
                 <div className="rooms-btn-block">
                     {this.state.rooms.map(room => 
-                        <Room key={room} name={room} openRoom={this.props.openRoom}/>)}
+                        <Room key={room["RoomId"]} name={room["RoomId"]} isFull={room["IsFull"]} openRoom={this.props.openRoom}/>)}
                 </div>
             </div>
         </div>
