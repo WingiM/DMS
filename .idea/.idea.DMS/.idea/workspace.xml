@@ -10,13 +10,10 @@
     <projectFile profileName="DMS_Main">DMS-Main/DMS-Main.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +161,7 @@
       <workItem from="1652365136788" duration="7797000" />
       <workItem from="1652467472030" duration="2510000" />
       <workItem from="1652510006446" duration="323000" />
+      <workItem from="1652619941486" duration="1262000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -284,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652385203328</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs">
+      <created>1652620034681</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1652620034681</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +337,8 @@
     <MESSAGE value="Replace all Tuple&lt;bool, string&gt; with Exceptions" />
     <MESSAGE value="Delete WeatherForecastController.cs" />
     <MESSAGE value="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset" />
+    <MESSAGE value="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
