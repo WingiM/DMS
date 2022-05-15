@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import "./Layouts.css"
 
-class EvictionOrderLayout extends React.Component {
+class TransactionLayout extends React.Component {
     constructor(props) {
         super(props);
 
@@ -48,4 +48,4 @@ class EvictionOrderLayout extends React.Component {
     }
 }
 
-export default EvictionOrderLayout;   
+export default TransactionLayout;   

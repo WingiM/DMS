@@ -10,6 +10,8 @@ import Settings from "./components/Settings";
 import Documents from "./components/Documents";
 import settingsIco from './components/Sidebar/img/settingsIco.svg'
 import activeSettingsIco from './components/Sidebar/img/activeSettingsIco.svg'
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import ResettlementList from "./components/ResettlementList";
 
 class App extends React.Component {
     static displayName = App.name;
@@ -23,12 +25,13 @@ class App extends React.Component {
             showResidents: false,
             showDocuments: false,
             showSettings: false,
+            showResettlementList: false,
             floors: [],
             activeRoom: [],
             allResidentsList: [],
             allResidentsFilterList: [],
         }
-        
+
         //binds
         this.logoutHandler = this.logoutHandler.bind(this);
         this.showRoomsButtonClickHandler = this.showRoomsButtonClickHandler.bind(this);
@@ -40,14 +43,16 @@ class App extends React.Component {
         this.updateAllResidentsList = this.updateAllResidentsList.bind(this);
         this.showSettingsButtonClickHandler = this.showSettingsButtonClickHandler.bind(this)
         this.showDocumentsButtonClickHandler = this.showDocumentsButtonClickHandler.bind(this);
+        this.showResettlementListButtonClickHandler = this.showResettlementListButtonClickHandler.bind(this)
     }
-    
+
     /* Handlers */
-    
+
     // logout handler
     logoutHandler() {
         localStorage.removeItem("token");
     }
+
     // open settings
     async showSettingsButtonClickHandler() {
         this.setState({
@@ -56,26 +61,28 @@ class App extends React.Component {
             showInRoomResidents: false,
             showDocuments: false,
             showSettings: !this.state.showSettings,
+            showResettlementList: false,
         })
         await this.enableSettingsBtn()
     }
-    
+
     //open all resident of dormitory list
     async showResidentsBlockButtonClickHandler() {
         const data = await this.fetchAllResidentsList()
-        
+
         this.setState({
             showRooms: false,
             showInRoomResidents: false,
             showDocuments: false,
             showSettings: false,
             showResidents: true,
+            showResettlementList: false,
             allResidentsList: data,
             allResidentsFilterList: data
         })
         await this.disableSettingsBtn()
     }
-    
+
     // switch img and bg of settings btn
     async disableSettingsBtn() {
         const elem = document.querySelector(".sidebar-settings-btn").children[0]
@@ -89,7 +96,23 @@ class App extends React.Component {
         elem.src = this.state.showSettings ? settingsIco : activeSettingsIco;
         elem.parentElement.style.background = this.state.showSettings ? "#299DCE" : "white";
     }
-    
+
+    // open resettlement list
+    async showResettlementListButtonClickHandler() {
+        const data = await this.fetchResettlementResidentsList()
+        this.setState({
+            showResidents: false,
+            showRooms: false,
+            showInRoomResidents: false,
+            showDocuments: false,
+            showSettings: false,
+            showResettlementList: true,
+            allResidentsList: data,
+            allResidentsFilterList: data
+        })
+        await this.disableSettingsBtn()
+    }
+
     // open documents
     async showDocumentsButtonClickHandler() {
         const data = await this.fetchAllDocuments()
@@ -99,24 +122,26 @@ class App extends React.Component {
             showInRoomResidents: false,
             showDocuments: true,
             showSettings: false,
+            showResettlementList: false,
             allResidentsList: data,
             allResidentsFilterList: data
         })
         await this.disableSettingsBtn()
     }
-    
-    
+
+
     //open all dormitory rooms'n'floors block
     async showRoomsButtonClickHandler() {
         await this.fetchFloors()
-        
+
         this.setState(
             {
-            showResidents: false,
-            showDocuments: false,
-            showSettings: false,
-            showRooms: true
-        })
+                showResidents: false,
+                showDocuments: false,
+                showSettings: false,
+                showRooms: true,
+                showResettlementList: false,
+            })
         await this.disableSettingsBtn()
     }
 
@@ -129,104 +154,139 @@ class App extends React.Component {
     }
 
     closeRoomButtonClickHandler() {
-        this.setState({showInRoomResidents : false})
+        this.setState({showInRoomResidents: false})
     }
-    
+
     addNewResidentHandler() {
         this.state.allResidentsList.push({
-                ResidentId: null,
-                LastName: '',
-                FirstName: '',
-                Patronymic: '',
-                Gender: 'М',
-                BirthDate: '',
-                PassportInformation: {SeriesAndNumber: null},
-                Tin: null,
-                Rating: null,
-                Debt: null,
-                Reports: null,
-            })
+            ResidentId: null,
+            LastName: '',
+            FirstName: '',
+            Patronymic: '',
+            Gender: 'М',
+            BirthDate: '',
+            PassportInformation: {SeriesAndNumber: null},
+            Tin: null,
+            Rating: null,
+            Debt: null,
+            Reports: null,
+        })
         this.setState({
             allResidentsList: this.state.allResidentsList,
             allResidentFilterList: this.state.allResidentsList,
         })
     }
-    
+
     // residents list filtration
     async filterResidentsHandler(list) {
         this.setState({
             allResidentsFilterList: list,
         })
     }
-    
-    async updateAllResidentsList(elem, update=false) {
+
+    async updateAllResidentsList(elem, update = false) {
         if (update) {
             this.state.allResidentsList[
                 this.state.allResidentsList.indexOf(
                     this.state.allResidentsList.find(
                         i => i.ResidentId === elem.ResidentId))] = elem
-        }
-        else {
+        } else {
             this.state.allResidentsList.push(elem)
         }
     }
-    
+
     /* Fetch Functions */
+    
+    // get resettlement list
+    async fetchResettlementResidentsList() {
+        try {
+            const requestUrl = "api/stats/resettlement"
+            const response = await fetch(requestUrl, {
+                method: "GET",
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            })
+            const data = await response.json()
+            return data.Value
+        } catch (e) {
+            localStorage.removeItem("token");
+            return <Navigate to="/login"/>
+        }
+    }
+    
     
     // get all documents
     async fetchAllDocuments() {
-        const response = await fetch("/api/documents", {
-            method: "GET",
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        });
-        const data = await response.json()
-        return data.Value
+        try {
+            const response = await fetch("/api/documents", {
+                method: "GET",
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            });
+            const data = await response.json()
+            return data.Value
+        } catch (e) {
+            localStorage.removeItem("token");
+            return <Navigate to="/login"/>
+        }
     }
+
     //get all residents in dormitory
     async fetchAllResidentsList() {
-        const requestUrl = "api/residents"
-        const response = await fetch(requestUrl, {
-            method: "GET",
-            headers: {
-                "Authorization" : localStorage.getItem("token")
-            }
-        })
-        const data = await response.json()
-        return data.Value
+        try {
+            const requestUrl = "api/residents"
+            const response = await fetch(requestUrl, {
+                method: "GET",
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            })
+            const data = await response.json()
+            return data.Value
+        } catch (e) {
+            localStorage.removeItem("token");
+            return <Navigate to="/login"/>
+        }
     }
-    
+
     //get room with specified ID
     async fetchRoom(room) {
-        const requestUrl = "api/rooms/" + room
-        const response = await fetch(requestUrl, {
-            method: "GET",
-            headers: {
-                "Authorization" : localStorage.getItem("token")
-            }
-        })
-        
-        const data = await response.json()
-        return data.Value
+        try {
+            const requestUrl = "api/rooms/" + room
+            const response = await fetch(requestUrl, {
+                method: "GET",
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            })
+
+            const data = await response.json()
+            return data.Value
+        } catch (e) {
+            localStorage.removeItem("token");
+            return <Navigate to="/login"/>
+        }
+
     }
-    
+
     //get all floors
     async fetchFloors() {
         const requestUrl = "api/rooms/floors";
         await fetch(requestUrl, {
             method: "GET",
             headers: {
-                "Authorization" : localStorage.getItem("token")
+                "Authorization": localStorage.getItem("token")
             }
         })
-            .then((response) => response.json())
-            .then((data) => data.Value)
-            .then((val) => {
-                this.setState({
-                    floors: val
-                })
+        .then((response) => response.json())
+        .then((data) => data.Value)
+        .then((val) => {
+            this.setState({
+                floors: val
             })
+        })
     }
 
     getTokenExpDate() {
@@ -259,48 +319,55 @@ class App extends React.Component {
             <Routes>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={
-                    <Routes>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/" element={
-                            <React.StrictMode>
-                                <Sidebar
-                                    showRooms={this.showRoomsButtonClickHandler}
-                                    showResidents={this.showResidentsBlockButtonClickHandler}
-                                    showSettings={this.showSettingsButtonClickHandler}
-                                    showDocuments={this.showDocumentsButtonClickHandler}
-                                    logout={this.logoutHandler}
-                                />
-                                <Residents 
-                                    show={this.state.showResidents}
-                                    residentsList={this.state.allResidentsList}
-                                    residentsFilterList={this.state.allResidentsFilterList}
-                                    addResidentBtnClickHandler={this.addNewResidentHandler}
-                                    filterHandler={this.filterResidentsHandler}
-                                    updateResidentsList={this.updateAllResidentsList}
-                                />
-                                <RoomsBlock
-                                    show={this.state.showRooms}
-                                    openRoom = {this.openRoomButtonClickHandler}
-                                    floors={this.state.floors}
-                                />
-                                <InRoomResidents
-                                    show={this.state.showInRoomResidents}
-                                    closeButtonClickHandler = {this.closeRoomButtonClickHandler}
-                                    room={this.state.activeRoom}
-                                />
-                                <Documents
-                                    show={this.state.showDocuments}
-                                    residentsList={this.state.allResidentsList}
-                                    residentsFilterList={this.state.allResidentsFilterList}
-                                    filterHandler={this.filterResidentsHandler}
-                                />
-                                <Settings
-                                    show={this.state.showSettings}
-                                />
-                            </React.StrictMode>
-                        }/>
-                        
-                    </Routes>
+                    <ErrorBoundary>
+                        <Routes>
+                            {/*<Route path="/login" element={<Login/>}/>*/}
+                            <Route path="/" element={
+                                <React.StrictMode>
+                                    <Sidebar
+                                        showRooms={this.showRoomsButtonClickHandler}
+                                        showResidents={this.showResidentsBlockButtonClickHandler}
+                                        showSettings={this.showSettingsButtonClickHandler}
+                                        showDocuments={this.showDocumentsButtonClickHandler}
+                                        showResettlementList={this.showResettlementListButtonClickHandler}
+                                        logout={this.logoutHandler}
+                                    />
+                                    <Residents
+                                        show={this.state.showResidents}
+                                        residentsList={this.state.allResidentsList}
+                                        residentsFilterList={this.state.allResidentsFilterList}
+                                        addResidentBtnClickHandler={this.addNewResidentHandler}
+                                        filterHandler={this.filterResidentsHandler}
+                                        updateResidentsList={this.updateAllResidentsList}
+                                    />
+                                    <RoomsBlock
+                                        show={this.state.showRooms}
+                                        openRoom={this.openRoomButtonClickHandler}
+                                        floors={this.state.floors}
+                                    />
+                                    <InRoomResidents
+                                        show={this.state.showInRoomResidents}
+                                        closeButtonClickHandler={this.closeRoomButtonClickHandler}
+                                        room={this.state.activeRoom}
+                                    />
+                                    <Documents
+                                        show={this.state.showDocuments}
+                                        residentsList={this.state.allResidentsList}
+                                        residentsFilterList={this.state.allResidentsFilterList}
+                                        filterHandler={this.filterResidentsHandler}
+                                    />
+                                    <Settings
+                                        show={this.state.showSettings}
+                                    />
+                                    <ResettlementList
+                                        show={this.state.showResettlementList}
+                                        residentsList={this.state.allResidentsList}
+                                    />
+                                </React.StrictMode>
+                            }/>
+
+                        </Routes>
+                    </ErrorBoundary>
                 }/>
             </Routes>
         )

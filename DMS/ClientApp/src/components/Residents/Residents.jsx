@@ -2,7 +2,6 @@ import "./Residents.css";
 import React from "react";
 import Resident from "../Resident";
 import rubleImg from './img/negativeRuble.svg'
-import "reactstrap"
 
 function template() {
     return (
@@ -13,11 +12,11 @@ function template() {
                     <div className="residents-nav">
                         <input type="text" onInput={(e) => this.filterByName(e)} placeholder="Введите имя"/>
                         <div className="filters">
-                            <button onClick={(e) => this.filterBySettlement(e)} className="yellow-btn"/>
-                            <button onClick={(e) => this.filterByCourse(e)} className="green-btn"/>
-                            <button onClick={(e) => this.filterByRating(e)} className="red-btn"/>
+                            <button id="unsettled-filter" onClick={(e) => this.filterBySettlement(e)} className="yellow-btn"><span className={"tooltip-text"}>Незаселенные проживающие</span></button>
+                            <button onClick={(e) => this.filterByCourse(e)} className="green-btn"><span className={"tooltip-text"}>Первокурсники</span></button>
+                            <button onClick={(e) => this.filterByRating(e)} className="red-btn"><span className={"tooltip-text"}>Отрицательный рост</span></button>
 
-                            <button className="w-filter-btn"><img alt={"ruble"} src={rubleImg}/></button>
+                            <button className="w-filter-btn"><img alt={"ruble"} src={rubleImg}/><span className={"tooltip-text"}>Начислить плату</span></button>
                             <button onClick={(e) => this.filterByGender(e)} className="w-filter-btn">Ж</button>
                             <button onClick={(e) => this.filterByGender(e)} className="m-filter-btn">М</button>
                             <button onClick={this.props.addResidentBtnClickHandler} className="resident-add-btn"/>

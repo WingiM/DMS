@@ -152,15 +152,15 @@ input[type="submit"] {
     background: #299DCE;
 }
 
-input[type="submit"]:hover {
-    background-color: #19A38BFF;
+.button-content-row .transaction-btn:hover {
+    background: #217293;
 }
 
 .button-content-row .evict-btn {
-    background: #FF8787;
+    background: #299DCE;
     color: #FFF
 }
 
 .button-content-row .evict-btn:hover {
-    background: #E75050;
+    background: #217293;
 }

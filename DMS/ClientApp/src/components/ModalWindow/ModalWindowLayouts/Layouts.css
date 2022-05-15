@@ -24,6 +24,11 @@
     align-items: center;
 }
 
+
+.modal-content input[type="submit"]:hover {
+    background-color: #158f79;
+}
+
 .modal-content div {
     padding: 0 5%;
 }  

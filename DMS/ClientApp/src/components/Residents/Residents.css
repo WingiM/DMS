@@ -237,3 +237,40 @@ input[type="submit"]:hover {
     }
 
 }
+
+.filters button {
+    position: relative;
+    display: inline-block;
+}
+
+.filters button .tooltip-text {
+    visibility: hidden;
+    width: 240px;
+    bottom: 120%;
+    left: -80%;
+    margin-left: -60px;
+    background-color: #299DCE;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 1px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.filters button:hover .tooltip-text {
+    visibility: visible;
+}
+
+.filters button .tooltip-text::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #299DCE transparent transparent transparent;
+}

@@ -48,6 +48,10 @@ function template() {
                    className="sidebar-btn" href="#documents">
                     Документы
                 </a>
+                <a id="resettlement-list" onClick={this.props.showResettlementList}
+                   className="sidebar-btn" href="#resettlement-list">
+                    Перезаселение
+                </a>
             </div>
             <a id="exit" className={"sidebar-exit-btn"} onClick={this.props.logout} 
                href="/login"><img alt="exit" src={exitIco}/></a>

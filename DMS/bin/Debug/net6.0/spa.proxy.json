@@ -2,7 +2,7 @@
 "SpaProxyServer": {
 "ServerUrl": "https://localhost:44449",
 "LaunchCommand": "npm start",
-"WorkingDirectory": "C:\\MyFolders\\Programming\\C#\\dms\\DMS\\ClientApp\\",
+"WorkingDirectory": "C:\\MyFolders\\Programming\\C#\\DMS\\DMS\\ClientApp\\",
 "MaxTimeoutInSeconds": "120"
 }
 }
