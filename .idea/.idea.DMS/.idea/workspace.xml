@@ -6,20 +6,17 @@
     <projectFile>DMS/DMS.csproj</projectFile>
     <projectFile profileName="DMS">DMS/DMS.csproj</projectFile>
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
+    <projectFile profileName="IIS Express">DMS-Main/DMS-Main.csproj</projectFile>
+    <projectFile profileName="DMS_Main">DMS-Main/DMS-Main.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Delete WeatherForecastController.cs">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +40,6 @@
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/package-lock.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -166,6 +162,8 @@
       <workItem from="1652334860589" duration="1908000" />
       <workItem from="1652336791974" duration="188000" />
       <workItem from="1652365136788" duration="7797000" />
+      <workItem from="1652467472030" duration="2510000" />
+      <workItem from="1652510006446" duration="323000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -265,7 +263,28 @@
       <option name="project" value="LOCAL" />
       <updated>1652336971500</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
+      <created>1652385042593</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1652385042593</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
+      <created>1652385054400</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1652385054400</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
+      <created>1652385203328</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1652385203328</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,7 +331,8 @@
     <MESSAGE value="Update SettlementOrder model&#10;POST request to edit room gender&#10;Dormitory reset done" />
     <MESSAGE value="Replace all Tuple&lt;bool, string&gt; with Exceptions" />
     <MESSAGE value="Delete WeatherForecastController.cs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete WeatherForecastController.cs" />
+    <MESSAGE value="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
