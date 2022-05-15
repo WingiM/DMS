@@ -6,6 +6,10 @@ namespace DMS.Models;
 [Table("transaction")]
 public class Transaction
 {
+    [Column("transaction_id")]
+    [Required]
+    public int TransactionId { get; set; }
+    
     [Column("resident_id")]
     [Required] 
     public int ResidentId { get; set; }

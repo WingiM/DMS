@@ -19,7 +19,7 @@ public abstract class DmsControllerBase : ControllerBase
             res.Gender, res.BirthDate, res.PassportInformation, res.Tin,
             res.RoomId, res.IsCommercial, res.Course,
             Evicted = res.RoomId is null, Rating = res.CountRating(),
-            Debt = -res.CountDebt(), Reports = res.CountReports()
+            Debt = res.CountDebt(), Reports = res.CountReports()
         };
 
     protected static DateTime ParseDate(string date)
