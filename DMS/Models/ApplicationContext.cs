@@ -29,8 +29,6 @@ public class ApplicationContext : DbContext
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingOperation>()
-            .HasKey(ro => new { ro.ResidentId, ro.OrderDate });
         modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<Room>().Property(r => r.FloorNumber)
@@ -214,32 +212,32 @@ public class ApplicationContext : DbContext
         
         modelBuilder.Entity<RatingOperation>().HasData(new RatingOperation()
         {
-            ResidentId = 1, CategoryId = 1,
+            ResidentId = 1, CategoryId = 1, RatingOperationId = 1,
             ChangeValue = -3, OrderDate = new DateTime(2021, 10, 9).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 2, CategoryId = 2,
+            ResidentId = 2, CategoryId = 2, RatingOperationId = 6,
             ChangeValue = 2, OrderDate = new DateTime(2021, 10, 10).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 3, CategoryId = 3,
+            ResidentId = 3, CategoryId = 3, RatingOperationId = 5,
             ChangeValue = -1, OrderDate = new DateTime(2021, 10, 11).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 4, CategoryId = 1,
+            ResidentId = 4, CategoryId = 1, RatingOperationId = 4,
             ChangeValue = -2, OrderDate = new DateTime(2021, 10, 12).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 5, CategoryId = 2,
+            ResidentId = 5, CategoryId = 2, RatingOperationId = 3,
             ChangeValue = 2, OrderDate = new DateTime(2021, 10, 13).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 6, CategoryId = 2,
+            ResidentId = 6, CategoryId = 2, RatingOperationId = 2,
             ChangeValue = 2, OrderDate = new DateTime(2021, 10, 14).ToUniversalTime(),
             Description = null
         });

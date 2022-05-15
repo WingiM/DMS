@@ -53,31 +53,31 @@ namespace DMS.Migrations
                         new
                         {
                             EvictionOrderId = 1,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9193),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4944),
                             ResidentId = 11
                         },
                         new
                         {
                             EvictionOrderId = 2,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9195),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4945),
                             ResidentId = 10
                         },
                         new
                         {
                             EvictionOrderId = 3,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9196),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4946),
                             ResidentId = 9
                         },
                         new
                         {
                             EvictionOrderId = 4,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9197),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4947),
                             ResidentId = 8
                         },
                         new
                         {
                             EvictionOrderId = 5,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9198),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4948),
                             ResidentId = 7
                         });
                 });
@@ -131,7 +131,7 @@ namespace DMS.Migrations
                             PassportInformationId = 1,
                             Address = "asdasdasdas",
                             DepartmentCode = 23124,
-                            IssueDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9372),
+                            IssueDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(5105),
                             IssuedBy = "МВД по чему-то",
                             ResidentId = 1,
                             SeriesAndNumber = "1234567890"
@@ -141,7 +141,7 @@ namespace DMS.Migrations
                             PassportInformationId = 2,
                             Address = "sadgsdfgfdg",
                             DepartmentCode = 23124,
-                            IssueDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9377),
+                            IssueDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(5109),
                             IssuedBy = "МВД по чему-то",
                             ResidentId = 2,
                             SeriesAndNumber = "1523123123"
@@ -151,7 +151,7 @@ namespace DMS.Migrations
                             PassportInformationId = 3,
                             Address = "sdghgfhgfhfgdh",
                             DepartmentCode = 23423,
-                            IssueDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9378),
+                            IssueDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(5110),
                             IssuedBy = "МВД по чему-то",
                             ResidentId = 3,
                             SeriesAndNumber = "7916239123"
@@ -161,7 +161,7 @@ namespace DMS.Migrations
                             PassportInformationId = 4,
                             Address = "asdfsdfdsaf",
                             DepartmentCode = 54334,
-                            IssueDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9380),
+                            IssueDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(5111),
                             IssuedBy = "МВД по чему-то",
                             ResidentId = 4,
                             SeriesAndNumber = "9817349817"
@@ -171,7 +171,7 @@ namespace DMS.Migrations
                             PassportInformationId = 5,
                             Address = "gdfsgfdsgdsf",
                             DepartmentCode = 98172,
-                            IssueDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9382),
+                            IssueDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(5113),
                             IssuedBy = "МВД по чему-то",
                             ResidentId = 5,
                             SeriesAndNumber = "1807231987"
@@ -216,13 +216,12 @@ namespace DMS.Migrations
 
             modelBuilder.Entity("DMS.Models.RatingOperation", b =>
                 {
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("int")
-                        .HasColumnName("resident_id");
+                    b.Property<int>("RatingOperationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("rating_operation_id");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("order_date");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RatingOperationId"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
@@ -236,54 +235,70 @@ namespace DMS.Migrations
                         .HasColumnType("varchar(200)")
                         .HasColumnName("description");
 
-                    b.HasKey("ResidentId", "OrderDate");
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("order_date");
+
+                    b.Property<int>("ResidentId")
+                        .HasColumnType("int")
+                        .HasColumnName("resident_id");
+
+                    b.HasKey("RatingOperationId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ResidentId");
 
                     b.ToTable("rating_operation");
 
                     b.HasData(
                         new
                         {
-                            ResidentId = 1,
+                            RatingOperationId = 1,
+                            CategoryId = 1,
+                            ChangeValue = -3,
                             OrderDate = new DateTime(2021, 10, 8, 21, 0, 0, 0, DateTimeKind.Utc),
-                            CategoryId = 1,
-                            ChangeValue = -3
+                            ResidentId = 1
                         },
                         new
                         {
-                            ResidentId = 2,
+                            RatingOperationId = 6,
+                            CategoryId = 2,
+                            ChangeValue = 2,
                             OrderDate = new DateTime(2021, 10, 9, 21, 0, 0, 0, DateTimeKind.Utc),
-                            CategoryId = 2,
-                            ChangeValue = 2
+                            ResidentId = 2
                         },
                         new
                         {
-                            ResidentId = 3,
-                            OrderDate = new DateTime(2021, 10, 10, 21, 0, 0, 0, DateTimeKind.Utc),
+                            RatingOperationId = 5,
                             CategoryId = 3,
-                            ChangeValue = -1
+                            ChangeValue = -1,
+                            OrderDate = new DateTime(2021, 10, 10, 21, 0, 0, 0, DateTimeKind.Utc),
+                            ResidentId = 3
                         },
                         new
                         {
-                            ResidentId = 4,
-                            OrderDate = new DateTime(2021, 10, 11, 21, 0, 0, 0, DateTimeKind.Utc),
+                            RatingOperationId = 4,
                             CategoryId = 1,
-                            ChangeValue = -2
+                            ChangeValue = -2,
+                            OrderDate = new DateTime(2021, 10, 11, 21, 0, 0, 0, DateTimeKind.Utc),
+                            ResidentId = 4
                         },
                         new
                         {
-                            ResidentId = 5,
+                            RatingOperationId = 3,
+                            CategoryId = 2,
+                            ChangeValue = 2,
                             OrderDate = new DateTime(2021, 10, 12, 21, 0, 0, 0, DateTimeKind.Utc),
-                            CategoryId = 2,
-                            ChangeValue = 2
+                            ResidentId = 5
                         },
                         new
                         {
-                            ResidentId = 6,
-                            OrderDate = new DateTime(2021, 10, 13, 21, 0, 0, 0, DateTimeKind.Utc),
+                            RatingOperationId = 2,
                             CategoryId = 2,
-                            ChangeValue = 2
+                            ChangeValue = 2,
+                            OrderDate = new DateTime(2021, 10, 13, 21, 0, 0, 0, DateTimeKind.Utc),
+                            ResidentId = 6
                         });
                 });
 
@@ -347,7 +362,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 1,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8837),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4543),
                             FirstName = "Даниил",
                             Gender = 'M',
                             IsCommercial = false,
@@ -358,7 +373,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 2,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8840),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4546),
                             FirstName = "Роман",
                             Gender = 'M',
                             IsCommercial = false,
@@ -369,7 +384,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 3,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8842),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4547),
                             FirstName = "Doma",
                             Gender = 'M',
                             IsCommercial = false,
@@ -380,7 +395,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 4,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8846),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4549),
                             FirstName = "Goma",
                             Gender = 'M',
                             IsCommercial = false,
@@ -391,7 +406,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 5,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8848),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4551),
                             FirstName = "Doma",
                             Gender = 'M',
                             IsCommercial = false,
@@ -402,7 +417,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 6,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8850),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4553),
                             FirstName = "Moma",
                             Gender = 'M',
                             IsCommercial = false,
@@ -413,7 +428,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 7,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8852),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4555),
                             FirstName = "Noma",
                             Gender = 'M',
                             IsCommercial = false,
@@ -424,7 +439,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 8,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8855),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4557),
                             FirstName = "Bulat",
                             Gender = 'M',
                             IsCommercial = false,
@@ -435,7 +450,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 9,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8857),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4559),
                             FirstName = "Bulad",
                             Gender = 'M',
                             IsCommercial = false,
@@ -446,7 +461,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 10,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8859),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4561),
                             FirstName = "Bular",
                             Gender = 'M',
                             IsCommercial = false,
@@ -457,7 +472,7 @@ namespace DMS.Migrations
                         new
                         {
                             ResidentId = 11,
-                            BirthDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(8861),
+                            BirthDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4563),
                             FirstName = "Bulas",
                             Gender = 'M',
                             IsCommercial = false,
@@ -635,77 +650,77 @@ namespace DMS.Migrations
                         new
                         {
                             SettlementOrderId = 1,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9151),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4912),
                             ResidentId = 1,
                             RoomId = 301
                         },
                         new
                         {
                             SettlementOrderId = 2,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9153),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4914),
                             ResidentId = 2,
                             RoomId = 423
                         },
                         new
                         {
                             SettlementOrderId = 3,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9154),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4915),
                             ResidentId = 3,
                             RoomId = 301
                         },
                         new
                         {
                             SettlementOrderId = 4,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9155),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4916),
                             ResidentId = 4,
                             RoomId = 301
                         },
                         new
                         {
                             SettlementOrderId = 5,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9156),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4917),
                             ResidentId = 5,
                             RoomId = 302
                         },
                         new
                         {
                             SettlementOrderId = 6,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9157),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4918),
                             ResidentId = 6,
                             RoomId = 303
                         },
                         new
                         {
                             SettlementOrderId = 7,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9158),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4920),
                             ResidentId = 7,
                             RoomId = 304
                         },
                         new
                         {
                             SettlementOrderId = 8,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9159),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4921),
                             ResidentId = 8,
                             RoomId = 305
                         },
                         new
                         {
                             SettlementOrderId = 9,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9161),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4922),
                             ResidentId = 9,
                             RoomId = 306
                         },
                         new
                         {
                             SettlementOrderId = 10,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9163),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4922),
                             ResidentId = 10,
                             RoomId = 307
                         },
                         new
                         {
                             SettlementOrderId = 11,
-                            OrderDate = new DateTime(2022, 5, 15, 17, 4, 56, 387, DateTimeKind.Utc).AddTicks(9164),
+                            OrderDate = new DateTime(2022, 5, 15, 19, 5, 23, 256, DateTimeKind.Utc).AddTicks(4923),
                             ResidentId = 11,
                             RoomId = 407
                         });

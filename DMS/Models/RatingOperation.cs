@@ -6,6 +6,9 @@ namespace DMS.Models;
 [Table("rating_operation")]
 public class RatingOperation
 {
+    [Column("rating_operation_id")]
+    [Required]
+    public int RatingOperationId { get; set; }
     [Column("resident_id")] [Required] public int ResidentId { get; set; }
 
     public Resident? Resident { get; set; }
