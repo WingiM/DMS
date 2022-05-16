@@ -24,7 +24,20 @@ public class DocumentsController : DmsControllerBase
     [HttpGet]
     public IResult GetAllDocuments()
     {
-        return Results.Ok(_residentResource.GetAllResidents());
+        return Results.Ok(_residentResource.GetAllResidents()
+            .Select(r => new
+            {
+                r.FirstName, r.LastName, r.Course, r.Patronymic, r.IsCommercial,
+                r.BirthDate, r.RoomId, r.PassportInformation, r.Tin,
+                Transactions = r.Transactions
+                    .OrderByDescending(t => t.OperationDate).ToList(),
+                RatingOperations = r.RatingOperations
+                    .OrderByDescending(t => t.OrderDate).ToList(),
+                SettlementOrders = r.SettlementOrders
+                    .OrderByDescending(t => t.OrderDate).ToList(),
+                EvictionOrders = r.EvictionOrders
+                    .OrderByDescending(t => t.OrderDate).ToList()
+            }));
     }
 
     [HttpPost]

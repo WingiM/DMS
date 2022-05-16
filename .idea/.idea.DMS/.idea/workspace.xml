@@ -10,10 +10,8 @@
     <projectFile profileName="DMS_Main">DMS-Main/DMS-Main.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Change rating operation primary key&#10;Sort resident documents by date desc">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +24,7 @@
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -37,6 +36,9 @@
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="q1xpwctb" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -58,7 +60,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/wingim/RiderProjects/iret-sila&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/wingim/Desktop/AspNetApp&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -159,9 +161,9 @@
       <workItem from="1652334860589" duration="1908000" />
       <workItem from="1652336791974" duration="188000" />
       <workItem from="1652365136788" duration="7797000" />
-      <workItem from="1652467472030" duration="2510000" />
-      <workItem from="1652510006446" duration="323000" />
-      <workItem from="1652619941486" duration="1262000" />
+      <workItem from="1652381538385" duration="18066000" />
+      <workItem from="1652640708096" duration="3122000" />
+      <workItem from="1652728559935" duration="1302000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -261,35 +263,42 @@
       <option name="project" value="LOCAL" />
       <updated>1652336971500</updated>
     </task>
-    <task id="LOCAL-00015" summary="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
-      <created>1652385042593</created>
+    <task id="LOCAL-00015" summary="Started making settings API">
+      <created>1652384092671</created>
       <option name="number" value="00015" />
       <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
-      <updated>1652385042593</updated>
+      <updated>1652384092671</updated>
     </task>
-    <task id="LOCAL-00016" summary="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
-      <created>1652385054400</created>
+    <task id="LOCAL-00016" summary="Done settings API&#10;Done password check for setting applying">
+      <created>1652398407545</created>
       <option name="number" value="00016" />
       <option name="presentableId" value="LOCAL-00016" />
       <option name="project" value="LOCAL" />
-      <updated>1652385054400</updated>
+      <updated>1652398407545</updated>
     </task>
-    <task id="LOCAL-00017" summary="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset">
-      <created>1652385203328</created>
+    <task id="LOCAL-00017" summary="Settings button now changes appearance correctly&#10;Made resident filtration by name and correct gender">
+      <created>1652454858867</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1652385203328</updated>
+      <updated>1652454858867</updated>
     </task>
-    <task id="LOCAL-00018" summary="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs">
-      <created>1652620034681</created>
+    <task id="LOCAL-00018" summary="Change transaction primary key">
+      <created>1652634416723</created>
       <option name="number" value="00018" />
       <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
-      <updated>1652620034681</updated>
+      <updated>1652634416723</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Change rating operation primary key&#10;Sort resident documents by date desc">
+      <created>1652641896624</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1652641896624</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,7 +318,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="InjectingEFCore" />
+                        <option value="Client" />
                       </list>
                     </value>
                   </entry>
@@ -336,9 +345,12 @@
     <MESSAGE value="Update SettlementOrder model&#10;POST request to edit room gender&#10;Dormitory reset done" />
     <MESSAGE value="Replace all Tuple&lt;bool, string&gt; with Exceptions" />
     <MESSAGE value="Delete WeatherForecastController.cs" />
-    <MESSAGE value="Sorted RoomsController.cs outputs&#10;Increment resident course on hard reset" />
-    <MESSAGE value="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove unused if statements in DocumentsResource.cs&#10;Add additional condition to resident add in ResidentResource.cs" />
+    <MESSAGE value="Started making settings API" />
+    <MESSAGE value="Done settings API&#10;Done password check for setting applying" />
+    <MESSAGE value="Settings button now changes appearance correctly&#10;Made resident filtration by name and correct gender" />
+    <MESSAGE value="Change transaction primary key" />
+    <MESSAGE value="Change rating operation primary key&#10;Sort resident documents by date desc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change rating operation primary key&#10;Sort resident documents by date desc" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

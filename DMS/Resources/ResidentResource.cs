@@ -140,7 +140,7 @@ public class ResidentResource : ResourceBase
         }
     }
 
-    public void AddResident(string data)
+    public int AddResident(string data)
     {
         try
         {
@@ -152,6 +152,7 @@ public class ResidentResource : ResourceBase
             
             _context.Residents.Add(resident);
             _context.SaveChanges();
+            return resident.ResidentId;
         }
         catch (Exception e)
         {
