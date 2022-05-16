@@ -1,5 +1,6 @@
 import React from "react";
 import template from "./Resident.jsx";
+import $ from 'jquery'
 
 class Resident extends React.Component {
     constructor(props) {
@@ -15,19 +16,19 @@ class Resident extends React.Component {
             BirthDate: this.props.birthDate.slice(0, 10),
 
             PassportInformation: this.props.passportInformation,
-            SeriesAndNumber: this.props.passportInformation["SeriesAndNumber"],
+            // SeriesAndNumber: this.props.passportInformation["SeriesAndNumber"],
             IssuedBy: this.props.passportInformation["IssuedBy"],
             IssueDate: this.props.passportInformation["IssueDate"],
             DepartmentCode: this.props.passportInformation["DepartmentCode"],
             Address: this.props.passportInformation["Address"],
-            
+
             Tin: this.props.tin,
             Rating: this.props.rating,
             Debt: this.props.debt,
             Reports: this.props.reports,
             RoomId: this.props.roomId,
             Course: this.props.course,
-            
+
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -48,7 +49,7 @@ class Resident extends React.Component {
             content.style.maxHeight = content.scrollHeight + 150 + "px";
         }
     }
-    
+
     //handlers
 
     handleChange(event) {
@@ -57,7 +58,7 @@ class Resident extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault()
-        
+
         const data = {
             LastName: this.state.LastName,
             FirstName: this.state.FirstName,
@@ -75,7 +76,7 @@ class Resident extends React.Component {
             RoomId: this.state.RoomId,
             Course: parseInt(this.state.Course),
         }
-        const requestUrl =  this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
+        const requestUrl = this.state.id === null ? "api/residents/" : "api/residents/" + this.state.ResidentId
         const response = await fetch(requestUrl, {
             method: this.state.ResidentId === null ? "POST" : "PUT",
             headers: {
@@ -84,10 +85,25 @@ class Resident extends React.Component {
             },
             body: JSON.stringify(data)
         })
-        
+        .then((val) => {
+            let thisSubmitText = event.target.parentNode.querySelector(".submit-text")
+            if (val["StatusCode"] !== 200) {
+                thisSubmitText.innerHTML = "Ошибка"
+                thisSubmitText.style.color = "#FF8787";
+
+            } else {
+                thisSubmitText.innerHTML = "Успешно"
+                thisSubmitText.style.color = "#3A7890";
+            }
+            thisSubmitText.classList.add("active")
+            setTimeout(() => {
+                thisSubmitText.classList.remove("active")
+            }, 7000);
+        })
+
         //update residents list of current stream
         this.props.updateResidentsList(this.state, this.state.ResidentId !== null)
-        
+
         const json = await response.json();
         console.log(json)
     }

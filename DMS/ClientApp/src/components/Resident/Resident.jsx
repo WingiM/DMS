@@ -82,6 +82,7 @@ function template() {
                   </div>
               </form>
               <div className={"button-content-row"}>
+                  <span className={"submit-text"}>Ошибка</span>
                   <input className={"evict-btn"} type={"submit"} value={"Выселить"}/>
                   <input className={"transaction-btn"} type={"submit"} value={"Транзакция"}/>
                   {

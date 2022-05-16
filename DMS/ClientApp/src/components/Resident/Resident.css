@@ -164,3 +164,24 @@ input[type="submit"] {
 .button-content-row .evict-btn:hover {
     background: #217293;
 }
+
+.submit-text {
+    font-size: 22px;
+    opacity: 0;
+}
+
+.submit-text.active {
+    animation: ease-in-out 7s  errorTextVisible;
+}
+
+@keyframes errorTextVisible {
+    0% {
+        opacity: 0;
+    }
+    40%, 50%, 70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
