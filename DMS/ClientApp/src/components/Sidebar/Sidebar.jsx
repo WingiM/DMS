@@ -5,6 +5,7 @@ import './scripts'
 
 import settingIco from './img/settingsIco.svg'
 import wavesIco from './img/waves.svg'
+import exitIco from './img/exitIco.svg'
 import {Navigate} from "react-router-dom";
 
 function template() {
@@ -24,12 +25,12 @@ function template() {
                 <div className="stats-intel-block">
                     <div className="stats-intel">
                         <span className="marked-span filled">занято</span><br/>
-                        <span className="relative-span">{this.state.settled}</span><br/>
+                        <span className="relative-span">{this.props.chartStats.settled}</span><br/>
                         <span className="marked-span unfilled">свободно</span><br/>
-                        <span className="relative-span">{this.state.free}</span><br/>
+                        <span className="relative-span">{this.props.chartStats.free}</span><br/>
                     </div>
                     <div className="circlechart"
-                         data-percentage={this.state.settled / this.state.total * 100 | 0}>
+                         data-percentage={this.props.chartStats.settled / this.props.chartStats.total * 100 | 0}>
                     </div>
                 </div>
             </div>
@@ -48,6 +49,9 @@ function template() {
                     Документы
                 </a>
             </div>
+
+            <a id="exit" className={"sidebar-exit-btn"} onClick={this.props.logout}
+               href="/login"><img alt="exit" src={exitIco}/></a>
 
             <img id="waves" src={wavesIco} alt="waves"/>
         </div>

@@ -9,8 +9,32 @@ export class Login extends Component {
         super(props);
         this.state = {
             password: "",
-            isVisible: false
+            isVisible: false,
+            isPasswordSet: false,
         }
+    }
+
+    async componentDidMount() {
+        await this.isPasswordCheck();
+    }
+
+    async isPasswordCheck() {
+        await fetch("/api/login", {
+            method: "POST",
+            headers: {"password": "p"},
+        })
+            .then(async resp => {
+                    if (resp.status === 409) {
+                        this.setState({
+                            isPasswordSet: false,
+                        })
+                    } else {
+                        this.setState({
+                            isPasswordSet: true
+                        })
+                    }
+                }
+            )
     }
 
     loginHandler = async e => {
@@ -31,7 +55,7 @@ export class Login extends Component {
             })
     }
 
-    keyUpController(e) {
+    keyDownController(e) {
         if (e.key === "Enter") {
             this.loginHandler(e);
         }

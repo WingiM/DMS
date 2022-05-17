@@ -3,6 +3,8 @@ import dotsImg from "../../Resident/img/resident3Dots.svg";
 import template from "../ModalWindow";
 import ModalWindow from "../ModalWindow";
 import SettlementOrderLayout from "./SettlementOrderLayout";
+import redDot from "../../Resident/img/redDot.svg";
+import greenDot from "../../Resident/img/greenDot.svg";
 
 class ResidentsListLayout extends React.Component {
     constructor(props) {
@@ -27,8 +29,8 @@ class ResidentsListLayout extends React.Component {
             chosenResident: resident,
         })
 
-        document.querySelector(".modal-content").className = this.state.showSettlementModal ? 
-            "modal-content settlement-orders" : "modal-content"
+        document.querySelector(".modal-content").className = this.state.showSettlementModal ?
+            "modal-content settlement-order" : "modal-content"
     }
 
     render() {
@@ -36,8 +38,13 @@ class ResidentsListLayout extends React.Component {
             this.state.showSettlementModal ?
                 <SettlementOrderLayout
                     toggleModal={this.toggleSettlementModal}
+                    toggleHandler={this.props.toggleHandler}
                     resident={this.state.chosenResident}
                     roomId={this.props.roomId}
+                    updateRoom={this.props.updateRoom}
+                    readOnly={false}
+                    updateChartStats={this.props.updateChartStats}
+                    chartStats={this.props.chartStats}
                 />
                 :
                 <div>
@@ -47,17 +54,19 @@ class ResidentsListLayout extends React.Component {
                         {
                             this.props.residentsFilterList !== undefined ?
                                 this.props.residentsFilterList.map(resident =>
-                                    resident["RoomId"] === null ?
-                                        <div className="resident-collapsible in-modal">
-                                            <button
-                                                className="resident-header"
-                                                onClick={() => this.toggleSettlementModal(resident)}
-                                            >
-                                                {resident["LastName"].toUpperCase()} {resident["FirstName"].toUpperCase()} {resident["Patronymic"].toUpperCase()}
-                                                <img className="header-dots" alt="dots" src={dotsImg}
-                                                />
-                                            </button>
-                                        </div> : '') : ''
+                                    <div className="resident-collapsible in-modal">
+                                        <button
+                                            className="resident-header"
+                                            onClick={() => this.toggleSettlementModal(resident)}
+                                        >
+                                            {resident["LastName"].toUpperCase()} {resident["FirstName"].toUpperCase()} {resident["Patronymic"].toUpperCase()}
+                                            <img className="header-dots" alt="dots" src={dotsImg}/>
+                                            {resident["Rating"] < 0 ?
+                                                <img alt={"dot"} className={"state-dot"} src={redDot}/> : ''}
+                                            {resident["Course"] == 1 ?
+                                                <img alt={"dot"} className={"state-dot"} src={greenDot}/> : ''}
+                                        </button>
+                                    </div>) : ''
                         }
                     </div>
                 </div>

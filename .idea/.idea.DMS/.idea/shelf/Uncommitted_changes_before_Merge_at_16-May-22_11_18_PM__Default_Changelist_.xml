@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Merge_at_16-May-22_11_18_PM_[Default_Changelist]" date="1652732314159" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_Merge_at_16-May-22_11_18_PM_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 16-May-22 11:18 PM [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="DMS/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="DMS/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_Merge_at_16-May-22_11_18_PM_[Default_Changelist]/project.nuget.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="DMS/obj/Debug/net6.0/DMS.assets.cache" />
+    <option name="AFTER_PATH" value="DMS/obj/Debug/net6.0/DMS.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_Merge_at_16-May-22_11_18_PM_[Default_Changelist]/DMS.assets.cache" />
+  </binary>
+</changelist>
