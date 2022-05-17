@@ -58,6 +58,7 @@ class Setting extends React.Component {
                         CommercialCost: val["CommercialCost"],
                         NonCommercialCost: val["NonCommercialCost"],
                     })
+                console.log(val)
             })
     }
     
@@ -77,11 +78,20 @@ class Setting extends React.Component {
         })
             .then((response) => response.json())
             .then((val) => {
+                console.log(val)
                 if (val["StatusCode"] === 200) {
                     this.setState({
                         showModal: false,
                     })
-                }
+                    this.props.updateChartStats(
+                        {
+                            settled: 0,
+                            total: this.state.Floors * this.state.RoomsCount * this.state.RoomCapacity,
+                            free: this.state.Floors * this.state.RoomsCount * this.state.RoomCapacity,
+                            percentage: 0
+                        }
+                    )
+                } 
             })
     }
 

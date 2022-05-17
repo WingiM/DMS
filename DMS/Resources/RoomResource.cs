@@ -59,7 +59,7 @@ public class RoomResource : ResourceBase
             var deserialized =
                 JsonSerializer.Deserialize<Dictionary<string, Object>>(data);
 
-            var res = (int)deserialized!["RoomId"];
+            var res = int.Parse(deserialized!["RoomId"].ToString());
             if (!char.TryParse(deserialized["Gender"].ToString(),
                     out var gender) || !new[] { 'M', 'F' }.Contains(gender))
                 throw new InvalidRequestDataException("Wrong gender value");
