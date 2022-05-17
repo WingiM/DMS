@@ -10,13 +10,78 @@
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Registration layout">
+    <list default="true" id="4cb9a6c2-3465-4915-9898-261fca42efef" name="Default Changelist" comment="Create submit message showing animation">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/shelf/Uncommitted_changes_before_Merge_at_06-May-22_1_09_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Resident/Resident.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/public/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/public/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Registration/Registration.js" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Registration/Registration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/components/Registration/Registration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/components/Registration/Registration.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/ClientApp/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/ClientApp/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/DmsControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DmsControllerBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/JwtAuthenticationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/DMS.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/DMS.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Exceptions/InvalidRequestDataException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Exceptions/InvalidRequestDataException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220428202658_Arab.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220428202658_Arab.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220428202658_Arab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220428202658_Arab.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507191631_IsCommercialToResidentAdded.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507191631_IsCommercialToResidentAdded.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507191631_IsCommercialToResidentAdded.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507191631_IsCommercialToResidentAdded.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507201909_ResidentPassportInformationRemove.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507201909_ResidentPassportInformationRemove.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507201909_ResidentPassportInformationRemove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507201909_ResidentPassportInformationRemove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507212636_TransferPassportDataToPassportInformation.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507212636_TransferPassportDataToPassportInformation.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507212636_TransferPassportDataToPassportInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507212636_TransferPassportDataToPassportInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507213738_AddDataToPassportInformation.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507213738_AddDataToPassportInformation.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507213738_AddDataToPassportInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220507213738_AddDataToPassportInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220508095907_RenamePassportInformationTable.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220508095907_RenamePassportInformationTable.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220508095907_RenamePassportInformationTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220508095907_RenamePassportInformationTable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510081418_AddCourseColumnToResident.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220510081418_AddCourseColumnToResident.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510081418_AddCourseColumnToResident.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220510081418_AddCourseColumnToResident.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/EvictionOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/EvictionOrder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/PassportInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/PassportInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/RatingChangeCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/RatingChangeCategory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/RatingOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/RatingOperation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/Resident.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/Resident.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/SettlementOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/SettlementOrder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Models/Transaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Models/Transaction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Pages/Error.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Pages/Error.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Pages/Error.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Pages/Error.cshtml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Pages/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Pages/_ViewImports.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResourceBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/ResourceBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/WeatherForecast.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/WeatherForecast.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/DMS.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/DMS.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/DMS.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/DMS.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/bin/Debug/net6.0/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/obj/staticwebassets.pack.sentinel" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/staticwebassets.pack.sentinel" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -180,7 +245,9 @@
       <workItem from="1652634279771" duration="451000" />
       <workItem from="1652634851130" duration="6198000" />
       <workItem from="1652647666340" duration="1192000" />
-      <workItem from="1652732557273" duration="4369000" />
+      <workItem from="1652732557273" duration="4444000" />
+      <workItem from="1652784238700" duration="1239000" />
+      <workItem from="1652786509248" duration="2365000" />
     </task>
     <task id="LOCAL-00001" summary="Start making Documents (SettlementOrder, EvictionOrder, RatingOperation) resource and controller">
       <created>1651505569899</created>
@@ -322,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652648827012</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Create submit message showing animation">
+      <created>1652737023871</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1652737023871</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,7 +449,8 @@
     <MESSAGE value="Fixed modal window className creating system" />
     <MESSAGE value="Exceptions catch system&#10;Resettlement page&#10;Logout system" />
     <MESSAGE value="Registration layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Registration layout" />
+    <MESSAGE value="Create submit message showing animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create submit message showing animation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

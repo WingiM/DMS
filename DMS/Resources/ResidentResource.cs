@@ -140,13 +140,19 @@ public class ResidentResource : ResourceBase
         }
     }
 
-    public void AddResident(string data)
+    public int AddResident(string data)
     {
         try
         {
             var resident = JsonSerializer.Deserialize<Resident>(data);
-            _context.Residents.Add(resident!);
+
+            if (resident!.RoomId is not null)
+                throw new Exception(
+                    "Cannot specify room id in resident creation");
+            
+            _context.Residents.Add(resident);
             _context.SaveChanges();
+            return resident.ResidentId;
         }
         catch (Exception e)
         {

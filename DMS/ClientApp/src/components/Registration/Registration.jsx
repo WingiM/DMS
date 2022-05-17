@@ -23,7 +23,7 @@ function template() {
                                className="password-input" placeholder="пароль"/> <br/>
                         <input style={{zIndex: 4,}} type="password" onChange={ e => this.setState({repeatPassword: e.target.value}) }
                                className="password-input" placeholder="повторите пароль"/> <br/>
-                        <button className="registration-btn" type={"submit"} >Зарегестрироваться</button>
+                        <button className="registration-btn" type={"submit"} onClick={this.setPassword} >Зарегестрироваться</button>
                     </div>
                 </div>
                 <div className="col-1-3" style={{height: "100%", position: "relative"}}>

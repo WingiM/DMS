@@ -35,8 +35,12 @@ public class ResidentsController : DmsControllerBase
         try
         {
             var data = await ParseRequestBody();
-            _resource.AddResident(data);
-            return Results.Ok("Added successfully");
+            var id = _resource.AddResident(data);
+            return Results.Json(new
+            {
+                message = "Added successfully",
+                ResidentId = id
+            });
         }
         catch (InvalidOperationException e)
         {

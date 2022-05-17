@@ -370,7 +370,6 @@ class App extends React.Component {
                         </Routes>
                     </ErrorBoundary>
                 }/>
-                <Route element={<Registration/>} path={"/reg"}/>
             </Routes>
         )
     }

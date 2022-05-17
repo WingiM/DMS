@@ -9,8 +9,32 @@ export class Login extends Component {
         super(props);
         this.state = {
             password: "",
-            isVisible: false
+            isVisible: false,
+            isPasswordSet: false,
         }
+    }
+    
+    componentDidMount() {
+        this.isPasswordCheck();
+    }
+
+    async isPasswordCheck() {
+        await fetch("/api/login", {
+            method: "POST",
+            headers: {"password": "p"},
+        })
+        .then(async resp => { 
+                if (resp.status === 409) {
+                    this.setState({
+                        isPasswordSet: false,
+                    })
+                } else {
+                    this.setState({
+                        isPasswordSet: true
+                    })
+                }
+            }
+        )
     }
 
     loginHandler = async e => {
@@ -41,7 +65,6 @@ export class Login extends Component {
         if (localStorage.getItem("token") !== null) {
             return <Navigate to="/" replace/>
         }
-
         return template.call(this);
     }
 }

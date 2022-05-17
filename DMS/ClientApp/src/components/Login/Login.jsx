@@ -5,10 +5,12 @@ import s_circle from "./img/Intersect-2.svg";
 import t_circle from "./img/Intersect-3.svg";
 import circle from "./img/Intersect.svg";
 import React from "react";
+import Registration from "../Registration/Registration";
 
 function template() {
     let state = this.state.isVisible ? "visible" : "";
     return (
+        this.state.isPasswordSet ?
         <div className="main">
             <div className="login-form-container">
                 <div className="col-2-3" style={{height: "100%", position: "relative"}}>
@@ -34,7 +36,7 @@ function template() {
                          style={{position: "absolute", right: "-1px", zIndex: 4, width: "49.1606715%"}} alt=""/>
                 </div>
             </div>
-        </div>
+        </div> : <Registration/>
 
     )
 }

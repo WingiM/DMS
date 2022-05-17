@@ -29,12 +29,8 @@ public class ApplicationContext : DbContext
             .UseIdentityAlwaysColumn();
         modelBuilder.Entity<EvictionOrder>().Property(e => e.EvictionOrderId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<RatingOperation>()
-            .HasKey(ro => new { ro.ResidentId, ro.OrderDate });
         modelBuilder.Entity<RatingChangeCategory>().Property(rc => rc.RatingChangeCategoryId)
             .UseIdentityAlwaysColumn();
-        modelBuilder.Entity<Transaction>()
-            .HasKey(t => new { t.ResidentId, t.OperationDate });
         modelBuilder.Entity<Room>().Property(r => r.FloorNumber)
             .HasComputedColumnSql("room_number / 100", stored:true);
 
@@ -216,59 +212,59 @@ public class ApplicationContext : DbContext
         
         modelBuilder.Entity<RatingOperation>().HasData(new RatingOperation()
         {
-            ResidentId = 1, CategoryId = 1,
+            ResidentId = 1, CategoryId = 1, RatingOperationId = 1,
             ChangeValue = -3, OrderDate = new DateTime(2021, 10, 9).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 2, CategoryId = 2,
+            ResidentId = 2, CategoryId = 2, RatingOperationId = 6,
             ChangeValue = 2, OrderDate = new DateTime(2021, 10, 10).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 3, CategoryId = 3,
+            ResidentId = 3, CategoryId = 3, RatingOperationId = 5,
             ChangeValue = -1, OrderDate = new DateTime(2021, 10, 11).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 4, CategoryId = 1,
+            ResidentId = 4, CategoryId = 1, RatingOperationId = 4,
             ChangeValue = -2, OrderDate = new DateTime(2021, 10, 12).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 5, CategoryId = 2,
+            ResidentId = 5, CategoryId = 2, RatingOperationId = 3,
             ChangeValue = 2, OrderDate = new DateTime(2021, 10, 13).ToUniversalTime(),
             Description = null
         }, new RatingOperation()
         {
-            ResidentId = 6, CategoryId = 2,
+            ResidentId = 6, CategoryId = 2, RatingOperationId = 2,
             ChangeValue = 2, OrderDate = new DateTime(2021, 10, 14).ToUniversalTime(),
             Description = null
         });
         
         modelBuilder.Entity<Transaction>().HasData(new Transaction()
         {
-            ResidentId = 1,
+            ResidentId = 1, TransactionId = 1,
             OperationDate = new DateTime(2021, 10, 9).ToUniversalTime(), Sum = 3000
         }, new Transaction()
         {
-           ResidentId = 2,
+           ResidentId = 2,TransactionId = 2,
            OperationDate = new DateTime(2021, 10, 9, 10, 0, 0).ToUniversalTime(), Sum = 1000
         }, new Transaction()
         {
-            ResidentId = 2,
+            ResidentId = 2, TransactionId = 3,
             OperationDate = new DateTime(2021, 10, 9, 12, 0, 0).ToUniversalTime(), Sum = 3000
         }, new Transaction()
         {
-            ResidentId = 3,
+            ResidentId = 3, TransactionId = 4,
             OperationDate = new DateTime(2021, 10, 12).ToUniversalTime(), Sum = 4000
         }, new Transaction()
         {
-            ResidentId = 4,
+            ResidentId = 4, TransactionId = 5,
             OperationDate = new DateTime(2021, 10, 10).ToUniversalTime(), Sum = 2012.42
         }, new Transaction()
         {
-            ResidentId = 5,
+            ResidentId = 5, TransactionId = 6,
             OperationDate = new DateTime(2021, 10, 20).ToUniversalTime(), Sum = 18234.13
         });
         
