@@ -61,14 +61,14 @@ public class DormitoryController : DmsControllerBase
             _residentResource.AccrualAll(commercialCost, nonCommercialCost);
             return Results.Ok("Transactions complete");
         }
-        catch (FormatException)
-        {
-            return Results.BadRequest(
-                "Dormitory constants not set or have bad value");
-        }
         catch (DbUpdateException e)
         {
             return Results.Conflict(e.Message);
+        }
+        catch (Exception)
+        {
+            return Results.BadRequest(
+                "Dormitory constants not set or have bad value");
         }
     }
 
