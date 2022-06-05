@@ -40,7 +40,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations" />
+      <ProjectReference Include="..\DMS.Data\DMS.Data.csproj" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

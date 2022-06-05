@@ -1,26 +1,14 @@
 using System.Text;
-using DMS.Models;
-using DMS.Resources;
+using DMS.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddTransient<RoomResource>();
-builder.Services.AddTransient<ResidentResource>();
-builder.Services.AddTransient<DocumentsResource>();
-builder.Services.AddTransient<DormitoryResource>();
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration =
-        builder.Configuration.GetConnectionString("RedisDefaultConnection");
-});
+builder.Services.AddData(builder.Configuration);
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

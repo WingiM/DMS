@@ -1,5 +1,5 @@
-﻿using DMS.Exceptions;
-using DMS.Resources;
+﻿using DMS.Core.Exceptions;
+using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

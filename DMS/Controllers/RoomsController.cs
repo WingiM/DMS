@@ -1,6 +1,6 @@
-﻿using DMS.Exceptions;
-using DMS.Models;
-using DMS.Resources;
+﻿using DMS.Core.Exceptions;
+using DMS.Data.Models;
+using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +11,7 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class RoomsController : DmsControllerBase
 {
-    private static readonly Func<Room, object> ConvertRoom =
+    private static readonly Func<RoomDb, object> ConvertRoom =
         room => new
         {
             room.RoomId, room.Capacity, room.Gender, room.FloorNumber,

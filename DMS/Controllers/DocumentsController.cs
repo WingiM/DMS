@@ -1,6 +1,6 @@
-using DMS.Exceptions;
-using DMS.Models;
-using DMS.Resources;
+using DMS.Core.Exceptions;
+using DMS.Data.Models;
+using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,16 +51,16 @@ public class DocumentsController : DmsControllerBase
             switch (documentType)
             {
                 case "EvictionOrder":
-                    _documentsResource.AddDocument<EvictionOrder>(data);
+                    _documentsResource.AddDocument<EvictionOrderDb>(data);
                     break;
                 case "SettlementOrder":
-                    _documentsResource.AddDocument<SettlementOrder>(data);
+                    _documentsResource.AddDocument<SettlementOrderDb>(data);
                     break;
                 case "RatingOperation":
-                    _documentsResource.AddDocument<RatingOperation>(data);
+                    _documentsResource.AddDocument<RatingOperationDb>(data);
                     break;
                 case "Transaction":
-                    _documentsResource.AddDocument<Transaction>(data);
+                    _documentsResource.AddDocument<TransactionDb>(data);
                     break;
                 default:
                     Response.StatusCode = 409;
@@ -91,10 +91,10 @@ public class DocumentsController : DmsControllerBase
             switch (documentType)
             {
                 case "RatingOperation":
-                    _documentsResource.DeleteDocument<RatingOperation>(data);
+                    _documentsResource.DeleteDocument<RatingOperationDb>(data);
                     break;
                 case "Transaction":
-                    _documentsResource.DeleteDocument<Transaction>(data);
+                    _documentsResource.DeleteDocument<TransactionDb>(data);
                     break;
                 default:
                     Response.StatusCode = 409;

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
-using DMS.Exceptions;
-using DMS.Models;
+using DMS.Core.Exceptions;
+using DMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Controllers;
@@ -12,7 +12,7 @@ public abstract class DmsControllerBase : ControllerBase
             ? new DateTime(DateTime.Now.Year, 9, 1)
             : new DateTime(DateTime.Now.Year - 1, 9, 1);
 
-    protected static readonly Func<Resident, object> ConvertResident =
+    protected static readonly Func<ResidentDb, object> ConvertResident =
         res => new
         {
             res.ResidentId, res.FirstName, res.LastName, res.Patronymic,
