@@ -1,4 +1,5 @@
 ﻿using DMS.Core.Exceptions;
+using DMS.Core.Objects.ServiceInterfaces;
 using DMS.Data.Models;
 using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -11,20 +12,11 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class RoomsController : DmsControllerBase
 {
-    private static readonly Func<RoomDb, object> ConvertRoom =
-        room => new
-        {
-            room.RoomId, room.Capacity, room.Gender, room.FloorNumber,
-            Residents = room.Residents
-                .OrderBy(r => r.LastName)
-                .Select(ConvertResident)
-        };
-    
-    private readonly RoomResource _resource;
+    private readonly IRoomService _service;
 
-    public RoomsController(RoomResource resource)
+    public RoomsController(IRoomService service)
     {
-        _resource = resource;
+        _service = service;
     }
 
     [HttpGet]
@@ -34,8 +26,8 @@ public class RoomsController : DmsControllerBase
         try
         {
             DateTime resultDate = ParseDate(Request.Headers["date"]);
-            var room = _resource.GetRoomWithResidents(id, resultDate);
-            return Results.Ok(ConvertRoom(room));
+            var room = _service.GetRoomWithResidents(id, resultDate);
+            return Results.Ok(room);
         }
         catch (InvalidOperationException e)
         {
@@ -47,18 +39,15 @@ public class RoomsController : DmsControllerBase
     [Route("/api/rooms/floors/{floor:int}")]
     public IResult GetWithFloorNumber(int floor)
     {
-        var res = _resource.GetAllRoomsOnFloor(floor).ToArray();
-        return Results.Ok(res
-            .OrderBy(r => r.RoomId)
-            .Select(r => new
-            { r.RoomId, IsFull = r.Capacity == r.Residents.Count }));
+        var res = _service.GetAllRoomsOnFloor(floor).ToArray();
+        return Results.Ok(res);
     }
 
     [HttpGet]
     [Route("/api/rooms/floors")]
     public IResult GetFloors()
     {
-        var res = _resource.GetFloorsCount();
+        var res = _service.GetFloorsCount();
         return Results.Ok(res.OrderBy(r => r));
     }
 
@@ -69,7 +58,7 @@ public class RoomsController : DmsControllerBase
         try
         {
             var data = await ParseRequestBody();
-            _resource.SetRoomGender(data);
+            _service.SetRoomGender(data);
             return Results.Ok("Room gender changed successfully");
         }
         catch (InvalidRequestDataException e)

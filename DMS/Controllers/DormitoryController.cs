@@ -1,4 +1,6 @@
 using DMS.Core.Exceptions;
+using DMS.Core.Objects.Dormitory;
+using DMS.Core.Objects.ServiceInterfaces;
 using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,38 +13,36 @@ namespace DMS.Controllers;
 [Authorize]
 public class DormitoryController : DmsControllerBase
 {
-    private readonly DormitoryResource _resource;
-    private readonly ResidentResource _residentResource;
+    private readonly IDormitoryService _service;
+    private readonly IResidentService _residentService;
 
-    public DormitoryController(DormitoryResource resource,
-        ResidentResource residentResource)
+    public DormitoryController(IDormitoryService service,
+        IResidentService residentService)
     {
-        _resource = resource;
-        _residentResource = residentResource;
+        _service = service;
+        _residentService = residentService;
     }
 
     [HttpGet]
     public IResult GetDormitoryCapacity()
     {
-        return Results.Ok(_resource.GetDormitoryCapacity());
+        return Results.Ok(_service.GetDormitoryCapacity());
     }
 
     [HttpGet]
     [Route("/api/stats/resettlement")]
     public IResult GetResettlementLists()
     {
-        var residents = _residentResource.GetAllResidents().ToList();
+        var residents = _residentService.GetAllResidents().ToList();
 
         var firstCourses = residents
             .Where(r => r.Course == 1)
-            .OrderBy(r => r.LastName)
-            .Select(ConvertResident);
+            .OrderBy(r => r.LastName);
 
         var others = residents
             .Where(r => r.Course != 1)
-            .OrderByDescending(r => r.CountRating())
-            .ThenBy(r => r.LastName)
-            .Select(ConvertResident);
+            .OrderByDescending(r => r.Rating)
+            .ThenBy(r => r.LastName);
 
         return Results.Ok(firstCourses.Concat(others));
     }
@@ -53,12 +53,12 @@ public class DormitoryController : DmsControllerBase
     {
         try
         {
-            var commercialCost = -1 * int.Parse(_resource.GetConstant(
+            var commercialCost = -1 * int.Parse(_service.GetConstant(
                 "CommercialCost"));
-            var nonCommercialCost = -1 * int.Parse(_resource.GetConstant(
+            var nonCommercialCost = -1 * int.Parse(_service.GetConstant(
                 "NonCommercialCost"));
 
-            _residentResource.AccrualAll(commercialCost, nonCommercialCost);
+            _residentService.AccrualAll(commercialCost, nonCommercialCost);
             return Results.Ok("Transactions complete");
         }
         catch (FormatException)
@@ -76,14 +76,14 @@ public class DormitoryController : DmsControllerBase
     [Route("/api/stats/constants")]
     public IResult GetConstants()
     {
-        return Results.Ok(_resource.GetConstants());
+        return Results.Ok(_service.GetConstants());
     }
 
     [HttpGet]
     [Route("/api/stats/constants/{name}")]
     public IResult GetConstant(string name)
     {
-        return Results.Ok(_resource.GetConstant(name));
+        return Results.Ok(_service.GetConstant(name));
     }
 
     [HttpPost]
@@ -93,7 +93,7 @@ public class DormitoryController : DmsControllerBase
         try
         {
             var data = await ParseRequestBody();
-            var res = _resource.SetSafeConstants(data);
+            var res = _service.SetSafeConstants(data);
             
             return Results.Ok(
                 "Setting completed." + res == ""
@@ -118,9 +118,9 @@ public class DormitoryController : DmsControllerBase
         {
             var data = await ParseRequestBody();
 
-            _resource.SetHardResetConstants(data);
-            _residentResource.ResetAll();
-            _resource.ResetRooms();
+            _service.SetHardResetConstants(data);
+            _residentService.ResetAll();
+            _service.ResetRooms();
 
             return Results.Ok("Reset complete");
         }

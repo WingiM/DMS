@@ -1,4 +1,6 @@
 using DMS.Core.Exceptions;
+using DMS.Core.Objects.Residents;
+using DMS.Core.Objects.ServiceInterfaces;
 using DMS.Data.Models;
 using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -11,33 +13,20 @@ namespace DMS.Controllers;
 [Route("/api/documents")]
 public class DocumentsController : DmsControllerBase
 {
-    private readonly DocumentsResource _documentsResource;
-    private readonly ResidentResource _residentResource;
+    private readonly IDocumentService _documentsService;
+    private readonly IResidentService _residentService;
 
-    public DocumentsController(DocumentsResource documentsResource,
-        ResidentResource residentResource)
+    public DocumentsController(IDocumentService documentsService,
+        IResidentService residentService)
     {
-        _documentsResource = documentsResource;
-        _residentResource = residentResource;
+        _documentsService = documentsService;
+        _residentService = residentService;
     }
 
     [HttpGet]
     public IResult GetAllDocuments()
     {
-        return Results.Ok(_residentResource.GetAllResidents()
-            .Select(r => new
-            {
-                r.FirstName, r.LastName, r.Course, r.Patronymic, r.IsCommercial,
-                r.BirthDate, r.RoomId, r.PassportInformation, r.Tin,
-                Transactions = r.Transactions
-                    .OrderByDescending(t => t.OperationDate).ToList(),
-                RatingOperations = r.RatingOperations
-                    .OrderByDescending(t => t.OrderDate).ToList(),
-                SettlementOrders = r.SettlementOrders
-                    .OrderByDescending(t => t.OrderDate).ToList(),
-                EvictionOrders = r.EvictionOrders
-                    .OrderByDescending(t => t.OrderDate).ToList()
-            }));
+        return Results.Ok(_residentService.GetAllResidents());
     }
 
     [HttpPost]
@@ -51,16 +40,16 @@ public class DocumentsController : DmsControllerBase
             switch (documentType)
             {
                 case "EvictionOrder":
-                    _documentsResource.AddDocument<EvictionOrderDb>(data);
+                    _documentsService.AddDocument<EvictionOrderDb>(data);
                     break;
                 case "SettlementOrder":
-                    _documentsResource.AddDocument<SettlementOrderDb>(data);
+                    _documentsService.AddDocument<SettlementOrderDb>(data);
                     break;
                 case "RatingOperation":
-                    _documentsResource.AddDocument<RatingOperationDb>(data);
+                    _documentsService.AddDocument<RatingOperationDb>(data);
                     break;
                 case "Transaction":
-                    _documentsResource.AddDocument<TransactionDb>(data);
+                    _documentsService.AddDocument<TransactionDb>(data);
                     break;
                 default:
                     Response.StatusCode = 409;
@@ -91,10 +80,10 @@ public class DocumentsController : DmsControllerBase
             switch (documentType)
             {
                 case "RatingOperation":
-                    _documentsResource.DeleteDocument<RatingOperationDb>(data);
+                    _documentsService.DeleteDocument<RatingOperationDb>(data);
                     break;
                 case "Transaction":
-                    _documentsResource.DeleteDocument<TransactionDb>(data);
+                    _documentsService.DeleteDocument<TransactionDb>(data);
                     break;
                 default:
                     Response.StatusCode = 409;
@@ -117,6 +106,6 @@ public class DocumentsController : DmsControllerBase
     [Route("/api/documents/categories")]
     public IResult GetAllRatingChangeCategories()
     {
-        return Results.Ok(_documentsResource.GetAllRatingChangeCategories());
+        return Results.Ok(_documentsService.GetAllRatingChangeCategories());
     }
 }

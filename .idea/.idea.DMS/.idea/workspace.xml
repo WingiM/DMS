@@ -13,98 +13,25 @@
     <projectFile profileName="IIS Express">DMS/DMS.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75319ad7-13e5-43b8-b0fb-c36e31e4ce2d" name="Default Changelist" comment="Make PUT and POST methods of ResidentsController">
-      <change afterPath="$PROJECT_DIR$/DMS.Core/DMS.Core.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/IDataContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/EvictionOrder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/Interfaces/IDocument.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/Interfaces/IDocumentsResource.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/RatingChangeCategory.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/RatingOperation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/SettlementOrder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/Transaction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/IDormitoryResource.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/IResidentResource.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/PassportInformation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/Resident.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/ResidentService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/ResidentValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/IRoomResource.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/Room.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IDocumentService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IDormitoryService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IResidentService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IRoomService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/ValidationMessages.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Data/DMS.Data.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Data/EfDataContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220605153500_NewMigration.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220605153500_NewMigration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Data/ServiceExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" afterDir="false" />
+    <list default="true" id="75319ad7-13e5-43b8-b0fb-c36e31e4ce2d" name="Default Changelist" comment="StartChanging architecture to independent parts (not working)">
+      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/DocumentService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/DormitoryService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/RoomService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DMS.Core/ServiceExtension.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.sln" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Residents/IResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/IResidentResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Residents/ResidentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/ResidentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IDocumentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IDocumentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IDormitoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IDormitoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IResidentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IResidentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IRoomService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/ServiceInterfaces/IRoomService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Data/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/ResidentResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/DmsControllerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DmsControllerBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/ResidentsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Controllers/RoomsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/DMS.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/DMS.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Exceptions/InvalidRequestDataException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Exceptions/InvalidRequestDataException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220428202658_Arab.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220428202658_Arab.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220428202658_Arab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220428202658_Arab.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507191631_IsCommercialToResidentAdded.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507191631_IsCommercialToResidentAdded.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507191631_IsCommercialToResidentAdded.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507191631_IsCommercialToResidentAdded.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507201909_ResidentPassportInformationRemove.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507201909_ResidentPassportInformationRemove.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507201909_ResidentPassportInformationRemove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507201909_ResidentPassportInformationRemove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507212636_TransferPassportDataToPassportInformation.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507212636_TransferPassportDataToPassportInformation.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507212636_TransferPassportDataToPassportInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507212636_TransferPassportDataToPassportInformation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507213738_AddDataToPassportInformation.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507213738_AddDataToPassportInformation.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220507213738_AddDataToPassportInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220507213738_AddDataToPassportInformation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220508095907_RenamePassportInformationTable.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220508095907_RenamePassportInformationTable.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220508095907_RenamePassportInformationTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220508095907_RenamePassportInformationTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220509200723_RemoveRoomNumberIdentityAlways.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220510080356_TransactionAndRatingOperationCompositePrimaryKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510081418_AddCourseColumnToResident.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220510081418_AddCourseColumnToResident.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220510081418_AddCourseColumnToResident.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220510081418_AddCourseColumnToResident.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220511171146_AddParentsToDatabase.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220511171146_AddParentsToDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220511171146_AddParentsToDatabase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220515170457_ChangeTransactionPrimaryKey.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220515170457_ChangeTransactionPrimaryKey.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220515170457_ChangeTransactionPrimaryKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220515170457_ChangeTransactionPrimaryKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220515190523_ChangeRatingOperationPrimaryKey.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220515190523_ChangeRatingOperationPrimaryKey.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220515190523_ChangeRatingOperationPrimaryKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220515190523_ChangeRatingOperationPrimaryKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220517131135_DeleteAllData.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220517131135_DeleteAllData.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220517131135_DeleteAllData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220517131135_DeleteAllData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220517144326_AddSomeData.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220517144326_AddSomeData.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/20220517144326_AddSomeData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/20220517144326_AddSomeData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/ApplicationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/ApplicationContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/EvictionOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/EvictionOrderDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/PassportInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/PassportInformationDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/RatingChangeCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/RatingChangeCategoryDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/RatingOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/RatingOperationDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/Resident.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/ResidentDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/RoomDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/SettlementOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/SettlementOrderDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Models/Transaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Models/TransactionDb.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/DocumentsResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/DormitoryResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/DormitoryResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/ResidentResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/ResourceBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/ResourceBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/Resources/RoomResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/RoomResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -204,6 +131,7 @@
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.uml" />
@@ -432,7 +360,9 @@
       <workItem from="1653997836700" duration="721000" />
       <workItem from="1654289643088" duration="612000" />
       <workItem from="1654429867605" duration="13137000" />
-      <workItem from="1654450280603" duration="3167000" />
+      <workItem from="1654450280603" duration="3277000" />
+      <workItem from="1654460180173" duration="642000" />
+      <workItem from="1654604682051" duration="1915000" />
     </task>
     <task id="LOCAL-00001" summary="Base of data manipulating project">
       <created>1650006328128</created>
@@ -560,7 +490,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651405264600</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="StartChanging architecture to independent parts (not working)">
+      <created>1654453515079</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1654453515079</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -609,6 +546,7 @@
     <MESSAGE value="Edit room FloorNumber property type&#10;Start working with REST API resources" />
     <MESSAGE value="Remove database deleting on startup&#10;Start making resources and controllers for api" />
     <MESSAGE value="Make PUT and POST methods of ResidentsController" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make PUT and POST methods of ResidentsController" />
+    <MESSAGE value="StartChanging architecture to independent parts (not working)" />
+    <option name="LAST_COMMIT_MESSAGE" value="StartChanging architecture to independent parts (not working)" />
   </component>
 </project>

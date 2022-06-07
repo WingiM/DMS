@@ -1,12 +1,11 @@
-﻿using DMS.Core.Objects.Residents;
-using DMS.Core.Objects.ServiceInterfaces;
+﻿using DMS.Core.Objects.ServiceInterfaces;
 
-namespace DMS.Core.Services;
+namespace DMS.Core.Objects.Residents;
 
 public class ResidentService : IResidentService
 {
-    private IResidentResource _residentResource;
-    private IDataContext _dataContext;
+    private readonly IResidentResource _residentResource;
+    private readonly IDataContext _dataContext;
 
     public ResidentService(IResidentResource residentResource, IDataContext dataContext)
     {
@@ -17,6 +16,11 @@ public class ResidentService : IResidentService
     public IEnumerable<Resident> GetAllResidents()
     {
         return _residentResource.GetAllResidents();
+    }
+
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate, string gender)
+    {
+        return _residentResource.GetAllResidents(documentsStartDate, gender);
     }
 
     public Resident GetResidentById(int id)
@@ -37,21 +41,21 @@ public class ResidentService : IResidentService
 
     public void ResetAll()
     {
-        throw new NotImplementedException();
+        _residentResource.ResetAll();
     }
 
     public int AddResident(string data)
     {
-        throw new NotImplementedException();
+        return _residentResource.AddResident(data);
     }
 
     public void UpdateResident(int id, string data)
     {
-        throw new NotImplementedException();
+        _residentResource.UpdateResident(id, data);
     }
 
     public void DeleteResident(int id)
     {
-        throw new NotImplementedException();
+        _residentResource.DeleteResident(id);
     }
 }

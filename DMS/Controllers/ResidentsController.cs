@@ -1,4 +1,5 @@
 ﻿using DMS.Core.Exceptions;
+using DMS.Core.Objects.ServiceInterfaces;
 using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,11 @@ namespace DMS.Controllers;
 [Route("/api/[controller]")]
 public class ResidentsController : DmsControllerBase
 {
-    private readonly ResidentResource _resource;
+    private readonly IResidentService _service;
 
-    public ResidentsController(ResidentResource resource)
+    public ResidentsController(IResidentService service)
     {
-        _resource = resource;
+        _service = service;
     }
 
     [HttpGet]
@@ -23,10 +24,7 @@ public class ResidentsController : DmsControllerBase
         DateTime resultDate = ParseDate(Request.Headers["date"]);
         var gender = Request.Headers["gender"];
 
-        return Results.Ok(
-            _resource.GetAllResidents(resultDate, gender)
-                .Select(ConvertResident)
-        );
+        return Results.Ok(_service.GetAllResidents(resultDate, gender));
     }
 
     [HttpPost]
@@ -35,7 +33,7 @@ public class ResidentsController : DmsControllerBase
         try
         {
             var data = await ParseRequestBody();
-            var id = _resource.AddResident(data);
+            var id = _service.AddResident(data);
             return Results.Json(new
             {
                 message = "Added successfully",
@@ -59,8 +57,8 @@ public class ResidentsController : DmsControllerBase
         try
         {
             DateTime resultDate = ParseDate(Request.Headers["date"]);
-            var res = _resource.GetResidentById(id, resultDate);
-            return Results.Ok(ConvertResident(res));
+            var res = _service.GetResidentById(id, resultDate);
+            return Results.Ok(res);
         }
         catch (InvalidOperationException)
         {
@@ -76,7 +74,7 @@ public class ResidentsController : DmsControllerBase
         try
         {
             var data = await ParseRequestBody();
-            _resource.UpdateResident(id, data);
+            _service.UpdateResident(id, data);
             return Results.Ok("Updated successfully");
         }
         catch (InvalidRequestDataException e)
@@ -95,7 +93,7 @@ public class ResidentsController : DmsControllerBase
     {
         try
         {
-            _resource.DeleteResident(id);
+            _service.DeleteResident(id);
             return Results.Ok("Deleted successfully");
         }
         catch (InvalidOperationException e)

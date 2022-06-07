@@ -19,6 +19,11 @@ public class ResidentResource : ResourceBase, IResidentResource
             .Select(ConvertResident);
     }
 
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate, string gender)
+    {
+        return GetAllResidents().Where(r => r.Gender == char.Parse(gender));
+    }
+
     public Resident GetResidentById(int id, DateTime documentsStartDate)
     {
         Context.Transactions
