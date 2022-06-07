@@ -14,12 +14,12 @@ public class DormitoryService : IDormitoryService
 
     public Dictionary<string, int> GetDormitoryCapacity()
     {
-        return _dormitoryResource.GetDormitoryCapacity();
+        return _dormitoryResource.GetDormitoryData();
     }
 
     public string SetSafeConstants(string data)
     {
-        return _dormitoryResource.SetSafeConstants(data);
+        return _dormitoryResource.SetConstants(data);
     }
 
     public Dictionary<string, string> GetConstants()
@@ -34,7 +34,7 @@ public class DormitoryService : IDormitoryService
 
     public void ResetRooms()
     {
-        _dormitoryResource.ResetRooms();
+        _dormitoryResource.ResetDormitoryRooms();
     }
 
     public string GetConstant(string key)

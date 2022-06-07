@@ -168,6 +168,16 @@ public abstract class ResourceBase
         };
     }
 
+    protected static RatingChangeCategory ConvertRatingChangeCategory(
+        RatingChangeCategoryDb ratingChangeCategoryDb)
+    {
+        return new RatingChangeCategory
+        {
+            Id = ratingChangeCategoryDb.RatingChangeCategoryId,
+            Name = ratingChangeCategoryDb.Name
+        };
+    }
+
     private static PassportInformation ConvertPassportInformation(
         PassportInformationDb passportInformationDb)
     {

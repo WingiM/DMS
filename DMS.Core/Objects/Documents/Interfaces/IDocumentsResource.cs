@@ -4,9 +4,9 @@ namespace DMS.Core.Objects.Documents.Interfaces;
 
 public interface IDocumentsResource
 {
-    public IQueryable GetAllRatingChangeCategories();
-    public IEnumerable<Resident> GetAllDocuments(DateTime documentsStartDate);
+    public IEnumerable<RatingChangeCategory> GetAllRatingChangeCategories();
     public IEnumerable<Resident> GetAllDocuments();
-    public void AddDocument<T>(string data) where T : class;
-    public void DeleteDocument<T>(string data) where T : class;
+    public IEnumerable<Resident> GetAllDocuments(DateTime documentsStartDate);
+    public void AddDocument<T>(T document) where T : class;
+    public void DeleteDocument<T>(T document) where T : class;
 }

@@ -13,7 +13,7 @@ public class RoomService : IRoomService
     
     public Room GetRoomWithResidents(int id, DateTime documentsDate)
     {
-        return _roomResource.GetRoomWithResidents(id, documentsDate);
+        return _roomResource.GetRoom(id, documentsDate);
     }
 
     public IEnumerable<int> GetFloorsCount()

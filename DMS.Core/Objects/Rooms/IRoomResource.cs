@@ -2,8 +2,10 @@
 
 public interface IRoomResource
 {
-    public Room GetRoomWithResidents(int id, DateTime documentsDate);
+    public Room GetRoom(int id);
+    public Room GetRoom(int id, DateTime documentsDate);
+    public bool IsExists(int roomNumber);
     public IEnumerable<int> GetFloorsCount();
     public IEnumerable<Room> GetAllRoomsOnFloor(int floorNumber);
-    public void SetRoomGender(string data);
+    public void UpdateRoom(Room room);
 }

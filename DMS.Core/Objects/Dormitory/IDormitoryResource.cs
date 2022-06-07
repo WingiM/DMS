@@ -2,10 +2,10 @@
 
 public interface IDormitoryResource
 {
-    public Dictionary<string, int> GetDormitoryCapacity();
-    public string SetSafeConstants(string data);
-    public Dictionary<string, string> GetConstants();
-    public void SetHardResetConstants(string data);
-    public void ResetRooms();
+    public DormitorySettlementData GetDormitoryData();
     public string GetConstant(string key);
+    public void SetConstant(string key, string value);
+    public void SetResetConstants(ResetConstants resetConstants);
+    public Dictionary<string, string> GetConstants();
+    public void ResetDormitoryRooms();
 }

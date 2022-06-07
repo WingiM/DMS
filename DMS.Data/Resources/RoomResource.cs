@@ -11,7 +11,7 @@ public class RoomResource : ResourceBase, IRoomResource
     {
     }
 
-    public Room GetRoomWithResidents(int id, DateTime documentDate)
+    public Room GetRoom(int id, DateTime documentDate)
     {
         try
         {

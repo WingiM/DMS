@@ -2,14 +2,14 @@
 
 public interface IResidentResource
 {
-    public IEnumerable<Resident> GetAllResidents();
-    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate,
-        string gender);
-    public Resident GetResidentById(int id);
-    public Resident GetResidentById(int id, DateTime documentsStartDate);
-    public void AccrualAll(int commercialCost, int nonCommercialCost);
-    public void ResetAll();
-    public int AddResident(string data);
-    public void UpdateResident(int id, string data);
-    public void DeleteResident(int id);
+    void CreateResident(Resident resident);
+    void UpdateResident(Resident resident);
+    void DeleteResident(int id);
+    bool IsExists(int id);
+    Resident GetResidentById(int id);
+    Resident GetResidentById(int id, DateTime documentsDate);
+    IEnumerable<Resident> GetAllResidents();
+    IEnumerable<Resident> GetAllResidents(DateTime documentsDate);
+    IEnumerable<Resident> GetAllResidents(string gender, DateTime documentsDate);
+
 }

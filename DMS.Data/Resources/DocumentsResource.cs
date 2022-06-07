@@ -38,27 +38,8 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
             .Select(ConvertResidentWithDocuments);
     }
 
-    public IQueryable GetAllRatingChangeCategories()
+    public void AddDocument<T>(T document) where T : class
     {
-        return Context.RatingChangeCategories;
-    }
-
-    private T? DeserializeDocument<T>(string data) where T : class
-    {
-        try
-        {
-            return JsonSerializer.Deserialize<T>(data);
-        }
-        catch (Exception e)
-        {
-            throw new InvalidRequestDataException(GetExceptionMessage(e), e);
-        }
-    }
-
-    public void AddDocument<T>(string data) where T : class
-    {
-        var document = DeserializeDocument<T>(data);
-
         switch (document)
         {
             case TransactionDb t:
@@ -76,33 +57,30 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
         }
     }
 
-    public void DeleteDocument<T>(string data) where T : class
+    public void DeleteDocument<T>(T document) where T : class
     {
-        try
+        switch (document)
         {
-            var document = DeserializeDocument<T>(data);
+            case TransactionDb t:
+                Context.Transactions.Remove(t);
+                break;
+            case RatingOperationDb ro:
+                Context.RatingOperations.Remove(ro);
+                break;
+            case SettlementOrderDb:
+            case EvictionOrderDb:
+                throw new InvalidRequestDataException(
+                    "Orders cannot be deleted");
+            default:
+                throw new InvalidRequestDataException(
+                    "Document type is unknown or unspecified");
+        }
+    }
 
-            switch (document)
-            {
-                case TransactionDb t:
-                    Context.Transactions.Remove(t);
-                    break;
-                case RatingOperationDb ro:
-                    Context.RatingOperations.Remove(ro);
-                    break;
-                case SettlementOrderDb:
-                case EvictionOrderDb:
-                    throw new InvalidRequestDataException(
-                        "Orders cannot be deleted");
-                default:
-                    throw new InvalidRequestDataException(
-                        "Document type is unknown or unspecified");
-            }
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
+    public IEnumerable<RatingChangeCategory> GetAllRatingChangeCategories()
+    {
+        return Context.RatingChangeCategories.Select(
+            ConvertRatingChangeCategory);
     }
 
     private void CreateSettlementOrder(SettlementOrderDb so)

@@ -15,67 +15,20 @@ public class DormitoryResource : ResourceBase, IDormitoryResource
         "CommercialCost", "NonCommercialCost"
     };
 
-    private static readonly string[] HardResetConstants =
-    {
-        "Floors", "RoomsCount", "RoomCapacity"
-    };
-
-    private static readonly Dictionary<string, Predicate<int>>
-        HardResetConstantsConstraints = new()
-        {
-            { "Floors", x => x is < 10 and > 0 },
-            { "RoomsCount", x => x is < 100 and > 0 },
-            { "RoomCapacity", x => x > 0 }
-        };
-    
     private readonly IDistributedCache _cache;
 
-    public DormitoryResource(IDistributedCache cache, ApplicationContext context) : base(context)
+    public DormitoryResource(IDistributedCache cache,
+        ApplicationContext context) : base(context)
     {
         _cache = cache;
     }
 
-    public Dictionary<string, int> GetDormitoryCapacity()
+    public void SetConstant(string key, string value)
     {
-        return new Dictionary<string, int>
-        {
-            { "Settled", Context.Residents.Count(r => r.RoomId != null) },
-            { "Total", Context.Rooms.Sum(r => r.Capacity) }
-        };
-    }
+        if (!SafeConstants.Concat(HardResetConstants).Contains(key))
+            throw new Exception("No constant with such name");
 
-    public string SetSafeConstants(string data)
-    {
-        try
-        {
-            var unusedKeys = new List<string?>();
-            var constants =
-                JsonSerializer.Deserialize<Dictionary<string, string?>>(data);
-
-            foreach (var key in SafeConstants)
-            {
-                if (!constants!.ContainsKey(key) ||
-                    !int.TryParse(constants[key], out var res) ||
-                    res < 0)
-                {
-                    unusedKeys.Add(key);
-                    continue;
-                }
-
-                _cache.Set(key, Encoding.UTF8.GetBytes(constants[key]!));
-            }
-
-            return string.Join(", ", unusedKeys);
-        }
-        catch (NullReferenceException e)
-        {
-            throw new InvalidRequestDataException(
-                "Could not deserialize request body", e);
-        }
-        catch (Exception e)
-        {
-            throw new Exception(GetExceptionMessage(e), e);
-        }
+        _cache.Set(key, Encoding.UTF8.GetBytes(value));
     }
 
     public Dictionary<string, string> GetConstants()
@@ -126,8 +79,24 @@ public class DormitoryResource : ResourceBase, IDormitoryResource
         }
     }
 
-    public void ResetRooms()
+    public void SetResetConstants(ResetConstants resetConstants)
     {
+        foreach (var constant in resetConstants)
+            _cache.Set(constant.Key,
+                Encoding.UTF8.GetBytes(constant.Value.ToString()));
+    }
+
+    private ResetConstants GetResetConstants()
+    {
+        
+    }
+
+    public void ResetDormitoryRooms()
+    {
+        if (!resetConstants.Keys.ToArray().SequenceEqual(HardResetConstants))
+            throw new Exception("Not all reset constants set");
+
+
         try
         {
             var constants = new Dictionary<string, int>
@@ -157,6 +126,15 @@ public class DormitoryResource : ResourceBase, IDormitoryResource
         {
             throw new DbUpdateException(GetExceptionMessage(e), e);
         }
+    }
+
+    DormitorySettlementData IDormitoryResource.GetDormitoryData()
+    {
+        return new DormitorySettlementData
+        {
+            SettledBedPlaces = Context.Residents.Count(r => r.RoomId != null),
+            TotalBedPlaces = Context.Rooms.Sum(r => r.Capacity)
+        };
     }
 
     public string GetConstant(string key)
