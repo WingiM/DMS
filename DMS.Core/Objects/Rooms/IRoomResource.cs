@@ -1,4 +1,6 @@
-﻿namespace DMS.Core.Objects.Rooms;
+﻿using DMS.Core.Objects.Dormitory;
+
+namespace DMS.Core.Objects.Rooms;
 
 public interface IRoomResource
 {

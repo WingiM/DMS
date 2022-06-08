@@ -3,7 +3,7 @@ using DMS.Core.Exceptions;
 
 namespace DMS.Core.Objects.Dormitory;
 
-public struct ResetConstants : IEnumerable<KeyValuePair<string, int>>
+public class ResetConstants : IEnumerable<KeyValuePair<string, int>>
 {
     private static readonly Dictionary<string, Predicate<int>>
         Constraints = new()
@@ -13,14 +13,7 @@ public struct ResetConstants : IEnumerable<KeyValuePair<string, int>>
             { "RoomCapacity", x => x > 0 }
         };
 
-    public static readonly string[] ConstantNames =
-        new[] { "Floors", "RoomsCount", "RoomCapacity" };
-
     private readonly Dictionary<string, int> _constants;
-
-    public int Floors { get; }
-    public int RoomsCount { get; }
-    public int RoomCapacity { get; }
 
     public ResetConstants(int floors, int roomCount, int roomCapacity)
     {
@@ -37,6 +30,8 @@ public struct ResetConstants : IEnumerable<KeyValuePair<string, int>>
         if (badValues.Length != 0)
             throw new ConstantException($"Following constants have bad value: {string.Join(" ", badValues)}");
     }
+
+    public int this[string key] => _constants[key];
 
     public IEnumerator<KeyValuePair<string, int>> GetEnumerator()
     {

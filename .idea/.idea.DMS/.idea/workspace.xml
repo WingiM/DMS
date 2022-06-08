@@ -18,32 +18,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75319ad7-13e5-43b8-b0fb-c36e31e4ce2d" name="Default Changelist" comment="Fix bug with settings soft constants">
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Exceptions/ConstantException.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/DormitorySettlementData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/ResetConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/dataSources/05ea521b-2c93-4614-9e36-836de217e28d.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/PriceConstants.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DMS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Documents/Interfaces/IDocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Documents/Interfaces/IDocumentsResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/DormitoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/DormitoryService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/IDormitoryResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/IDormitoryResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Residents/IResidentResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Residents/IResidentResource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/ResetConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Dormitory/ResetConstants.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/IRoomResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/IRoomResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/RoomService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Core/Objects/Rooms/RoomService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.Data/Resources/DocumentsResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/DocumentsResource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DMS.Data/Resources/DormitoryResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/DormitoryResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.Data/Resources/ResourceBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/ResourceBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS.Data/Resources/RoomResource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DMS.Data/Resources/RoomResource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/DMS.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/Debug/net6.0/DMS.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DMS/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +50,16 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/12d149da7b1493fa67ab7e1689d07cc634cb3e4a71191753e3d0f5fa3b9598/AuthAppBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7733bdb26b2be012c4266979a95d3728e74790201f91a02df4529ee6c2f37/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7c773eadd6cb72f7039f9b6f27f9fd45f7c3961ed5b3ab27280698087dc26e9/AuthenticationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f360779027ab17e5e4e3fd5265f4d517a2cb87478614dec7899e899423040/StackExchangeRedisCacheServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DMS.Core/Exceptions/ConstantException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DMS.Core/Objects/Documents/Interfaces/IDocumentsResource.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DMS.Core/Objects/Dormitory/IDormitoryResource.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DMS.Core/Objects/Dormitory/ResetConstants.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DMS.Core/Objects/Rooms/IRoomResource.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DMS.Data/Resources/DormitoryResource.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/ClientApp/package-lock.json" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/DocumentsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DMS/Controllers/DormitoryController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -131,11 +121,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "/home/wingim/Desktop/BarsGroupProject/TripTalk/TripTalk.sln"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;/home/wingim/Desktop/BarsGroupProject/TripTalk/TripTalk.sln&quot;
   }
-}]]></component>
+}</component>
   <component name="RiderProblemsViewState">
     <option name="contextShortcutLearned" value="true" />
   </component>
