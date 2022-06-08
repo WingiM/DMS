@@ -1,5 +1,4 @@
-using System.Text.Json;
-using DMS.Core.Exceptions;
+using System.Data;
 using DMS.Core.Objects.Documents;
 using DMS.Core.Objects.Documents.Interfaces;
 using DMS.Core.Objects.Residents;
@@ -14,13 +13,18 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
     {
     }
 
+    public IEnumerable<RatingChangeCategory> GetAllRatingChangeCategories()
+    {
+        return Context.RatingChangeCategories.Select(
+            ConvertRatingChangeCategory);
+    }
+
     public IEnumerable<Resident> GetAllDocuments()
     {
         return GetAllDocuments(DateTime.MinValue);
     }
 
-    public IEnumerable<Resident> GetAllDocuments(
-        DateTime documentsStartDate)
+    public IEnumerable<Resident> GetAllDocuments(DateTime documentsStartDate)
     {
         Context.Transactions.Where(t => t.OperationDate > documentsStartDate)
             .Load();
@@ -38,146 +42,114 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
             .Select(ConvertResidentWithDocuments);
     }
 
-    public void AddDocument<T>(T document) where T : class
+    public void AddDocument<T>(T document) where T : IDocument
     {
         switch (document)
         {
-            case TransactionDb t:
+            case Transaction t:
                 CreateTransaction(t);
                 break;
-            case RatingOperationDb ro:
+            case RatingOperation ro:
                 CreateRatingOperation(ro);
                 break;
-            case SettlementOrderDb so:
+            case SettlementOrder so:
                 CreateSettlementOrder(so);
                 break;
-            case EvictionOrderDb eo:
+            case EvictionOrder eo:
                 CreateEvictionOrder(eo);
                 break;
         }
     }
 
-    public void DeleteDocument<T>(T document) where T : class
+    public void DeleteDocument<T>(T document) where T : IDocument
     {
         switch (document)
         {
-            case TransactionDb t:
-                Context.Transactions.Remove(t);
+            case Transaction t:
+                var transactionDb =
+                    Context.Transactions.First(tr => tr.TransactionId == t.Id);
+                Context.Transactions.Remove(transactionDb);
                 break;
-            case RatingOperationDb ro:
-                Context.RatingOperations.Remove(ro);
+            case RatingOperation ro:
+                var ratingOperationDb =
+                    Context.RatingOperations.First(ratingOp =>
+                        ratingOp.RatingOperationId == ro.Id);
+                Context.RatingOperations.Remove(ratingOperationDb);
                 break;
-            case SettlementOrderDb:
-            case EvictionOrderDb:
-                throw new InvalidRequestDataException(
-                    "Orders cannot be deleted");
+            case SettlementOrder:
+            case EvictionOrder:
+                throw new DataException("Orders cannot be deleted");
             default:
-                throw new InvalidRequestDataException(
+                throw new DataException(
                     "Document type is unknown or unspecified");
         }
     }
 
-    public IEnumerable<RatingChangeCategory> GetAllRatingChangeCategories()
+    private void CreateSettlementOrder(SettlementOrder so)
     {
-        return Context.RatingChangeCategories.Select(
-            ConvertRatingChangeCategory);
+        var resident =
+            Context.Residents.First(r => r.ResidentId == so.Resident.Id);
+        var room = Context.Rooms.First(r => r.RoomId == so.Room.Id);
+
+        if (resident.RoomId != null)
+            throw new Exception("Resident already has a room.");
+
+        if (Context.Residents.Count(r => r.RoomId == room.RoomId) ==
+            room.Capacity)
+            throw new Exception("Room is overcrowded");
+
+        var settlementOrderDb = new SettlementOrderDb
+        {
+            SettlementOrderId = so.Id, Description = so.Description,
+            OrderDate = so.PostDate, ResidentId = so.Resident.Id,
+            RoomId = so.Room.Id,
+            ParentsFullName = so.ParentData.ParentsFullName,
+            ParentsPassportAddress = so.ParentData.ParentsPassportAddress,
+            ParentsPassportDepartmentCode =
+                so.ParentData.ParentsPassportDepartmentCode,
+            ParentsPassportIssueDate = so.ParentData.ParentsPassportIssueDate,
+            ParentsPassportIssuedBy = so.ParentData.ParentsPassportIssuedBy,
+            ParentsPassportSeriesNumber =
+                so.ParentData.ParentsPassportSeriesNumber
+        };
+        Context.SettlementOrders.Add(settlementOrderDb);
+
+        resident.RoomId = so.Room.Id;
     }
 
-    private void CreateSettlementOrder(SettlementOrderDb so)
+    private void CreateEvictionOrder(EvictionOrder eo)
     {
-        try
+        var resident =
+            Context.Residents.First(r => r.ResidentId == eo.Resident.Id);
+
+        var evictionOrderDb = new EvictionOrderDb
         {
-            var resident =
-                Context.Residents.First(r => r.ResidentId == so.ResidentId);
-            var room = Context.Rooms.First(r => r.RoomId == so.RoomId);
+            EvictionOrderId = eo.Id, Description = eo.Description,
+            OrderDate = eo.PostDate, ResidentId = eo.Resident.Id
+        };
 
-            if (resident.RoomId != null)
-                throw new Exception("Resident already has a room.");
-
-            if (Context.Residents.Count(r => r.RoomId == room.RoomId) ==
-                room.Capacity)
-                throw new Exception("Room is overcrowded");
-
-            Context.SettlementOrders.Add(so);
-            Context.SaveChanges();
-
-            resident.RoomId = so.RoomId;
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new InvalidOperationException("Invalid room or resident id",
-                e);
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
+        Context.EvictionOrders.Add(evictionOrderDb);
+        resident.RoomId = null;
     }
 
-    private void CreateEvictionOrder(EvictionOrderDb eo)
+    private void CreateRatingOperation(RatingOperation ro)
     {
-        try
+        var ratingOperationDb = new RatingOperationDb
         {
-            var resident =
-                Context.Residents.First(r => r.ResidentId == eo.ResidentId);
-
-            if (resident.RoomId is null)
-                throw new Exception("Resident is already evicted");
-
-            Context.EvictionOrders.Add(eo);
-            resident.RoomId = null;
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new InvalidOperationException("Invalid resident id", e);
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
+            RatingOperationId = ro.Id, CategoryId = ro.Category.Id,
+            Description = ro.Description, ChangeValue = ro.ChangeValue,
+            OrderDate = ro.PostDate, ResidentId = ro.Resident.Id
+        };
+        Context.RatingOperations.Add(ratingOperationDb);
     }
 
-    private void CreateRatingOperation(RatingOperationDb ro)
+    private void CreateTransaction(Transaction t)
     {
-        try
+        var transactionDb = new TransactionDb
         {
-            var resident =
-                Context.Residents.First(r => r.ResidentId == ro.ResidentId);
-
-            if (resident.RoomId is null)
-                throw new Exception("Resident is evicted");
-
-            Context.RatingOperations.Add(ro);
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new InvalidOperationException("Invalid resident id", e);
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
-    }
-
-    private void CreateTransaction(TransactionDb t)
-    {
-        try
-        {
-            var resident =
-                Context.Residents.First(r => r.ResidentId == t.ResidentId);
-
-            if (resident.RoomId is null)
-                throw new Exception("Resident is evicted");
-
-            Context.Transactions.Add(t);
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new InvalidOperationException("Invalid resident id", e);
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
+            TransactionId = t.Id, ResidentId = t.Resident.Id,
+            OperationDate = t.PostDate, Sum = t.Sum
+        };
+        Context.Transactions.Add(transactionDb);
     }
 }

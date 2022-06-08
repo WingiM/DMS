@@ -1,5 +1,4 @@
 ﻿using DMS.Core;
-using DMS.Core.Objects.Documents;
 using DMS.Core.Objects.Documents.Interfaces;
 using DMS.Core.Objects.Dormitory;
 using DMS.Core.Objects.Residents;

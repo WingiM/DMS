@@ -26,7 +26,7 @@ public class DormitoryController : DmsControllerBase
     [HttpGet]
     public IResult GetDormitoryCapacity()
     {
-        return Results.Ok(_service.GetDormitoryCapacity());
+        return Results.Ok(_service.GetDormitorySettlementData());
     }
 
     [HttpGet]
@@ -120,7 +120,7 @@ public class DormitoryController : DmsControllerBase
 
             _service.SetHardResetConstants(data);
             _residentService.ResetAll();
-            _service.ResetRooms();
+            _service.RebuildDormitoryRooms();
 
             return Results.Ok("Reset complete");
         }

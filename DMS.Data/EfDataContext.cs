@@ -1,6 +1,4 @@
 ﻿using DMS.Core;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace DMS.Data;
 

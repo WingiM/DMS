@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using DMS.Core.Exceptions;
-using DMS.Core.Objects.Rooms;
+﻿using DMS.Core.Objects.Rooms;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Data.Resources;
@@ -11,31 +9,36 @@ public class RoomResource : ResourceBase, IRoomResource
     {
     }
 
-    public Room GetRoom(int id, DateTime documentDate)
+    public Room GetRoom(int roomNumber)
     {
-        try
-        {
-            var room = Context.Rooms.First(r => r.RoomId == id);
-            var roomResidents = Context.Residents.Where(r => r.RoomId == id);
-            roomResidents.Load();
-            foreach (var resident in roomResidents.ToArray())
-            {
-                Context.Transactions
-                    .Where(t => t.ResidentId == resident.ResidentId
-                                && t.OperationDate > documentDate).Load();
-                Context.RatingOperations
-                    .Where(t => t.ResidentId == resident.ResidentId
-                                && t.OrderDate > documentDate).Load();
-                Context.RatingChangeCategories.Load();
-                Context.Passports.Load();
-            }
+        return GetRoom(roomNumber, DateTime.MinValue);
+    }
 
-            return ConvertRoomWithResidents(room);
-        }
-        catch (InvalidOperationException e)
+    public Room GetRoom(int roomNumber, DateTime documentsDate)
+    {
+        var room = Context.Rooms.First(r => r.RoomId == roomNumber);
+        var roomResidents =
+            Context.Residents.Where(r => r.RoomId == roomNumber);
+        roomResidents.Load();
+        foreach (var resident in roomResidents.ToArray())
         {
-            throw new InvalidOperationException("No room with this Id", e);
+            Context.Transactions
+                .Where(t => t.ResidentId == resident.ResidentId
+                            && t.OperationDate > documentsDate).Load();
+            Context.RatingOperations
+                .Where(t => t.ResidentId == resident.ResidentId
+                            && t.OrderDate > documentsDate).Load();
+            Context.RatingChangeCategories.Load();
+            Context.Passports.Load();
         }
+
+        return ConvertRoomWithResidents(room);
+    }
+
+    public bool IsExists(int roomNumber)
+    {
+        return Context.Rooms.FirstOrDefault(r => r.RoomId == roomNumber) is not
+            null;
     }
 
     public IEnumerable<int> GetFloorsCount()
@@ -46,41 +49,16 @@ public class RoomResource : ResourceBase, IRoomResource
     public IEnumerable<Room> GetAllRoomsOnFloor(int floorNumber)
     {
         Context.Residents.Load();
-        return Context.Rooms.Where(r => r.FloorNumber == floorNumber)
-            .AsEnumerable().Select(ConvertRoom);
+        return Context.Rooms
+            .Where(r => r.FloorNumber == floorNumber)
+            .AsEnumerable()
+            .Select(ConvertRoom);
     }
 
-    public void SetRoomGender(string data)
+    public void UpdateRoom(Room room)
     {
-        try
-        {
-            var deserialized =
-                JsonSerializer.Deserialize<Dictionary<string, Object>>(data);
+        var entity = Context.Rooms.First(r => r.RoomId == room.Id);
 
-            var res = (int)deserialized!["RoomId"];
-            if (!char.TryParse(deserialized["Gender"].ToString(),
-                    out var gender) || !new[] { 'M', 'F' }.Contains(gender))
-                throw new InvalidRequestDataException("Wrong gender value");
-
-            var room = Context.Rooms.First(r => r.RoomId == res);
-            room.Gender = gender;
-        }
-        catch (NullReferenceException e)
-        {
-            throw new InvalidRequestDataException(
-                "Could not deserialize request body", e);
-        }
-        catch (InvalidCastException e)
-        {
-            throw new InvalidRequestDataException("Wrong room id value", e);
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new Exception("No room with such number", e);
-        }
-        catch (Exception e)
-        {
-            throw new Exception(GetExceptionMessage(e), e);
-        }
+        entity.Gender = room.Gender;
     }
 }

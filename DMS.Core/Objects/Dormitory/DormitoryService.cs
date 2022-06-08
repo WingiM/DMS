@@ -32,7 +32,7 @@ public class DormitoryService : IDormitoryService
         _dormitoryResource.SetHardResetConstants(data);
     }
 
-    public void ResetRooms()
+    public void RebuildDormitoryRooms()
     {
         _dormitoryResource.ResetDormitoryRooms();
     }

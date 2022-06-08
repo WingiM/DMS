@@ -64,7 +64,7 @@ public abstract class ResourceBase
             PassportInformation =
                 ConvertPassportInformation(residentDb.PassportInformation)
         };
-        
+
         if (residentDb.Room is not null)
         {
             var room = ConvertRoom(residentDb.Room);
@@ -99,13 +99,15 @@ public abstract class ResourceBase
     {
         var resident = ConvertResident(residentDb);
         resident.SettlementOrders = residentDb.SettlementOrders
-            .Select(ConvertSettlementOrder).ToList();
+            .Select(ConvertSettlementOrder).OrderBy(doc => doc.PostDate)
+            .ToList();
         resident.EvictionOrders = residentDb.EvictionOrders
-            .Select(ConvertEvictionOrder).ToList();
-        resident.RatingOperations =
-            residentDb.RatingOperations.Select(ConvertRatingOperation).ToList();
-        resident.Transactions =
-            residentDb.Transactions.Select(ConvertTransaction).ToList();
+            .Select(ConvertEvictionOrder).OrderBy(doc => doc.PostDate).ToList();
+        resident.RatingOperations = residentDb.RatingOperations
+            .Select(ConvertRatingOperation).OrderBy(doc => doc.PostDate)
+            .ToList();
+        resident.Transactions = residentDb.Transactions
+            .Select(ConvertTransaction).OrderBy(doc => doc.PostDate).ToList();
         return resident;
     }
 
@@ -118,15 +120,18 @@ public abstract class ResourceBase
             PostDate = settlementOrderDb.OrderDate,
             Description = settlementOrderDb.Description,
             Room = ConvertRoom(settlementOrderDb.Room),
-            ParentsFullName = settlementOrderDb.ParentsFullName,
-            ParentsPassportAddress = settlementOrderDb.ParentsPassportAddress,
-            ParentsPassportDepartmentCode =
-                settlementOrderDb.ParentsPassportDepartmentCode,
-            ParentsPassportIssueDate =
-                settlementOrderDb.ParentsPassportIssueDate,
-            ParentsPassportIssuedBy = settlementOrderDb.ParentsPassportIssuedBy,
-            ParentsPassportSeriesNumber =
-                settlementOrderDb.ParentsPassportSeriesNumber
+            ParentData = new ParentData
+            {
+                ParentsFullName = settlementOrderDb.ParentsFullName,
+                ParentsPassportAddress = settlementOrderDb.ParentsPassportAddress,
+                ParentsPassportDepartmentCode =
+                    settlementOrderDb.ParentsPassportDepartmentCode,
+                ParentsPassportIssueDate =
+                    settlementOrderDb.ParentsPassportIssueDate,
+                ParentsPassportIssuedBy = settlementOrderDb.ParentsPassportIssuedBy,
+                ParentsPassportSeriesNumber =
+                    settlementOrderDb.ParentsPassportSeriesNumber
+            }
         };
     }
 

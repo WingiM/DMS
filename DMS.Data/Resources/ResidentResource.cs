@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using DMS.Core.Objects.Residents;
+﻿using DMS.Core.Objects.Residents;
 using DMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,27 +10,18 @@ public class ResidentResource : ResourceBase, IResidentResource
     {
     }
 
-    public IEnumerable<Resident> GetAllResidents()
+    public Resident GetResidentById(int id)
     {
-        return Context.Residents
-            .OrderBy(r => r.RoomId == null)
-            .ThenBy(r => r.LastName)
-            .Select(ConvertResident);
+        return GetResidentById(id, DateTime.MinValue);
     }
 
-    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate, string gender)
-    {
-        return GetAllResidents().Where(r => r.Gender == char.Parse(gender));
-    }
-
-    public Resident GetResidentById(int id, DateTime documentsStartDate)
+    public Resident GetResidentById(int id, DateTime documentsDate)
     {
         Context.Transactions
-            .Where(t =>
-                t.ResidentId == id && t.OperationDate > documentsStartDate)
+            .Where(t => t.ResidentId == id && t.OperationDate > documentsDate)
             .Load();
-        Context.RatingOperations.Where(ro =>
-                ro.ResidentId == id && ro.OrderDate > documentsStartDate)
+        Context.RatingOperations
+            .Where(ro => ro.ResidentId == id && ro.OrderDate > documentsDate)
             .Load();
         Context.Passports.Load();
         Context.RatingChangeCategories.Load();
@@ -40,126 +30,71 @@ public class ResidentResource : ResourceBase, IResidentResource
             Context.Residents.First(r => r.ResidentId == id));
     }
 
-    public Resident GetResidentById(int id)
+    public IEnumerable<Resident> GetAllResidents()
     {
-        return GetResidentById(id, DateTime.MinValue);
+        return GetAllResidents(DateTime.MinValue);
     }
 
-    public void AccrualAll(int commercialCost, int nonCommercialCost)
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsDate)
     {
-        try
+        return Context.Residents
+            .OrderBy(r => r.RoomId == null)
+            .ThenBy(r => r.LastName)
+            .Select(ConvertResident);
+    }
+
+    public IEnumerable<Resident> GetAllResidents(string gender,
+        DateTime documentsDate)
+    {
+        return GetAllResidents(documentsDate)
+            .Where(r => r.Gender == char.Parse(gender));
+    }
+
+    public bool IsExists(int id)
+    {
+        return Context.Residents.FirstOrDefault(r => r.ResidentId == id) is not
+            null;
+    }
+
+    public void CreateResident(Resident resident)
+    {
+        var entity = new ResidentDb
         {
-            foreach (var resident in Context.Residents)
+            FirstName = resident.FirstName, LastName = resident.LastName,
+            Gender = resident.Gender, Patronymic = resident.Patronymic,
+            BirthDate = resident.BirthDate, Course = resident.Course,
+            IsCommercial = resident.IsCommercial, Tin = resident.Tin,
+            PassportInformation = new PassportInformationDb
             {
-                if (resident.RoomId is null)
-                    continue;
-
-                var transaction = new TransactionDb
-                {
-                    ResidentId = resident.ResidentId,
-                    OperationDate = DateTime.UtcNow,
-                    Sum = resident.IsCommercial
-                        ? commercialCost
-                        : nonCommercialCost
-                };
-
-                Context.Transactions.Add(transaction);
+                ResidentId = resident.Id,
+                Address = resident.PassportInformation.Address,
+                DepartmentCode = resident.PassportInformation.DepartmentCode,
+                IssueDate = resident.PassportInformation.IssueDate,
+                IssuedBy = resident.PassportInformation.IssuedBy,
+                SeriesAndNumber = resident.PassportInformation.SeriesAndNumber
             }
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
+        };
+
+        Context.Add(entity);
     }
 
-    public void ResetAll()
+    public void UpdateResident(Resident resident)
     {
-        try
-        {
-            foreach (var resident in Context.Residents)
-            {
-                if (resident.RoomId is null)
-                    continue;
-
-                var order = new EvictionOrderDb
-                {
-                    ResidentId = resident.ResidentId,
-                    OrderDate = DateTime.UtcNow,
-                    Description = "Dormitory reset"
-                };
-
-                Context.EvictionOrders.Add(order);
-                resident.RoomId = null;
-                resident.Course++;
-            }
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
-    }
-
-    public int AddResident(string data)
-    {
-        try
-        {
-            var resident = JsonSerializer.Deserialize<ResidentDb>(data);
-
-            if (resident!.RoomId is not null)
-                throw new Exception(
-                    "Cannot specify room id in resident creation");
-
-            Context.Residents.Add(resident);
-            return resident.ResidentId;
-        }
-        catch (Exception e)
-        {
-            throw new Exception(GetExceptionMessage(e), e);
-        }
-    }
-
-    public void UpdateResident(int id, string data)
-    {
-        try
-        {
-            var stored = Context.Residents.AsNoTracking()
-                .First(r => r.ResidentId == id);
-
-            var resident = JsonSerializer.Deserialize<ResidentDb>(data);
-            resident!.ResidentId = stored.ResidentId;
-            resident.RoomId = stored.RoomId;
-            resident.PassportInformation.PassportInformationId =
-                Context.Passports.AsNoTracking().FirstOrDefault(p =>
-                    p.ResidentId == id)!.PassportInformationId;
-            Context.Update(resident.PassportInformation);
-
-            Context.Residents.Update(resident);
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new InvalidOperationException("No resident with this Id", e);
-        }
-        catch (Exception e)
-        {
-            throw new Exception(GetExceptionMessage(e), e);
-        }
+        var entity = Context.Residents.First(r => r.ResidentId == resident.Id);
+        entity.FirstName = resident.FirstName;
+        entity.LastName = resident.LastName;
+        entity.Patronymic = resident.Patronymic;
+        entity.BirthDate = resident.BirthDate;
+        entity.Gender = resident.Gender;
+        entity.Tin = resident.Tin;
+        entity.Course = resident.Course;
+        entity.IsCommercial = resident.IsCommercial;
+        entity.PassportInformation = entity.PassportInformation;
     }
 
     public void DeleteResident(int id)
     {
-        try
-        {
-            var resident =
-                Context.Residents.First(r => r.ResidentId == id);
-            Context.Residents.Remove(resident);
-        }
-        catch (InvalidOperationException e)
-        {
-            throw new InvalidOperationException("No resident with this Id", e);
-        }
-        catch (DbUpdateException e)
-        {
-            throw new DbUpdateException(GetExceptionMessage(e), e);
-        }
+        var resident = Context.Residents.First(r => r.ResidentId == id);
+        Context.Residents.Remove(resident);
     }
 }

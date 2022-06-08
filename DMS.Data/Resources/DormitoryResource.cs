@@ -1,7 +1,6 @@
 using System.Text;
 using DMS.Core.Exceptions;
 using DMS.Core.Objects.Dormitory;
-using DMS.Data.Models;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace DMS.Data.Resources;
