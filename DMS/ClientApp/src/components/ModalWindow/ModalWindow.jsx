@@ -7,7 +7,7 @@ function template() {
     return (
         this.props.show ?
             <div className="modal show-modal">
-                <div className={`modal-content ${this.props.layoutName}`}>
+                <div className={`modal-content ${this.layoutsNameToHtmlClassName(this.props.layout.type.name)}`}>
                     {this.props.layout}
                     <button onClick={() => this.props.toggleHandler()} className="close-residents-button"><img
                         alt="close" src={closeButtonImg}/></button>

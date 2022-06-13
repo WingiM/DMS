@@ -4,6 +4,18 @@ import template from "./Residents.jsx";
 class Residents extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.state = {
+      showModal: false,
+      chosenResident: null,
+      modalLayout: null,
+    }
+
+    this.toggleHandler = this.toggleHandler.bind(this)
+    this.toggleDeleteResidentConfirmModal = this.toggleDeleteResidentConfirmModal.bind(this)
+    this.toggleTransactionModal = this.toggleTransactionModal.bind(this)
+    this.toggleRatingModal = this.toggleRatingModal.bind(this)
+    this.multicastAccrual = this.multicastAccrual.bind(this)
   }
   
   filterByName(e) {
@@ -29,6 +41,47 @@ class Residents extends React.Component {
   filterBySettlement(e) {
     this.props.filterHandler(this.props.residentsList.filter(i=>
         (i["RoomId"] === null)))
+  }
+
+  toggleHandler() {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+  }
+
+  toggleTransactionModal(resident) {
+    this.setState({
+      showModal: !this.state.showModal,
+      chosenResident: resident,
+      modalLayout: "transactionOrder",
+    })
+  }
+
+  toggleRatingModal(resident) {
+    this.setState({
+      showModal: !this.state.showModal,
+      chosenResident: resident,
+      modalLayout: "ratingModal",
+    })
+  }
+  
+  toggleDeleteResidentConfirmModal(resident) {
+    this.setState({
+      showModal: !this.state.showModal,
+      chosenResident: resident,
+      modalLayout: "deleteResidentModal"
+    })
+  }
+  
+  async multicastAccrual() {
+    await fetch("api/stats/accruals", {
+      method: "POST",
+      headers: {
+        "Authorization": localStorage.getItem("token"),
+        "Content-Type": 'application/json',
+      },
+    })
+    this.props.updateResidentsList()
   }
   
   render() {
