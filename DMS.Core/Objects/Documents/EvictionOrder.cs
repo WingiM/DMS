@@ -3,7 +3,7 @@ using DMS.Core.Objects.Residents;
 
 namespace DMS.Core.Objects.Documents;
 
-public class EvictionOrder : IDocument
+public class EvictionOrder : IOrder
 {
     public int Id { get; set; }
     public DateTime PostDate { get; set; }

@@ -45,6 +45,8 @@ public class DocumentService : IDocumentService
         };
 
         _documentsResource.AddDocument(settlementOrder);
+        _documentsResource.UpdateResidentRoomAfterOrder(settlementOrder,
+            settlementOrder.Room.Id);
         _dataContext.SaveChanges();
     }
 
@@ -58,6 +60,7 @@ public class DocumentService : IDocumentService
         };
 
         _documentsResource.AddDocument(evictionOrder);
+        _documentsResource.UpdateResidentRoomAfterOrder(evictionOrder, null);
         _dataContext.SaveChanges();
     }
 

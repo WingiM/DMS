@@ -61,6 +61,16 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
         }
     }
 
+    public void UpdateResidentRoomAfterOrder(IOrder order, int? room)
+    {
+        var resident =
+            Context.Residents.FirstOrDefault(r =>
+                r.ResidentId == order.Resident.Id) ??
+            throw new DataException("Resident not found");
+
+        resident.RoomId = room;
+    }
+
     public void DeleteDocument<T>(T document) where T : IDocument
     {
         switch (document)
@@ -102,7 +112,7 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
 
         if (Context.Residents.Count(r => r.RoomId == room.RoomId) ==
             room.Capacity)
-            throw new Core.Exceptions.DataException("Room is overcrowded");
+            throw new DataException("Room is overcrowded");
 
         var settlementOrderDb = new SettlementOrderDb
         {
@@ -119,16 +129,13 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
                 so.ParentData.ParentsPassportSeriesNumber
         };
         Context.SettlementOrders.Add(settlementOrderDb);
-
-        resident.RoomId = so.Room.Id;
     }
 
     private void CreateEvictionOrder(EvictionOrder eo)
     {
-        var resident =
-            Context.Residents.FirstOrDefault(
-                r => r.ResidentId == eo.Resident.Id) ??
-            throw new DataException("Eviction order not found");
+        if (Context.Residents.FirstOrDefault(
+                r => r.ResidentId == eo.Resident.Id) is null)
+            throw new DataException("Resident not found");
 
         var evictionOrderDb = new EvictionOrderDb
         {
@@ -137,11 +144,14 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
         };
 
         Context.EvictionOrders.Add(evictionOrderDb);
-        resident.RoomId = null;
     }
 
     private void CreateRatingOperation(RatingOperation ro)
     {
+        if (Context.Residents.FirstOrDefault(
+                r => r.ResidentId == ro.Resident.Id) is null)
+            throw new DataException("Resident not found");
+        
         var ratingOperationDb = new RatingOperationDb
         {
             RatingOperationId = ro.Id, CategoryId = ro.Category.Id,
@@ -153,6 +163,10 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
 
     private void CreateTransaction(Transaction t)
     {
+        if (Context.Residents.FirstOrDefault(
+                r => r.ResidentId == t.Resident.Id) is null)
+            throw new DataException("Resident not found");
+        
         var transactionDb = new TransactionDb
         {
             TransactionId = t.Id, ResidentId = t.Resident.Id,

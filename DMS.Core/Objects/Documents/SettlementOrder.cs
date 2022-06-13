@@ -4,7 +4,7 @@ using DMS.Core.Objects.Rooms;
 
 namespace DMS.Core.Objects.Documents;
 
-public class SettlementOrder : IDocument
+public class SettlementOrder : IOrder
 {
     public int Id { get; set; }
     public DateTime PostDate { get; set; }
