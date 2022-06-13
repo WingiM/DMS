@@ -33,18 +33,9 @@ public class DormitoryController : DmsControllerBase
     [Route("/api/stats/resettlement")]
     public IResult GetResettlementLists()
     {
-        var residents = _residentService.GetAllResidents().ToList();
+        var residents = _service.GetResettlementList();
 
-        var firstCourses = residents
-            .Where(r => r.Course == 1)
-            .OrderBy(r => r.LastName);
-
-        var others = residents
-            .Where(r => r.Course != 1)
-            .OrderByDescending(r => r.Rating)
-            .ThenBy(r => r.LastName);
-
-        return Results.Ok(firstCourses.Concat(others));
+        return Results.Ok(residents);
     }
 
     // [HttpPost]

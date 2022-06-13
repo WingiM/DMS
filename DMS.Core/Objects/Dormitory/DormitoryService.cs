@@ -22,37 +22,6 @@ public class DormitoryService : IDormitoryService
         _dataContext = dataContext;
     }
 
-
-    // public Dictionary<string, int> GetDormitoryCapacity()
-    // {
-    //     return _dormitoryResource.GetDormitoryData();
-    // }
-    //
-    // public string SetSafeConstants(string data)
-    // {
-    //     return _dormitoryResource.SetConstants(data);
-    // }
-    //
-    // public Dictionary<string, string> GetConstants()
-    // {
-    //     return _dormitoryResource.GetConstants();
-    // }
-    //
-    // public void SetHardResetConstants(string data)
-    // {
-    //     _dormitoryResource.SetHardResetConstants(data);
-    // }
-    //
-    // public void ResetDormitoryResidentsAndRooms()
-    // {
-    //     _dormitoryResource.ResetDormitoryRooms();
-    // }
-    //
-    //
-    // public string GetConstant(string key)
-    // {
-    //     return _dormitoryResource.GetConstant(key);
-    // }
     public DormitorySettlementData GetDormitorySettlementData()
     {
         return _dormitoryResource.GetDormitoryData();
@@ -79,7 +48,18 @@ public class DormitoryService : IDormitoryService
 
     public IEnumerable<Resident> GetResettlementList()
     {
-        throw new NotImplementedException();
+        var residents = _residentResource.GetAllResidents().ToList();
+
+        var firstCourses = residents
+            .Where(r => r.Course == 1)
+            .OrderBy(r => r.LastName);
+
+        var others = residents
+            .Where(r => r.Course != 1)
+            .OrderByDescending(r => r.Rating)
+            .ThenBy(r => r.LastName);
+
+        return firstCourses.Concat(others);
     }
 
 
