@@ -290,10 +290,10 @@ class App extends React.Component {
                 this.setState({
                     chartStats:
                         {
-                            settled: val["Settled"],
-                            total: val["Total"],
-                            free: val["Total"] - val["Settled"],
-                            percentage: val["Settled"] / val["Total"] * 100 | 0
+                            settled: val["SettledBedPlaces"],
+                            total: val["TotalBedPlaces"],
+                            free: val["TotalBedPlaces"] - val["SettledBedPlaces"],
+                            percentage: val["SettledBedPlaces"] / val["TotalBedPlaces"] * 100 | 0
                         }
                 })
             })

@@ -24,8 +24,10 @@ public class ResidentsController : DmsControllerBase
     {
         DateTime resultDate = ParseDate(Request.Headers["date"]);
         var gender = Request.Headers["gender"];
-
-        return Results.Ok(_service.GetAllResidents(resultDate, gender));
+        
+        if ((string) gender is not null)
+            return Results.Ok(_service.GetAllResidents(resultDate, gender));
+        return Results.Ok(_service.GetAllResidents(resultDate));
     }
 
     [HttpPost]

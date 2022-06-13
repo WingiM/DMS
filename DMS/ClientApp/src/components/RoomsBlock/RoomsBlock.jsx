@@ -26,7 +26,7 @@ function template() {
             <div className="rooms-btn-block-scroll-zone">
                 <div className="rooms-btn-block">
                     {this.state.rooms.map(room => 
-                        <Room key={room["RoomId"]} name={room["RoomId"]} isFull={room["IsFull"]} openRoom={this.props.openRoom}/>)}
+                        <Room key={room["Id"]} name={room["Id"]} isFull={room["IsFull"]} openRoom={this.props.openRoom}/>)}
                 </div>
             </div>
         </div>

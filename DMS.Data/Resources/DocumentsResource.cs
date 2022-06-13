@@ -39,7 +39,7 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
         return Context.Residents
             .OrderBy(r => r.RoomId == null)
             .ThenBy(r => r.LastName)
-            .Select(ConvertResidentWithDocuments);
+            .Select(ConvertResident);
     }
 
     public void AddDocument<T>(T document) where T : IDocument

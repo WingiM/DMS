@@ -80,14 +80,7 @@ public abstract class ResourceBase
 
             resident.Room = room;
         }
-
-        return resident;
-    }
-
-    protected static Resident ConvertResidentWithDocuments(
-        ResidentDb residentDb)
-    {
-        var resident = ConvertResident(residentDb);
+        
         resident.SettlementOrders = residentDb.SettlementOrders
             .Select(ConvertSettlementOrder).OrderBy(doc => doc.PostDate)
             .ToList();

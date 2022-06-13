@@ -10,6 +10,7 @@ public interface IResidentService
         string gender);
 
     public IEnumerable<Resident> GetAllResidents(string gender);
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate);
     public Resident GetResidentById(int id);
     public Resident GetResidentById(int id, DateTime documentsStartDate);
 

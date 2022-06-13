@@ -33,6 +33,11 @@ public class ResidentService : IResidentService
     {
         return _residentResource.GetAllResidents(gender);
     }
+    
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate)
+    {
+        return _residentResource.GetAllResidents(documentsStartDate);
+    }
 
     public Resident GetResidentById(int id)
     {

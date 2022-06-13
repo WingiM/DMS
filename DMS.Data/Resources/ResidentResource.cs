@@ -28,7 +28,7 @@ public class ResidentResource : ResourceBase, IResidentResource
         Context.RatingChangeCategories.Load();
         Context.Rooms.Load();
 
-        return ConvertResidentWithDocuments(
+        return ConvertResident(
             Context.Residents.FirstOrDefault(r => r.ResidentId == id) ??
             throw new DataException("Resident not found"));
     }
@@ -42,6 +42,11 @@ public class ResidentResource : ResourceBase, IResidentResource
     {
         Context.Rooms.Load();
         Context.Passports.Load();
+        Context.Transactions.Load();
+        Context.RatingOperations.Load();
+        Context.RatingChangeCategories.Load();
+        Context.SettlementOrders.Load();
+        Context.EvictionOrders.Load();
         return Context.Residents
             .OrderBy(r => r.RoomId == null)
             .ThenBy(r => r.LastName)

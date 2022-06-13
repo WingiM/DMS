@@ -65,9 +65,9 @@ function template() {
                                         <Resident
                                             updateResidentsList={this.props.updateResidentsList}
                                             residentObj={resident}
-                                            key={resident["ResidentId"]}
+                                            key={resident["Id"]}
                                             readOnly={false}
-                                            id={resident["ResidentId"]}
+                                            id={resident["Id"]}
                                             lastname={resident["LastName"]}
                                             firstName={resident["FirstName"]}
                                             patronymic={resident["Patronymic"]}
@@ -76,7 +76,7 @@ function template() {
                                             passportInformation={resident["PassportInformation"] === null ? "" : resident["PassportInformation"]}
                                             tin={resident["Tin"]}
                                             rating={resident["Rating"]}
-                                            debt={resident["Debt"]}
+                                            debt={resident["Balance"]}
                                             reports={resident["Reports"]}
                                             roomId={resident["RoomId"]}
                                             course={resident["Course"]}

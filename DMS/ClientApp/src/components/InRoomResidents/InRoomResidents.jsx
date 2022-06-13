@@ -93,9 +93,9 @@ function template() {
                               course={resident["Course"]}
                               tin={resident["Tin"]}
                               rating={resident["Rating"]}
-                              debt={resident["Debt"]}
+                              debt={resident["Balance"]}
                               reports={resident["Reports"]}
-                              roomId={resident["RoomId"]}
+                              roomId={this.props.room["Id"]}
                               isCommercial={resident["IsCommercial"]}
                               
                               toggleEvictionModal={this.toggleEvictionModal}
