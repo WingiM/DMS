@@ -26,11 +26,11 @@ public static class ServiceExtension
                 configuration.GetConnectionString("RedisDefaultConnection");
         });
 
-        serviceCollection.AddTransient<IDormitoryResource, DormitoryResource>();
-        serviceCollection.AddTransient<IDocumentsResource, DocumentsResource>();
-        serviceCollection.AddTransient<IResidentResource, ResidentResource>();
-        serviceCollection.AddTransient<IRoomResource, RoomResource>();
-        serviceCollection.AddTransient<IDataContext, EfDataContext>();
+        serviceCollection.AddScoped<IDormitoryResource, DormitoryResource>();
+        serviceCollection.AddScoped<IDocumentsResource, DocumentsResource>();
+        serviceCollection.AddScoped<IResidentResource, ResidentResource>();
+        serviceCollection.AddScoped<IRoomResource, RoomResource>();
+        serviceCollection.AddScoped<IDataContext, EfDataContext>();
         
         return serviceCollection;
     }

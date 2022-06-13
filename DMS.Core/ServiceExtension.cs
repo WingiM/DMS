@@ -12,10 +12,10 @@ public static class ServiceExtension
     public static IServiceCollection AddCore(
         this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddTransient<IResidentService, ResidentService>();
-        serviceCollection.AddTransient<IDocumentService, DocumentService>();
-        serviceCollection.AddTransient<IDormitoryService, DormitoryService>();
-        serviceCollection.AddTransient<IRoomService, RoomService>();
+        serviceCollection.AddScoped<IResidentService, ResidentService>();
+        serviceCollection.AddScoped<IDocumentService, DocumentService>();
+        serviceCollection.AddScoped<IDormitoryService, DormitoryService>();
+        serviceCollection.AddScoped<IRoomService, RoomService>();
 
         return serviceCollection;
     }
