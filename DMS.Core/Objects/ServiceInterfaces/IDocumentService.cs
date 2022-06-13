@@ -13,5 +13,5 @@ public interface IDocumentService
     public void AddEvictionOrder(int residentId, DateTime documentDate, string? description);
     public void AddRatingOperation(int residentId, DateTime documentDate, int changeValue, RatingChangeCategory category);
     public void AddTransaction(int residentId, DateTime documentDate, double sum);
-    public void DeleteDocument<T>(int id) where T : IDocument;
+    public void DeleteDocument(IDocument document);
 }

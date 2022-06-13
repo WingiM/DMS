@@ -1,4 +1,5 @@
 ﻿using DMS.Core.Exceptions;
+using DMS.Core.Objects.Residents;
 using DMS.Core.Objects.ServiceInterfaces;
 using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -28,64 +29,47 @@ public class ResidentsController : DmsControllerBase
     }
 
     [HttpPost]
-    public async Task<IResult> AddResident()
+    public IResult AddResident(Resident resident)
     {
-        try
+        var id = _service.CreateResident(resident.LastName,
+            resident.FirstName, resident.Gender, resident.BirthDate,
+            resident.PassportInformation, resident.IsCommercial,
+            resident.Tin, resident.Course, resident.Patronymic);
+        return Results.Json(new
         {
-            var data = await ParseRequestBody();
-            var id = _service.AddResident(data);
-            return Results.Json(new
-            {
-                message = "Added successfully",
-                ResidentId = id
-            });
-        }
-        catch (InvalidOperationException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return Results.Conflict(e.Message);
-        }
+            message = "Added successfully",
+            ResidentId = id
+        });
     }
 
     [HttpGet]
     [Route("/api/[controller]/{id:int}")]
     public IResult GetResidentById(int id)
     {
-        try
-        {
-            DateTime resultDate = ParseDate(Request.Headers["date"]);
-            var res = _service.GetResidentById(id, resultDate);
-            return Results.Ok(res);
-        }
-        catch (InvalidOperationException)
-        {
-            return Results.Conflict("No resident with this ID");
-        }
-        
+        DateTime resultDate = ParseDate(Request.Headers["date"]);
+        var res = _service.GetResidentById(id, resultDate);
+        return Results.Ok(res);
     }
 
-    [HttpPut]
-    [Route("/api/[controller]/{id:int}")]
-    public async Task<IResult> UpdateResidentInfo(int id)
-    {
-        try
-        {
-            var data = await ParseRequestBody();
-            _service.UpdateResident(id, data);
-            return Results.Ok("Updated successfully");
-        }
-        catch (InvalidRequestDataException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return Results.Conflict(e.Message);
-        }
-    }
+    // [HttpPut]
+    // [Route("/api/[controller]/{id:int}")]
+    // public async Task<IResult> UpdateResidentInfo(int id)
+    // {
+    //     try
+    //     {
+    //         var data = await ParseRequestBody();
+    //         _service.UpdateResident(id, data);
+    //         return Results.Ok("Updated successfully");
+    //     }
+    //     catch (InvalidRequestDataException e)
+    //     {
+    //         return Results.BadRequest(e.Message);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return Results.Conflict(e.Message);
+    //     }
+    // }
 
     [HttpDelete]
     [Route("/api/[controller]/{id:int}")]

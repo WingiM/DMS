@@ -1,4 +1,5 @@
-﻿using DMS.Core.Objects.Rooms;
+﻿using DMS.Core.Exceptions;
+using DMS.Core.Objects.Rooms;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Data.Resources;
@@ -16,7 +17,7 @@ public class RoomResource : ResourceBase, IRoomResource
 
     public Room GetRoom(int roomNumber, DateTime documentsDate)
     {
-        var room = Context.Rooms.First(r => r.RoomId == roomNumber);
+        var room = Context.Rooms.FirstOrDefault(r => r.RoomId == roomNumber) ?? throw new DataException("Room not found");
         var roomResidents =
             Context.Residents.Where(r => r.RoomId == roomNumber);
         roomResidents.Load();
@@ -57,7 +58,7 @@ public class RoomResource : ResourceBase, IRoomResource
 
     public void UpdateRoom(Room room)
     {
-        var entity = Context.Rooms.First(r => r.RoomId == room.Id);
+        var entity = Context.Rooms.FirstOrDefault(r => r.RoomId == room.Id) ?? throw new DataException("Room not found");
 
         entity.Gender = room.Gender;
     }

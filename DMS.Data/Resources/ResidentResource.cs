@@ -1,4 +1,5 @@
-﻿using DMS.Core.Objects.Residents;
+﻿using DMS.Core.Exceptions;
+using DMS.Core.Objects.Residents;
 using DMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,9 +26,11 @@ public class ResidentResource : ResourceBase, IResidentResource
             .Load();
         Context.Passports.Load();
         Context.RatingChangeCategories.Load();
+        Context.Rooms.Load();
 
         return ConvertResidentWithDocuments(
-            Context.Residents.First(r => r.ResidentId == id));
+            Context.Residents.FirstOrDefault(r => r.ResidentId == id) ??
+            throw new DataException("Resident not found"));
     }
 
     public IEnumerable<Resident> GetAllResidents()
@@ -37,17 +40,24 @@ public class ResidentResource : ResourceBase, IResidentResource
 
     public IEnumerable<Resident> GetAllResidents(DateTime documentsDate)
     {
+        Context.Rooms.Load();
+        Context.Passports.Load();
         return Context.Residents
             .OrderBy(r => r.RoomId == null)
             .ThenBy(r => r.LastName)
             .Select(ConvertResident);
     }
 
-    public IEnumerable<Resident> GetAllResidents(string gender,
-        DateTime documentsDate)
+    public IEnumerable<Resident> GetAllResidents(DateTime documentsDate,
+        string gender)
     {
         return GetAllResidents(documentsDate)
             .Where(r => r.Gender == char.Parse(gender));
+    }
+
+    public IEnumerable<Resident> GetAllResidents(string gender)
+    {
+        return GetAllResidents(DateTime.MinValue, gender);
     }
 
     public bool IsExists(int id)
@@ -56,7 +66,7 @@ public class ResidentResource : ResourceBase, IResidentResource
             null;
     }
 
-    public void CreateResident(Resident resident)
+    public int CreateResident(Resident resident)
     {
         var entity = new ResidentDb
         {
@@ -76,11 +86,16 @@ public class ResidentResource : ResourceBase, IResidentResource
         };
 
         Context.Add(entity);
+        Context.SaveChanges();
+        return entity.ResidentId;
     }
 
     public void UpdateResident(Resident resident)
     {
-        var entity = Context.Residents.First(r => r.ResidentId == resident.Id);
+        var entity =
+            Context.Residents.FirstOrDefault(r =>
+                r.ResidentId == resident.Id) ??
+            throw new DataException("Resident not found");
         entity.FirstName = resident.FirstName;
         entity.LastName = resident.LastName;
         entity.Patronymic = resident.Patronymic;
@@ -94,7 +109,9 @@ public class ResidentResource : ResourceBase, IResidentResource
 
     public void DeleteResident(int id)
     {
-        var resident = Context.Residents.First(r => r.ResidentId == id);
+        var resident =
+            Context.Residents.FirstOrDefault(r => r.ResidentId == id) ??
+            throw new DataException("Resident not found");
         Context.Residents.Remove(resident);
     }
 }

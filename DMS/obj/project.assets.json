@@ -949,7 +949,10 @@
         },
         "runtime": {
           "bin/placeholder/DMS.Core.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "DMS.Data/1.0.0": {
         "type": "project",
@@ -970,7 +973,10 @@
         },
         "runtime": {
           "bin/placeholder/DMS.Data.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -2799,32 +2805,34 @@
     ]
   },
   "packageFolders": {
-    "/home/wingim/.nuget/packages/": {}
+    "C:\\Users\\wingi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/wingim/RiderProjects/DMS/DMS/DMS.csproj",
+      "projectUniqueName": "C:\\Users\\wingi\\RiderProjects\\dms\\DMS\\DMS.csproj",
       "projectName": "DMS",
-      "projectPath": "/home/wingim/RiderProjects/DMS/DMS/DMS.csproj",
-      "packagesPath": "/home/wingim/.nuget/packages/",
-      "outputPath": "/home/wingim/RiderProjects/DMS/DMS/obj/",
+      "projectPath": "C:\\Users\\wingi\\RiderProjects\\dms\\DMS\\DMS.csproj",
+      "packagesPath": "C:\\Users\\wingi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\wingi\\RiderProjects\\dms\\DMS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/wingim/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\wingi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/home/wingim/RiderProjects/DMS/DMS.Data/DMS.Data.csproj": {
-              "projectPath": "/home/wingim/RiderProjects/DMS/DMS.Data/DMS.Data.csproj"
+            "C:\\Users\\wingi\\RiderProjects\\dms\\DMS.Data\\DMS.Data.csproj": {
+              "projectPath": "C:\\Users\\wingi\\RiderProjects\\dms\\DMS.Data\\DMS.Data.csproj"
             }
           }
         }
@@ -2874,7 +2882,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/wingim/dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

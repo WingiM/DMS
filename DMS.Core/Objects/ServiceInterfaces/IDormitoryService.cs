@@ -14,5 +14,5 @@ public interface IDormitoryService
     public void SetResetConstants(int floors, int roomsCount, int roomCapacity);
     public IEnumerable<Resident> GetResettlementList();
     public void AccrualAllResidents();
-    public void RebuildDormitoryRooms();
+    public void ResetDormitoryResidentsAndRooms();
 }

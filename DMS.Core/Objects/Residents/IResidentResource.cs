@@ -6,9 +6,10 @@ public interface IResidentResource
     Resident GetResidentById(int id, DateTime documentsDate);
     IEnumerable<Resident> GetAllResidents();
     IEnumerable<Resident> GetAllResidents(DateTime documentsDate);
-    IEnumerable<Resident> GetAllResidents(string gender, DateTime documentsDate);
+    IEnumerable<Resident> GetAllResidents(DateTime documentsDate, string gender);
+    IEnumerable<Resident> GetAllResidents(string gender);
     bool IsExists(int id);
-    void CreateResident(Resident resident);
+    int CreateResident(Resident resident);
     void UpdateResident(Resident resident);
     void DeleteResident(int id);
 

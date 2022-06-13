@@ -8,11 +8,20 @@ public interface IResidentService
 
     public IEnumerable<Resident> GetAllResidents(DateTime documentsStartDate,
         string gender);
+
+    public IEnumerable<Resident> GetAllResidents(string gender);
     public Resident GetResidentById(int id);
     public Resident GetResidentById(int id, DateTime documentsStartDate);
-    public void AccrualAll(int commercialCost, int nonCommercialCost);
-    public void ResetAll();
-    public int AddResident(string data);
-    public void UpdateResident(int id, string data);
+
+    public int CreateResident(string lastName, string firstName, char gender,
+        DateTime birthDate, PassportInformation passportInformation,
+        bool isCommercial, string? tin = null, int? course = null,
+        string? patronymic = null);
+
+    public void UpdateResident(int id, string lastName, string firstName,
+        char gender, DateTime birthDate,
+        PassportInformation passportInformation, bool isCommercial,
+        string? tin = null, int? course = null, string? patronymic = null);
+
     public void DeleteResident(int id);
 }

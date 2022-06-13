@@ -1,6 +1,7 @@
 using System.Text;
 using DMS.Core.Exceptions;
 using DMS.Core.Objects.Dormitory;
+using DMS.Data.Models;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace DMS.Data.Resources;
@@ -78,5 +79,24 @@ public class DormitoryResource : ResourceBase, IDormitoryResource
             SettledBedPlaces = Context.Residents.Count(r => r.RoomId != null),
             TotalBedPlaces = Context.Rooms.Sum(r => r.Capacity)
         };
+    }
+    
+    public void ResetDormitoryRooms()
+    {
+        var constants = GetResetConstants();
+        Context.Rooms.RemoveRange(Context.Rooms);
+        for (int i = 2; i < constants["Rooms"] + 2; ++i)
+        {
+            for (int j = 1; j < constants["RoomsCount"] + 1; j++)
+            {
+                var room = new RoomDb
+                {
+                    Capacity = constants["RoomCapacity"],
+                    Gender = i == 2 ? 'F' : 'M',
+                    RoomId = int.Parse($"{i}{j:00}")
+                };
+                Context.Rooms.Add(room);
+            }
+        }
     }
 }

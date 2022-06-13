@@ -7,4 +7,5 @@ public interface IDormitoryResource
     public void SetConstants(PriceConstants priceConstants);
     public void SetConstants(ResetConstants resetConstants);
     public DormitorySettlementData GetDormitoryData();
+    public void ResetDormitoryRooms();
 }

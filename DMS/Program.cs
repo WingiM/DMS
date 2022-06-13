@@ -1,4 +1,5 @@
 using System.Text;
+using DMS;
 using DMS.Core;
 using DMS.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -38,7 +39,7 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
 );
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -47,30 +47,30 @@ public class DormitoryController : DmsControllerBase
         return Results.Ok(firstCourses.Concat(others));
     }
 
-    [HttpPost]
-    [Route("/api/stats/accruals")]
-    public IResult AccrualAllResidents()
-    {
-        try
-        {
-            var commercialCost = -1 * int.Parse(_service.GetConstant(
-                "CommercialCost"));
-            var nonCommercialCost = -1 * int.Parse(_service.GetConstant(
-                "NonCommercialCost"));
-
-            _residentService.AccrualAll(commercialCost, nonCommercialCost);
-            return Results.Ok("Transactions complete");
-        }
-        catch (FormatException)
-        {
-            return Results.BadRequest(
-                "Dormitory constants not set or have bad value");
-        }
-        catch (DbUpdateException e)
-        {
-            return Results.Conflict(e.Message);
-        }
-    }
+    // [HttpPost]
+    // [Route("/api/stats/accruals")]
+    // public IResult AccrualAllResidents()
+    // {
+    //     try
+    //     {
+    //         var commercialCost = -1 * int.Parse(_service.GetConstant(
+    //             "CommercialCost"));
+    //         var nonCommercialCost = -1 * int.Parse(_service.GetConstant(
+    //             "NonCommercialCost"));
+    //
+    //         _residentService.AccrualAll(commercialCost, nonCommercialCost);
+    //         return Results.Ok("Transactions complete");
+    //     }
+    //     catch (FormatException)
+    //     {
+    //         return Results.BadRequest(
+    //             "Dormitory constants not set or have bad value");
+    //     }
+    //     catch (DbUpdateException e)
+    //     {
+    //         return Results.Conflict(e.Message);
+    //     }
+    // }
 
     [HttpGet]
     [Route("/api/stats/constants")]
@@ -79,58 +79,58 @@ public class DormitoryController : DmsControllerBase
         return Results.Ok(_service.GetConstants());
     }
 
-    [HttpGet]
-    [Route("/api/stats/constants/{name}")]
-    public IResult GetConstant(string name)
-    {
-        return Results.Ok(_service.GetConstant(name));
-    }
+    // [HttpGet]
+    // [Route("/api/stats/constants/{name}")]
+    // public IResult GetConstant(string name)
+    // {
+    //     return Results.Ok(_service.GetConstant(name));
+    // }
 
-    [HttpPost]
-    [Route("/api/stats/constants")]
-    public async Task<IResult> SetConstants()
-    {
-        try
-        {
-            var data = await ParseRequestBody();
-            var res = _service.SetSafeConstants(data);
-            
-            return Results.Ok(
-                "Setting completed." + res == ""
-                    ? ""
-                    : $"The following keys were not added: {res}");
-        }
-        catch (InvalidRequestDataException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return Results.Conflict(e.Message);
-        }
-    }
+    // [HttpPost]
+    // [Route("/api/stats/constants")]
+    // public async Task<IResult> SetConstants()
+    // {
+    //     try
+    //     {
+    //         var data = await ParseRequestBody();
+    //         var res = _service.SetSafeConstants(data);
+    //         
+    //         return Results.Ok(
+    //             "Setting completed." + res == ""
+    //                 ? ""
+    //                 : $"The following keys were not added: {res}");
+    //     }
+    //     catch (InvalidRequestDataException e)
+    //     {
+    //         return Results.BadRequest(e.Message);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return Results.Conflict(e.Message);
+    //     }
+    // }
 
-    [HttpPost]
-    [Route("/api/stats/reset")]
-    public async Task<IResult> ResetDormitory()
-    {
-        try
-        {
-            var data = await ParseRequestBody();
-
-            _service.SetHardResetConstants(data);
-            _residentService.ResetAll();
-            _service.RebuildDormitoryRooms();
-
-            return Results.Ok("Reset complete");
-        }
-        catch (InvalidRequestDataException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return Results.Conflict(e.Message);
-        }
-    }
+    // [HttpPost]
+    // [Route("/api/stats/reset")]
+    // public async Task<IResult> ResetDormitory()
+    // {
+    //     try
+    //     {
+    //         var data = await ParseRequestBody();
+    //
+    //         _service.SetHardResetConstants(data);
+    //         _residentService.ResetAll();
+    //         _service.ResetDormitoryResidentsAndRooms();
+    //
+    //         return Results.Ok("Reset complete");
+    //     }
+    //     catch (InvalidRequestDataException e)
+    //     {
+    //         return Results.BadRequest(e.Message);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return Results.Conflict(e.Message);
+    //     }
+    // }
 }

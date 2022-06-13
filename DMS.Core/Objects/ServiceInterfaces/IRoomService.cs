@@ -7,5 +7,5 @@ public interface IRoomService
     public Room GetRoomWithResidents(int id, DateTime documentsDate);
     public IEnumerable<int> GetFloorsCount();
     public IEnumerable<Room> GetAllRoomsOnFloor(int floorNumber);
-    public void SetRoomGender(string data);
+    public void SetRoomGender(int roomNumber, string gender);
 }

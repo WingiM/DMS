@@ -67,13 +67,16 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
         {
             case Transaction t:
                 var transactionDb =
-                    Context.Transactions.First(tr => tr.TransactionId == t.Id);
+                    Context.Transactions.FirstOrDefault(tr =>
+                        tr.TransactionId == t.Id) ??
+                    throw new DataException("Transaction not found");
                 Context.Transactions.Remove(transactionDb);
                 break;
             case RatingOperation ro:
                 var ratingOperationDb =
-                    Context.RatingOperations.First(ratingOp =>
-                        ratingOp.RatingOperationId == ro.Id);
+                    Context.RatingOperations.FirstOrDefault(ratingOp =>
+                        ratingOp.RatingOperationId == ro.Id) ??
+                    throw new DataException("Rating operation not found");
                 Context.RatingOperations.Remove(ratingOperationDb);
                 break;
             case SettlementOrder:
@@ -88,15 +91,18 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
     private void CreateSettlementOrder(SettlementOrder so)
     {
         var resident =
-            Context.Residents.First(r => r.ResidentId == so.Resident.Id);
-        var room = Context.Rooms.First(r => r.RoomId == so.Room.Id);
+            Context.Residents.FirstOrDefault(
+                r => r.ResidentId == so.Resident.Id) ??
+            throw new DataException("Resident not found");
+        var room = Context.Rooms.FirstOrDefault(r => r.RoomId == so.Room.Id) ??
+                   throw new DataException("Room not found");
 
         if (resident.RoomId != null)
-            throw new Exception("Resident already has a room.");
+            throw new DataException("Resident already has a room.");
 
         if (Context.Residents.Count(r => r.RoomId == room.RoomId) ==
             room.Capacity)
-            throw new Exception("Room is overcrowded");
+            throw new Core.Exceptions.DataException("Room is overcrowded");
 
         var settlementOrderDb = new SettlementOrderDb
         {
@@ -120,7 +126,9 @@ public class DocumentsResource : ResourceBase, IDocumentsResource
     private void CreateEvictionOrder(EvictionOrder eo)
     {
         var resident =
-            Context.Residents.First(r => r.ResidentId == eo.Resident.Id);
+            Context.Residents.FirstOrDefault(
+                r => r.ResidentId == eo.Resident.Id) ??
+            throw new DataException("Eviction order not found");
 
         var evictionOrderDb = new EvictionOrderDb
         {

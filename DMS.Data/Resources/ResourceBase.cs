@@ -65,16 +65,6 @@ public abstract class ResourceBase
                 ConvertPassportInformation(residentDb.PassportInformation)
         };
 
-        if (residentDb.Room is not null)
-        {
-            var room = ConvertRoom(residentDb.Room);
-
-            room.Residents = residentDb.Room.Residents
-                .Select(ConvertResidentBase).ToList();
-
-            resident.Room = room;
-        }
-
         return resident;
     }
 

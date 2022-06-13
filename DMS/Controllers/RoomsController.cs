@@ -23,16 +23,9 @@ public class RoomsController : DmsControllerBase
     [Route("/api/rooms/{id:int}")]
     public IResult GetWithId(int id)
     {
-        try
-        {
-            DateTime resultDate = ParseDate(Request.Headers["date"]);
-            var room = _service.GetRoomWithResidents(id, resultDate);
-            return Results.Ok(room);
-        }
-        catch (InvalidOperationException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
+        DateTime resultDate = ParseDate(Request.Headers["date"]);
+        var room = _service.GetRoomWithResidents(id, resultDate);
+        return Results.Ok(room);
     }
 
     [HttpGet]
@@ -51,24 +44,23 @@ public class RoomsController : DmsControllerBase
         return Results.Ok(res.OrderBy(r => r));
     }
 
-    [HttpPost]
-    [Route("/api/rooms/gender")]
-    public async Task<IResult> SetRoomGender()
-    {
-        try
-        {
-            var data = await ParseRequestBody();
-            _service.SetRoomGender(data);
-            return Results.Ok("Room gender changed successfully");
-        }
-        catch (InvalidRequestDataException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return Results.Conflict(e.Message);
-        }
-        
-    }
+    // [HttpPost]
+    // [Route("/api/rooms/gender")]
+    // public async Task<IResult> SetRoomGender()
+    // {
+    //     try
+    //     {
+    //         var data = await ParseRequestBody();
+    //         _service.SetRoomGender(data);
+    //         return Results.Ok("Room gender changed successfully");
+    //     }
+    //     catch (InvalidRequestDataException e)
+    //     {
+    //         return Results.BadRequest(e.Message);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return Results.Conflict(e.Message);
+    //     }
+    // }
 }
