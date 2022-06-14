@@ -1,5 +1,4 @@
-﻿using DMS.Core.Objects.Documents;
-using DMS.Core.Objects.Documents.Interfaces;
+﻿using DMS.Core.Objects.Documents.Interfaces;
 using DMS.Core.Objects.ServiceInterfaces;
 
 namespace DMS.Core.Objects.Residents;

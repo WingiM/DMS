@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DMS.Controllers;
+namespace DMS.Web.Controllers;
 
 [Route("/api/login")]
 public class JwtAuthenticationController : ControllerBase

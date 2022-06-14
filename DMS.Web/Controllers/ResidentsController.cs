@@ -1,11 +1,9 @@
-﻿using DMS.Core.Exceptions;
-using DMS.Core.Objects.Residents;
+﻿using DMS.Core.Objects.Residents;
 using DMS.Core.Objects.ServiceInterfaces;
-using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DMS.Controllers;
+namespace DMS.Web.Controllers;
 
 [ApiController]
 [Authorize]

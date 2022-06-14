@@ -1,4 +1,4 @@
-﻿namespace DMS.Dto;
+﻿namespace DMS.Web.Dto;
 
 public class ResidentDto
 {

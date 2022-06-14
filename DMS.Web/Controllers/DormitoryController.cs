@@ -1,12 +1,8 @@
-using DMS.Core.Exceptions;
-using DMS.Core.Objects.Dormitory;
 using DMS.Core.Objects.ServiceInterfaces;
-using DMS.Data.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace DMS.Controllers;
+namespace DMS.Web.Controllers;
 
 [ApiController]
 [Route("/api/stats")]

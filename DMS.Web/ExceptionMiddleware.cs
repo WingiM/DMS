@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace DMS;
+namespace DMS.Web;
 
 public class ExceptionMiddleware
 {

@@ -1,9 +1,8 @@
 ﻿using System.Globalization;
 using DMS.Core.Exceptions;
-using DMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DMS.Controllers;
+namespace DMS.Web.Controllers;
 
 public abstract class DmsControllerBase : ControllerBase
 {

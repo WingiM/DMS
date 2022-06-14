@@ -1,4 +1,4 @@
-namespace DMS
+namespace DMS.Web
 {
     public class WeatherForecast
     {

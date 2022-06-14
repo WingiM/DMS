@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS", "DMS\DMS.csproj", "{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS.Web", "DMS.Web\DMS.Web.csproj", "{CC3F1CF0-B513-4390-AA3A-4911D6B9F1C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManipulation", "DataManipulation\DataManipulation.csproj", "{A5D2B700-7260-41EB-81F1-0E2AFDC1A782}"
 EndProject
